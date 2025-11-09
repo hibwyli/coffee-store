@@ -1,6 +1,4 @@
 ﻿using CoffeeServer.Models;
-using DoAnLapTrinhMang.FirestoreHelpers;
-using DoAnLapTrinhMang.FirestoreHelpers;
 using DoAnLapTrinhMang.Models;
 using System;
 using System.Collections.Generic;

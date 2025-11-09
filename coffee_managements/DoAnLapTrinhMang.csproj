@@ -241,8 +241,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <!-- FirestoreHelpers -->
-    <Compile Include="FirestoreHelpers\FirebaseOtpService.cs" />
-    <Compile Include="FirestoreHelpers\FirestoreService.cs" />
     <!-- Models -->
     <Compile Include="Models\Ban.cs" />
     <Compile Include="Models\ChiTietHoaDon.cs" />
@@ -313,6 +311,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="FirestoreHelpers\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\Google.Api.CommonProtos.2.17.0\build\Google.Api.CommonProtos.targets" Condition="Exists('packages\Google.Api.CommonProtos.2.17.0\build\Google.Api.CommonProtos.targets')" />

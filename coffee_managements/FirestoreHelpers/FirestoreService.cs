@@ -1,11 +1,12 @@
-﻿using CoffeeServer.Models;
+﻿using DoAnLapTrinhMang.Models;
+using Google.Cloud.Firestore;
 using Google.Cloud.Firestore;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace CoffeeServer.FirestoreHelpers
+namespace DoAnLapTrinhMang.FirestoreHelpers
 {
     public class FirestoreService
     {
@@ -13,7 +14,7 @@ namespace CoffeeServer.FirestoreHelpers
 
         public FirestoreService()
         {
-            string path = "C:\\Users\\MINH HIEU\\source\\repos\\coffee-store\\CoffeeServer\\CoffeeServer\\FirestoreHelpers\\serviceAccountKey.json";
+            string path = "C:\\Users\\MINH HIEU\\source\\repos\\DoAnLapTrinhMang\\serviceAccountKey.json";
             Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", path);
 
             FirestoreDb db = FirestoreDb.Create("coffee-manage-f42fa");
@@ -290,39 +291,6 @@ namespace CoffeeServer.FirestoreHelpers
             await doc.Reference.UpdateAsync("IsUsed", true);
 
             return true;
-        }
-        // --------------------- CHANGE PASSWORD BY EMAIL ---------------------
-        public async Task<bool> ChangePasswordByEmailAsync(string email, string newPassword)
-        {
-            // 1. Kiểm tra trong KhachHang
-            var khSnapshot = await _db.Collection("KhachHang")
-                                      .WhereEqualTo("Email", email)
-                                      .GetSnapshotAsync();
-
-            if (khSnapshot.Count > 0)
-            {
-                var doc = khSnapshot.Documents[0];
-                await doc.Reference.UpdateAsync("MatKhau", newPassword);
-                Console.WriteLine($"Password for KhachHang {email} updated successfully.");
-                return true;
-            }
-
-            // 2. Kiểm tra trong NhanVien
-            var nvSnapshot = await _db.Collection("NhanVien")
-                                      .WhereEqualTo("Email", email)
-                                      .GetSnapshotAsync();
-
-            if (nvSnapshot.Count > 0)
-            {
-                var doc = nvSnapshot.Documents[0];
-                await doc.Reference.UpdateAsync("MatKhau", newPassword);
-                Console.WriteLine($"Password for NhanVien {email} updated successfully.");
-                return true;
-            }
-
-            // Nếu không tìm thấy email trong cả 2 collection
-            Console.WriteLine($"No user found with email: {email}");
-            return false;
         }
     }
 }
