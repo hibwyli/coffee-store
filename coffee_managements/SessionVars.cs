@@ -9,6 +9,7 @@ namespace DoAnLapTrinhMang
 {
     public static class SessionVars
     {
-        public static UserData AppName = null; 
+        public static string username = null;
+        public static string role = null;
     }
 }
