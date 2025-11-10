@@ -58,7 +58,9 @@ namespace DoAnLapTrinhMang
                     MatKhau = password,
                     XacNhanMK = "",
                     Email = "",
-                    Quyen = ""
+                    Quyen = "",
+                    Sdt = "",
+                    DiaChi="",
                 }
             };
 
@@ -109,6 +111,11 @@ namespace DoAnLapTrinhMang
             {
                 MessageBox.Show("Error: " + ex.Message);
             }
+        }
+
+        private void splitContainer1_Panel2_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

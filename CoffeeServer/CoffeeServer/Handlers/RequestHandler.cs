@@ -53,7 +53,7 @@ namespace CoffeeServer.Handlers
                         }
                         if (request.Data.Quyen == "KH")
                         {
-                            string maKH = "KH" + Guid.NewGuid().ToString("N").Substring(0, 6).ToUpper();
+                            string maKH = "KH" + Guid.NewGuid().ToString("N"    ).Substring(0, 6).ToUpper();
 
                             var user = new KhachHang
                             {
@@ -80,18 +80,26 @@ namespace CoffeeServer.Handlers
                         }
                         else
                         {
-                            string maNV = "NV" + Guid.NewGuid().ToString("N").Substring(0, 6).ToUpper();
-
-                            // Tạo đối tượng NhanVien
-                            var nv = new NhanVien
+                            string maNV = "";
+                            if (request.Data.MaNv == "")
                             {
-                                MaNV = maNV,
-                                TenNV = request.Data.TenTaiKhoan,      // biến tenTaiKhoan chứa tên đăng nhập
-                                SDT = "0123456789",
-                                DiaChi = "Hanoi",
-                                MatKhau = request.Data.MatKhau,        // biến matKhau chứa mật khẩu
-                                Email = request.Data.Email
-                            };
+                                maNV = "NV" + Guid.NewGuid().ToString("N").Substring(0, 6).ToUpper();
+
+                            }else
+                            {
+                                maNV = request.Data.MaNv;
+                            }
+
+                                // Tạo đối tượng NhanVien
+                                var nv = new NhanVien
+                                {
+                                    MaNV = maNV,
+                                    TenNV = request.Data.TenTaiKhoan,      // biến tenTaiKhoan chứa tên đăng nhập
+                                    SDT = "0123456789",
+                                    DiaChi = "Hanoi",
+                                    MatKhau = request.Data.MatKhau,        // biến matKhau chứa mật khẩu
+                                    Email = request.Data.Email
+                                };
 
                             // Khởi tạo service
                             bool regSuccess = await service.RegisterNhanVien(nv);
@@ -136,7 +144,20 @@ namespace CoffeeServer.Handlers
                             return "Something went wrong";
                             //Verify token
                         }
-                        break; 
+                        break;
+
+                    case "UPDATE":
+                        if(request.Data.DiaChi != "" && request.Data.Sdt !=""&& request.Data.MaNv != "")
+                        {
+                            bool updateSuccess = await service.CapNhatThongTinNhanVien(request.Data.MaNv,request.Data.Sdt,request.Data.DiaChi);
+                            if (updateSuccess)
+                            {
+                                return "Update success!!";
+                            }
+                        }
+                        return "Update failed";
+                        break;
+                        
                     default:
                         Console.WriteLine($"[ERROR] Unknown action: {request.Action}");
                         return $"[ERROR] Unknown action: {request.Action}";

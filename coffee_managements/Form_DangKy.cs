@@ -57,7 +57,9 @@ namespace DoAnLapTrinhMang
                         MatKhau = matKhau,
                         XacNhanMK = xacNhanMK,
                         Email = email,
-                        Quyen = quyen
+                        Quyen = quyen,
+                        Sdt = "",
+                        DiaChi = "",
                     }
                 };
 

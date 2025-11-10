@@ -62,7 +62,9 @@ namespace DoAnLapTrinhMang
                     MatKhau = tokenNhap,
                     XacNhanMK = newPassword,
                     Email = email,
-                    Quyen = ""
+                    Quyen = "",
+                    Sdt = "",
+                    DiaChi = "",
                 }
             };
 
@@ -110,7 +112,9 @@ namespace DoAnLapTrinhMang
                     MatKhau = "",
                     XacNhanMK = "",
                     Email = email,
-                    Quyen = ""
+                    Quyen = "",
+                    Sdt = "",
+                    DiaChi = "",
                 }
             };
 
