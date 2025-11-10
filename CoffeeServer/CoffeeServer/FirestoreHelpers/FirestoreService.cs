@@ -13,7 +13,7 @@ namespace CoffeeServer.FirestoreHelpers
 
         public FirestoreService()
         {
-            string path = "C:\\Users\\MINH HIEU\\source\\repos\\coffee-store\\CoffeeServer\\CoffeeServer\\FirestoreHelpers\\serviceAccountKey.json";
+            string path = "C:\\Users\\Hoang Dang\\source\\repos\\coffee-store\\CoffeeServer\\CoffeeServer\\FirestoreHelpers\\serviceAccountKey.json";
             Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", path);
 
             FirestoreDb db = FirestoreDb.Create("coffee-manage-f42fa");
@@ -348,6 +348,41 @@ namespace CoffeeServer.FirestoreHelpers
 
             // ❌ Không tồn tại trong cả 2
             return false;
+        }
+
+        //Update Thong tin nhan vien
+        public async Task<bool> CapNhatThongTinNhanVien(string maNV, string sdt, string diaChi)
+        {
+            try
+            {
+                // Lấy document nhân viên theo Mã NV
+                var docRef = _db.Collection("NhanVien").Document(maNV);
+                var snapshot = await docRef.GetSnapshotAsync();
+
+                if (!snapshot.Exists)
+                {
+                    // Nếu nhân viên chưa có trong Firestore → không được thêm mới
+                    Console.WriteLine($"⚠️ Nhân viên {maNV} chưa có tài khoản, không thể cập nhật.");
+                    return false;
+                }
+
+                // Nếu tồn tại → chỉ cập nhật thêm thông tin SDT & Địa chỉ
+                var updates = new Dictionary<string, object>
+        {
+            { "SDT", sdt },
+            { "DiaChi", diaChi }
+        };
+
+                await docRef.UpdateAsync(updates);
+
+                Console.WriteLine($"✅ Đã cập nhật thông tin cho nhân viên {maNV}.");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Lỗi khi cập nhật nhân viên: {ex.Message}");
+                return false;
+            }
         }
     }
 }
