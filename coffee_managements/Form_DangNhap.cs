@@ -2,15 +2,10 @@
 using DoAnLapTrinhMang.Models;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 namespace DoAnLapTrinhMang
 {
     public partial class Form_DangNhap : Form
@@ -82,14 +77,31 @@ namespace DoAnLapTrinhMang
                     byte[] respBuffer = new byte[1024];
                     int bytesRead = await stream.ReadAsync(respBuffer, 0, respBuffer.Length);
                     string response = Encoding.UTF8.GetString(respBuffer, 0, bytesRead);
-                    if (response.Contains("SUCCESS")){
-                        //redirect 
-                        Form_TrangChinh form_TrangChinh = new Form_TrangChinh();
-                        form_TrangChinh.Show();
-                    } else
+                    if (response.Contains("FAIL"))
                     {
                         MessageBox.Show("Server response: " + response);
+                    }
+                    else
+                    {
+                        // Deserialize using Newtonsoft.Json dynamic
+                        dynamic obj = JsonConvert.DeserializeObject(response);
 
+                        // Use conditional access
+                        string _username = obj.TenNV != null ? (string)obj.TenNV : (string)obj.TenKH;
+                        string role = obj.TenNV != null ? "NV" : "KH";
+
+                        SessionVars.username = _username;
+                        SessionVars.role = role;
+                        if (role == "KH")
+                        {
+                            MessageBox.Show("Not implement KH views");
+;                        }else
+                        {
+                            Form_TrangChinh form_TrangChinh = new Form_TrangChinh();
+                            form_TrangChinh.UpdateSession();
+                            form_TrangChinh.Show();
+                        }
+                      
                     }
                 }
             }

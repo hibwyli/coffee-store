@@ -28,7 +28,7 @@ class TcpServer
             RequestHandler handler = new RequestHandler();
             string result =  handler.HandleRequest(received).GetAwaiter().GetResult(); ;
             // Echo back
-            byte[] response = Encoding.UTF8.GetBytes("Server: " + result);
+            byte[] response = Encoding.UTF8.GetBytes(result);
             stream.Write(response, 0, response.Length);
 
             client.Close();

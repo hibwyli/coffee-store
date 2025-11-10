@@ -30,13 +30,14 @@ namespace CoffeeServer.Handlers
                         KhachHang success = await service.LoginUser(request.Data.TenTaiKhoan, request.Data.MatKhau);
                         if (success != null)
                         {
-                            return "LOGIN KH SUCCESS";
+                            return JsonSerializer.Serialize<KhachHang>(success);
                         }else
                         {
                             NhanVien nvSuccess = await service.LoginNhanVien(request.Data.TenTaiKhoan, request.Data.MatKhau);
                             if(nvSuccess != null)
                             {
-                                return "LOGIN NV SUCCESS";
+                                return JsonSerializer.Serialize<NhanVien>(nvSuccess);
+
 
                             }
                         }
