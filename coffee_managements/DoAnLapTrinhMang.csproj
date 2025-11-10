@@ -1,4 +1,4 @@
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -112,7 +112,9 @@
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.13.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
+    <Reference Include="System">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.dll</HintPath>
+    </Reference>
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
@@ -170,6 +172,12 @@
   </ItemGroup>
   <ItemGroup>
     <!-- Forms -->
+    <Compile Include="Form_DanhMucNhanVien.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_DanhMucNhanVien.Designer.cs">
+      <DependentUpon>Form_DanhMucNhanVien.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form_DangKy.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -207,6 +215,9 @@
     <!-- Properties -->
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SessionVars.cs" />
+    <EmbeddedResource Include="Form_DanhMucNhanVien.resx">
+      <DependentUpon>Form_DanhMucNhanVien.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -220,6 +231,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form_DanhMucDoUong.resx">
       <DependentUpon>Form_DanhMucDoUong.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Form_TrangChinh.resx">
       <DependentUpon>Form_TrangChinh.cs</DependentUpon>
