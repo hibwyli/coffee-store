@@ -41,5 +41,10 @@ namespace DoAnLapTrinhMang
         {
 
         }
+
+        private void LoadTable()
+        {
+
+        }
     }
 }
