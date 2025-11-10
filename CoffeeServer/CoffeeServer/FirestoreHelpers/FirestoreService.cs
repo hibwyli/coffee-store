@@ -324,5 +324,30 @@ namespace CoffeeServer.FirestoreHelpers
             Console.WriteLine($"No user found with email: {email}");
             return false;
         }
+        // Email exisst 
+        public async Task<bool> EmailExistsAsync(string email)
+        {
+            if (string.IsNullOrEmpty(email))
+                return false;
+
+            // 1️⃣ Kiểm tra trong KhachHang
+            var khSnapshot = await _db.Collection("KhachHang")
+                                      .WhereEqualTo("Email", email)
+                                      .Limit(1)
+                                      .GetSnapshotAsync();
+            if (khSnapshot.Count > 0)
+                return true;
+
+            // 2️⃣ Kiểm tra trong NhanVien
+            var nvSnapshot = await _db.Collection("NhanVien")
+                                      .WhereEqualTo("Email", email)
+                                      .Limit(1)
+                                      .GetSnapshotAsync();
+            if (nvSnapshot.Count > 0)
+                return true;
+
+            // ❌ Không tồn tại trong cả 2
+            return false;
+        }
     }
 }

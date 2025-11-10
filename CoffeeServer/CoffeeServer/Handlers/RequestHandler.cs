@@ -44,7 +44,12 @@ namespace CoffeeServer.Handlers
 
                     case "REGISTER":
                         Console.WriteLine($"[REGISTER] {request.Data.TenTaiKhoan} - {request.Data.Email}");
-
+                        // CHeck email exists 
+                        bool exists = await service.EmailExistsAsync(request.Data.Email);
+                        if (exists)
+                        {
+                            return "EMAIL EXISTS";
+                        }
                         if (request.Data.Quyen == "KH")
                         {
                             string maKH = "KH" + Guid.NewGuid().ToString("N").Substring(0, 6).ToUpper();

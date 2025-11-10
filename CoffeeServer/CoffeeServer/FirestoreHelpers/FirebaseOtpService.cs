@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 using System;
 public class FirebaseOtpService
 {
-    private readonly HttpClient _httpClient = new HttpClient();
-    private readonly string _apiKey = "AIzaSyCUfIQCBIFl9xnR-sRvfXX0F3Rhq43s06E";
 
     public async Task SendOtpEmail(string email,string token)
     {

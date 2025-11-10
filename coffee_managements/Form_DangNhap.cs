@@ -81,8 +81,15 @@ namespace DoAnLapTrinhMang
                     byte[] respBuffer = new byte[1024];
                     int bytesRead = await stream.ReadAsync(respBuffer, 0, respBuffer.Length);
                     string response = Encoding.UTF8.GetString(respBuffer, 0, bytesRead);
+                    if (response.Contains("SUCCESS")){
+                        //redirect 
+                        Form_TrangChinh form_TrangChinh = new Form_TrangChinh();
+                        form_TrangChinh.Show();
+                    } else
+                    {
+                        MessageBox.Show("Server response: " + response);
 
-                    MessageBox.Show("Server response: " + response);
+                    }
                 }
             }
             catch (Exception ex)
