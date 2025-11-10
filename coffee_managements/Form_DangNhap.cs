@@ -49,6 +49,7 @@ namespace DoAnLapTrinhMang
             }
             if (string.IsNullOrEmpty(password))
             {
+                
                 MessageBox.Show("Nhập mật khẩu.");
                 textBox_MatKhau.Focus();
                 return;

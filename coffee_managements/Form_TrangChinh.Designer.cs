@@ -102,7 +102,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(8, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(2055, 40);
+            this.menuStrip1.Size = new System.Drawing.Size(2055, 42);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -114,7 +114,7 @@
             this.nhậpTồnKhoHàngHóaToolStripMenuItem});
             this.hệThốngToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("hệThốngToolStripMenuItem.Image")));
             this.hệThốngToolStripMenuItem.Name = "hệThốngToolStripMenuItem";
-            this.hệThốngToolStripMenuItem.Size = new System.Drawing.Size(159, 36);
+            this.hệThốngToolStripMenuItem.Size = new System.Drawing.Size(159, 38);
             this.hệThốngToolStripMenuItem.Text = "Hệ thống";
             // 
             // nhânViênToolStripMenuItem
@@ -146,7 +146,7 @@
             this.côngThứcToolStripMenuItem});
             this.danhMụcToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("danhMụcToolStripMenuItem.Image")));
             this.danhMụcToolStripMenuItem.Name = "danhMụcToolStripMenuItem";
-            this.danhMụcToolStripMenuItem.Size = new System.Drawing.Size(168, 36);
+            this.danhMụcToolStripMenuItem.Size = new System.Drawing.Size(168, 38);
             this.danhMụcToolStripMenuItem.Text = "Danh mục";
             // 
             // loạiĐồUốngToolStripMenuItem
@@ -184,7 +184,7 @@
             // 
             this.quảnLýKháchHangToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("quảnLýKháchHangToolStripMenuItem.Image")));
             this.quảnLýKháchHangToolStripMenuItem.Name = "quảnLýKháchHangToolStripMenuItem";
-            this.quảnLýKháchHangToolStripMenuItem.Size = new System.Drawing.Size(272, 36);
+            this.quảnLýKháchHangToolStripMenuItem.Size = new System.Drawing.Size(272, 38);
             this.quảnLýKháchHangToolStripMenuItem.Text = "Quản lý khách hàng";
             // 
             // thốngKêToolStripMenuItem
@@ -196,7 +196,7 @@
             this.lịchSửHóaĐơnToolStripMenuItem});
             this.thốngKêToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("thốngKêToolStripMenuItem.Image")));
             this.thốngKêToolStripMenuItem.Name = "thốngKêToolStripMenuItem";
-            this.thốngKêToolStripMenuItem.Size = new System.Drawing.Size(159, 36);
+            this.thốngKêToolStripMenuItem.Size = new System.Drawing.Size(159, 38);
             this.thốngKêToolStripMenuItem.Text = "Thống kê";
             // 
             // thốngKêToolStripMenuItem1
@@ -227,7 +227,7 @@
             // 
             this.đăngXuấtToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("đăngXuấtToolStripMenuItem.Image")));
             this.đăngXuấtToolStripMenuItem.Name = "đăngXuấtToolStripMenuItem";
-            this.đăngXuấtToolStripMenuItem.Size = new System.Drawing.Size(167, 36);
+            this.đăngXuấtToolStripMenuItem.Size = new System.Drawing.Size(167, 38);
             this.đăngXuấtToolStripMenuItem.Text = "Đăng xuất";
             // 
             // mainLayout
@@ -240,12 +240,12 @@
             this.mainLayout.Controls.Add(this.panel1, 2, 0);
             this.mainLayout.Controls.Add(this.panel2, 1, 0);
             this.mainLayout.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mainLayout.Location = new System.Drawing.Point(0, 40);
-            this.mainLayout.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.mainLayout.Location = new System.Drawing.Point(0, 42);
+            this.mainLayout.Margin = new System.Windows.Forms.Padding(4);
             this.mainLayout.Name = "mainLayout";
             this.mainLayout.RowCount = 1;
             this.mainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.mainLayout.Size = new System.Drawing.Size(2055, 968);
+            this.mainLayout.Size = new System.Drawing.Size(2055, 966);
             this.mainLayout.TabIndex = 1;
             this.mainLayout.Paint += new System.Windows.Forms.PaintEventHandler(this.mainLayout_Paint);
             // 
@@ -257,16 +257,16 @@
             this.panelBanHeader.Controls.Add(this.label_banDangChon);
             this.panelBanHeader.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelBanHeader.Location = new System.Drawing.Point(4, 4);
-            this.panelBanHeader.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelBanHeader.Margin = new System.Windows.Forms.Padding(4);
             this.panelBanHeader.Name = "panelBanHeader";
-            this.panelBanHeader.Size = new System.Drawing.Size(505, 960);
+            this.panelBanHeader.Size = new System.Drawing.Size(505, 958);
             this.panelBanHeader.TabIndex = 0;
             // 
             // flowLayoutPanel_Ban
             // 
             this.flowLayoutPanel_Ban.BackColor = System.Drawing.Color.SeaShell;
             this.flowLayoutPanel_Ban.Location = new System.Drawing.Point(0, 100);
-            this.flowLayoutPanel_Ban.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.flowLayoutPanel_Ban.Margin = new System.Windows.Forms.Padding(4);
             this.flowLayoutPanel_Ban.Name = "flowLayoutPanel_Ban";
             this.flowLayoutPanel_Ban.Size = new System.Drawing.Size(505, 859);
             this.flowLayoutPanel_Ban.TabIndex = 2;
@@ -276,7 +276,7 @@
             this.button1.BackColor = System.Drawing.Color.MediumSeaGreen;
             this.button1.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.Location = new System.Drawing.Point(276, 26);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(212, 54);
             this.button1.TabIndex = 1;
@@ -311,9 +311,9 @@
             this.panel1.Controls.Add(this.label_ThongTinHoaDon);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(1174, 4);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(877, 960);
+            this.panel1.Size = new System.Drawing.Size(877, 958);
             this.panel1.TabIndex = 1;
             // 
             // button3
@@ -322,7 +322,7 @@
             this.button3.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button3.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.button3.Location = new System.Drawing.Point(613, 879);
-            this.button3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button3.Margin = new System.Windows.Forms.Padding(4);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(241, 70);
             this.button3.TabIndex = 10;
@@ -335,7 +335,7 @@
             this.button2.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button2.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.button2.Location = new System.Drawing.Point(364, 879);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button2.Margin = new System.Windows.Forms.Padding(4);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(241, 70);
             this.button2.TabIndex = 9;
@@ -376,7 +376,7 @@
             this.DonGia,
             this.ThanhTien});
             this.dataGridView_HoaDon.Location = new System.Drawing.Point(0, 304);
-            this.dataGridView_HoaDon.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dataGridView_HoaDon.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView_HoaDon.Name = "dataGridView_HoaDon";
             this.dataGridView_HoaDon.RowHeadersWidth = 62;
             this.dataGridView_HoaDon.RowTemplate.Height = 28;
@@ -424,7 +424,7 @@
             this.button_XoaDoUong.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_XoaDoUong.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.button_XoaDoUong.Location = new System.Drawing.Point(39, 209);
-            this.button_XoaDoUong.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button_XoaDoUong.Margin = new System.Windows.Forms.Padding(4);
             this.button_XoaDoUong.Name = "button_XoaDoUong";
             this.button_XoaDoUong.Size = new System.Drawing.Size(241, 70);
             this.button_XoaDoUong.TabIndex = 5;
@@ -435,7 +435,7 @@
             // 
             this.dateTimePicker1.Font = new System.Drawing.Font("Times New Roman", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dateTimePicker1.Location = new System.Drawing.Point(324, 151);
-            this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(4);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(444, 41);
             this.dateTimePicker1.TabIndex = 4;
@@ -444,7 +444,7 @@
             // 
             this.textBox1.Font = new System.Drawing.Font("Times New Roman", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox1.Location = new System.Drawing.Point(324, 90);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(4);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(444, 41);
             this.textBox1.TabIndex = 3;
@@ -493,9 +493,9 @@
             this.panel2.Controls.Add(this.label5);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(517, 4);
-            this.panel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel2.Margin = new System.Windows.Forms.Padding(4);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(649, 960);
+            this.panel2.Size = new System.Drawing.Size(649, 958);
             this.panel2.TabIndex = 2;
             // 
             // dataGridView1
@@ -507,7 +507,7 @@
             this.Ten,
             this.Gia});
             this.dataGridView1.Location = new System.Drawing.Point(0, 159);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 62;
             this.dataGridView1.RowTemplate.Height = 28;
@@ -539,7 +539,7 @@
             // 
             this.textBox2.Font = new System.Drawing.Font("Times New Roman", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox2.Location = new System.Drawing.Point(151, 96);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox2.Margin = new System.Windows.Forms.Padding(4);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(471, 41);
             this.textBox2.TabIndex = 11;
@@ -561,7 +561,7 @@
             this.button4.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button4.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.button4.Location = new System.Drawing.Point(432, 26);
-            this.button4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button4.Margin = new System.Windows.Forms.Padding(4);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(191, 51);
             this.button4.TabIndex = 11;
@@ -572,7 +572,7 @@
             // 
             this.numericUpDown1.Font = new System.Drawing.Font("Times New Roman", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.numericUpDown1.Location = new System.Drawing.Point(151, 29);
-            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(4);
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(89, 41);
             this.numericUpDown1.TabIndex = 12;
@@ -596,7 +596,7 @@
             this.Controls.Add(this.mainLayout);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form_TrangChinh";
             this.Text = "Phần mềm quản lý quán cafe";
             this.menuStrip1.ResumeLayout(false);
