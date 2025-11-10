@@ -92,12 +92,16 @@ namespace DoAnLapTrinhMang
 
                         SessionVars.username = _username;
                         SessionVars.role = role;
-
-                        Console.WriteLine("Session: " + SessionVars.username + " " + SessionVars.role);
-
-                        // Open main form
-                        Form_TrangChinh form_TrangChinh = new Form_TrangChinh();
-                        form_TrangChinh.Show();
+                        if (role == "KH")
+                        {
+                            MessageBox.Show("Not implement KH views");
+;                        }else
+                        {
+                            Form_TrangChinh form_TrangChinh = new Form_TrangChinh();
+                            form_TrangChinh.UpdateSession();
+                            form_TrangChinh.Show();
+                        }
+                      
                     }
                 }
             }

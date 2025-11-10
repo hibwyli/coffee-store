@@ -46,5 +46,33 @@ namespace DoAnLapTrinhMang
         {
 
         }
+
+        public void UpdateSession()
+        {
+            textBox_Ten.Text = SessionVars.username;
+            textBox_Role.Text = SessionVars.role; 
+        }
+
+        private void textBox_Role_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void đăngXuấtToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            SessionVars.username = null;
+            SessionVars.role = null;
+            this.Close();
+        }
+
+        private void textBox_Ten_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
