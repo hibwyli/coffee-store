@@ -97,7 +97,8 @@ namespace DoAnLapTrinhMang
                         if (role == "KH")
                         {
                             MessageBox.Show("Not implement KH views");
-;                        }else
+                        }
+                        else
                         {
                             Form_TrangChinh form_TrangChinh = new Form_TrangChinh();
                             form_TrangChinh.UpdateSession();

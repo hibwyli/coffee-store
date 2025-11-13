@@ -81,11 +81,11 @@ namespace CoffeeServer.Handlers
                         else
                         {
                             string maNV = "";
-                            if (request.Data.MaNv == "")
+                            if (string.IsNullOrEmpty(request.Data.MaNv))
                             {
                                 maNV = "NV" + Guid.NewGuid().ToString("N").Substring(0, 6).ToUpper();
-
-                            }else
+                            }
+                            else
                             {
                                 maNV = request.Data.MaNv;
                             }

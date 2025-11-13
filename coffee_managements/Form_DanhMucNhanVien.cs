@@ -1,6 +1,8 @@
 ﻿using CoffeeServer.Models;
 using DoAnLapTrinhMang.Models;
+using Google.Cloud.Firestore;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,6 +19,7 @@ namespace DoAnLapTrinhMang
 {
     public partial class Form_DanhMucNhanVien : Form
     {
+
         public Form_DanhMucNhanVien()
         {
             InitializeComponent();
@@ -26,9 +29,10 @@ namespace DoAnLapTrinhMang
 
         private async void Form_DanhMucNhanVien_Load(object sender, EventArgs e)
         {
+
         }
 
- 
+        }
 
         private void label5_Click(object sender, EventArgs e)
         {
@@ -98,6 +102,11 @@ namespace DoAnLapTrinhMang
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridView_NhanVien_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }

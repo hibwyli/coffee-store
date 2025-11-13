@@ -44,7 +44,8 @@ namespace DoAnLapTrinhMang
             if (quyen == "Khách hàng")
             {
                 quyen = "KH";
-            }else
+            }
+            else
             {
                 quyen = "NV";
             }
