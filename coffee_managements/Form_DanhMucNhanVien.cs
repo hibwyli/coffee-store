@@ -78,6 +78,7 @@ namespace DoAnLapTrinhMang
             }
 
         }
+
         private void LoadAll()
         {
             ClearAll();
@@ -149,6 +150,9 @@ namespace DoAnLapTrinhMang
                         string response = Encoding.UTF8.GetString(respBuffer, 0, bytesRead);
 
                         MessageBox.Show("Server response: " + response);
+                        ClearAll();
+                        LoadNvList();
+                        LoadAll();
                     }
                 }
                 catch (Exception ex)
@@ -235,6 +239,124 @@ namespace DoAnLapTrinhMang
             txtEmail.Text = row.Cells["Email"].Value?.ToString();
             txtSDT.Text = row.Cells["SDT"].Value?.ToString();
 
+        }
+
+        private async  void menuXoa_Click(object sender, EventArgs e)
+        {
+            if (txtMaNV.Text == "")
+            {
+                MessageBox.Show("Please select some one to delete :)");
+                return;
+            }
+            var request = new RequestModel
+            {
+                Action = "DELETE",
+                Data = new UserData
+                {
+                    MaNv = txtMaNV.Text,
+                    TenTaiKhoan = "",
+                    MatKhau = "",
+                    XacNhanMK = "",
+                    Email = "",
+                    Quyen = "",
+                    Sdt = "",
+                    DiaChi = "",
+                }
+            };
+
+            string json = System.Text.Json.JsonSerializer.Serialize(request);
+            byte[] buffer = Encoding.UTF8.GetBytes(json);
+
+            try
+            {
+                using (TcpClient client = new TcpClient("127.0.0.1", 5000)) // 👈 your server IP & port
+                using (NetworkStream stream = client.GetStream())
+                {
+                    // Send data
+                    await stream.WriteAsync(buffer, 0, buffer.Length);
+
+                    // Receive response
+                    byte[] respBuffer = new byte[1024];
+                    int bytesRead = await stream.ReadAsync(respBuffer, 0, respBuffer.Length);
+                    string response = Encoding.UTF8.GetString(respBuffer, 0, bytesRead);
+
+                    MessageBox.Show("Server response: " + response);
+                    ClearAll();
+                    LoadNvList();
+                    LoadAll();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+        }
+
+        private async void menuSua_Click(object sender, EventArgs e)
+        {
+
+            try
+            {
+                string maNV = txtMaNV.Text.Trim();
+                string sdt = txtSDT.Text.Trim();
+                string diaChi = txtDiaChi.Text.Trim();
+                string email = txtEmail.Text.Trim();
+                string mk = txtMk.Text.Trim();
+                string tenNv = txtTenNV.Text.Trim();
+                var request = new RequestModel
+                {
+                    Action = "UPDATE",
+                    Data = new UserData
+                    {
+                        MaNv = maNV,
+                        TenTaiKhoan = mk,
+                        MatKhau = mk,
+                        XacNhanMK = mk,
+                        Email = email,
+                        Quyen = "NV",
+                        Sdt = sdt,
+                        DiaChi = diaChi,
+                    }
+                };
+
+                string json = System.Text.Json.JsonSerializer.Serialize(request);
+                byte[] buffer = Encoding.UTF8.GetBytes(json);
+
+                try
+                {
+                    using (TcpClient client = new TcpClient("127.0.0.1", 5000)) // 👈 your server IP & port
+                    using (NetworkStream stream = client.GetStream())
+                    {
+                        // Send data
+                        await stream.WriteAsync(buffer, 0, buffer.Length);
+
+                        // Receive response
+                        byte[] respBuffer = new byte[1024];
+                        int bytesRead = await stream.ReadAsync(respBuffer, 0, respBuffer.Length);
+                        string response = Encoding.UTF8.GetString(respBuffer, 0, bytesRead);
+
+                        MessageBox.Show("Server response: " + response);
+                        ClearAll();
+                        LoadNvList();
+                        LoadAll();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi cập nhật: " + ex.Message);
+            }
+        }
+
+        private void menuThoat_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
         /*
 if (dataGridView_NhanVien.SelectedRows.Count > 0)
