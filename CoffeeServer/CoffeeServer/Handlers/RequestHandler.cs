@@ -158,8 +158,22 @@ namespace CoffeeServer.Handlers
                         return "Update failed";
                         
                     case "GETALL":
-                        if(request.Data.CollectionName)
-                        return "";
+                        if (request.CollectionName != null)
+                        {
+                            List<NhanVien> employees = await service.GetAll<NhanVien>("NhanVien");
+                            var displayList = employees.Select(x => new
+                            {
+                                x.MaNV,
+                                x.TenNV,
+                                x.SDT,
+                                x.DiaChi,
+                                x.Email
+                            }).ToList();
+                            string jsond = JsonSerializer.Serialize(displayList);
+                            Console.WriteLine(jsond);
+                            return jsond;
+                        }
+                        return "Wrong shit";
                     default:
                         Console.WriteLine($"[ERROR] Unknown action: {request.Action}");
                         return $"[ERROR] Unknown action: {request.Action}";

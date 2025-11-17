@@ -19,21 +19,21 @@ namespace DoAnLapTrinhMang
 {
     public partial class Form_DanhMucNhanVien : Form
     {
-
+        private List<NhanVien> nvList;
         public Form_DanhMucNhanVien()
         {
             InitializeComponent();
             this.Load += Form_DanhMucNhanVien_Load;
-            LoadData();
-
+            LoadNvList();
             this.menuThem.Click += menuThem_Click;
+            this.dataGridView_NhanVien.CellContentClick += dataGridView_NhanVien_CellContentClick;
         }
 
         private async void Form_DanhMucNhanVien_Load(object sender, EventArgs e)
         {
 
         }
-        private void LoadData()
+        private async void LoadNvList()
         {
             // Example with manual rows
             dataGridView_NhanVien.Columns.Clear();
@@ -42,12 +42,64 @@ namespace DoAnLapTrinhMang
             dataGridView_NhanVien.Columns.Add("SDT", "sdt");
             dataGridView_NhanVien.Columns.Add("Email", "MAIL");
             dataGridView_NhanVien.Columns.Add("DiaChi", "DC");
-            AddData();
+            // request list 
+            var request = new RequestModel
+            {
+                Action = "GETALL",
+                Data = new UserData
+                {
+
+                },
+                CollectionName = "NhanVien"
+            };
+
+            string json = System.Text.Json.JsonSerializer.Serialize(request);
+            byte[] buffer = Encoding.UTF8.GetBytes(json);
+
+            try
+            {
+                using (TcpClient client = new TcpClient("127.0.0.1", 5000)) // 👈 your server IP & port
+                using (NetworkStream stream = client.GetStream())
+                {
+                    // Send data
+                    await stream.WriteAsync(buffer, 0, buffer.Length);
+
+                    // Receive response
+                    byte[] respBuffer = new byte[1024];
+                    int bytesRead = await stream.ReadAsync(respBuffer, 0, respBuffer.Length);
+                    string response = Encoding.UTF8.GetString(respBuffer, 0, bytesRead);
+                    nvList = System.Text.Json.JsonSerializer.Deserialize<List<NhanVien>>(response);
+                    LoadAll();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+
         }
-        private void AddData()
+        private void LoadAll()
         {
-            dataGridView_NhanVien.Rows.Add("NV01", "Alice", "0123456789","Cac@gmail.com","diaCHi");
+            ClearAll();
+            foreach (var emp in nvList)
+            {
+                AddData(emp);
+            }
         }
+        private void AddData(NhanVien nv)
+        {
+            dataGridView_NhanVien.Rows.Add(nv.MaNV, nv.TenNV, nv.SDT, nv.Email, nv.DiaChi);
+        }
+        private void ClearAll()
+        {
+            dataGridView_NhanVien.Rows.Clear();
+            txtMaNV.Text = "";
+            txtTenNV.Text = "";
+            txtDiaChi.Text = "";
+            txtEmail.Text = "";
+            txtSDT.Text = "";
+        }
+
 
         private void label5_Click(object sender, EventArgs e)
         {
@@ -103,7 +155,7 @@ namespace DoAnLapTrinhMang
                 {
                     MessageBox.Show("Error: " + ex.Message);
                 }
-              
+
             }
             catch (Exception ex)
             {
@@ -123,7 +175,78 @@ namespace DoAnLapTrinhMang
 
         private void dataGridView_NhanVien_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+           
+        }
+
+        private void menuXoaTrang_Click(object sender, EventArgs e)
+        {
+            dataGridView_NhanVien.Rows.Clear();
 
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ClearAll();
+
+            string nameToFind = txtTim.Text;
+            if (string.IsNullOrEmpty(nameToFind))
+            {
+
+                LoadAll();
+                return;
+            }
+
+            // Filter the list by name starting with the input (case-insensitive)
+            List<NhanVien> matchingEmployees = nvList
+         .Where(nv => !string.IsNullOrEmpty(nv.TenNV) && nv.TenNV.StartsWith(nameToFind, StringComparison.OrdinalIgnoreCase))
+         .ToList();
+
+            if (matchingEmployees.Count == 0)
+            {
+
+                return;
+            }
+            foreach (var nv in matchingEmployees)
+            {
+                AddData(nv);
+            }
+
+            // Example: update a field in Firestore for each matched employee
+
+        }
+
+        private void dataGridView_NhanVien_SelectionChanged(object sender, EventArgs e)
+        {
+          
+        }
+
+        private void dataGridView_NhanVien_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0)
+                return;
+
+            // Get the row that was double-clicked
+            DataGridViewRow row = dataGridView_NhanVien.Rows[e.RowIndex];
+
+            // Access cell values
+            txtMaNV.Text = row.Cells["MaNV"].Value?.ToString();
+            txtTenNV.Text = row.Cells["TenNV"].Value?.ToString();
+            txtDiaChi.Text = row.Cells["DiaChi"].Value?.ToString();
+            txtEmail.Text = row.Cells["Email"].Value?.ToString();
+            txtSDT.Text = row.Cells["SDT"].Value?.ToString();
+
+        }
+        /*
+if (dataGridView_NhanVien.SelectedRows.Count > 0)
+{
+// Get the first selected row
+DataGridViewRow row = dataGridView_NhanVien.SelectedRows[0];
+
+// Access cell values by column name or index
+string maNV = row.Cells["MaNV"].Value.ToString();
+string tenNV = row.Cells["TenNV"].Value.ToString();
+
+MessageBox.Show($"Selected: {maNV} - {tenNV}");
+}*/
     }
 }
