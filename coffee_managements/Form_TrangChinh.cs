@@ -20,6 +20,7 @@ namespace DoAnLapTrinhMang
         private void nhânViênToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Form_DanhMucNhanVien form_DanhMucNhanVien = new Form_DanhMucNhanVien();
+            
             form_DanhMucNhanVien.Show();
         }
 

@@ -156,8 +156,10 @@ namespace CoffeeServer.Handlers
                             }
                         }
                         return "Update failed";
-                        break;
                         
+                    case "GETALL":
+                        if(request.Data.CollectionName)
+                        return "";
                     default:
                         Console.WriteLine($"[ERROR] Unknown action: {request.Action}");
                         return $"[ERROR] Unknown action: {request.Action}";

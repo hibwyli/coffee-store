@@ -24,6 +24,8 @@ namespace DoAnLapTrinhMang
         {
             InitializeComponent();
             this.Load += Form_DanhMucNhanVien_Load;
+            LoadData();
+
             this.menuThem.Click += menuThem_Click;
         }
 
@@ -31,7 +33,20 @@ namespace DoAnLapTrinhMang
         {
 
         }
-
+        private void LoadData()
+        {
+            // Example with manual rows
+            dataGridView_NhanVien.Columns.Clear();
+            dataGridView_NhanVien.Columns.Add("MaNV", "ID");
+            dataGridView_NhanVien.Columns.Add("TenNV", "Name");
+            dataGridView_NhanVien.Columns.Add("SDT", "sdt");
+            dataGridView_NhanVien.Columns.Add("Email", "MAIL");
+            dataGridView_NhanVien.Columns.Add("DiaChi", "DC");
+            AddData();
+        }
+        private void AddData()
+        {
+            dataGridView_NhanVien.Rows.Add("NV01", "Alice", "0123456789","Cac@gmail.com","diaCHi");
         }
 
         private void label5_Click(object sender, EventArgs e)
