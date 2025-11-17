@@ -16,5 +16,10 @@ namespace DoAnLapTrinhMang
         {
             InitializeComponent();
         }
+
+        private void Form_DanhMucDoUong_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
