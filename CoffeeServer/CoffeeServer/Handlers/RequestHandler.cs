@@ -147,16 +147,24 @@ namespace CoffeeServer.Handlers
                         break;
 
                     case "UPDATE":
-                        if(request.Data.DiaChi != "" && request.Data.Sdt !=""&& request.Data.MaNv != "")
+                        if(request.Data.DiaChi != "" && request.Data.Sdt !=""&& request.Data.MaNv != "" && request.Data.Email != "")
                         {
-                            bool updateSuccess = await service.CapNhatThongTinNhanVien(request.Data.MaNv,request.Data.Sdt,request.Data.DiaChi);
+                            bool updateSuccess = await service.CapNhatThongTinNhanVien(request.Data.MaNv,request.Data.Sdt,request.Data.DiaChi,request.Data.Email);
                             if (updateSuccess)
                             {
                                 return "Update success!!";
                             }
                         }
                         return "Update failed";
-                        
+                    case "DELETE":
+                        if (request.Data.MaNv != "" )
+                        {
+                            await service.Delete("NhanVien", request.Data.MaNv);
+                             return "Update success!!";
+                            
+                        }
+                        return "NV not exists to delete!";
+
                     case "GETALL":
                         if (request.CollectionName != null)
                         {

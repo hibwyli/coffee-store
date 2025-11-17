@@ -382,7 +382,7 @@ namespace CoffeeServer.FirestoreHelpers
         }
 
         //Update Thong tin nhan vien
-        public async Task<bool> CapNhatThongTinNhanVien(string maNV, string sdt, string diaChi)
+        public async Task<bool> CapNhatThongTinNhanVien(string maNV, string sdt, string diaChi,string email)
         {
             try
             {
@@ -401,7 +401,9 @@ namespace CoffeeServer.FirestoreHelpers
                 var updates = new Dictionary<string, object>
         {
             { "SDT", sdt },
-            { "DiaChi", diaChi }
+            { "DiaChi", diaChi },
+            { "Email", email }
+
         };
 
                 await docRef.UpdateAsync(updates);
