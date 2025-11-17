@@ -58,7 +58,9 @@ namespace DoAnLapTrinhMang
                     MatKhau = password,
                     XacNhanMK = "",
                     Email = "",
-                    Quyen = ""
+                    Quyen = "",
+                    Sdt = "",
+                    DiaChi="",
                 }
             };
 
@@ -95,7 +97,8 @@ namespace DoAnLapTrinhMang
                         if (role == "KH")
                         {
                             MessageBox.Show("Not implement KH views");
-;                        }else
+                        }
+                        else
                         {
                             Form_TrangChinh form_TrangChinh = new Form_TrangChinh();
                             form_TrangChinh.UpdateSession();
@@ -109,6 +112,11 @@ namespace DoAnLapTrinhMang
             {
                 MessageBox.Show("Error: " + ex.Message);
             }
+        }
+
+        private void splitContainer1_Panel2_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

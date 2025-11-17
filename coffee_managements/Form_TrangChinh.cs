@@ -19,7 +19,8 @@ namespace DoAnLapTrinhMang
 
         private void nhânViênToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            Form_DanhMucNhanVien form_DanhMucNhanVien = new Form_DanhMucNhanVien();
+            form_DanhMucNhanVien.Show();
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -39,7 +40,8 @@ namespace DoAnLapTrinhMang
 
         private void loạiĐồUốngToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            Form_DanhMucDoUong form_DanhMucDoUong = new Form_DanhMucDoUong();
+            form_DanhMucDoUong.Show();
         }
 
         private void LoadTable()

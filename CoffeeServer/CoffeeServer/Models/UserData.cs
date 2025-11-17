@@ -4,6 +4,9 @@ namespace CoffeeServer.Models
 {
     public class UserData
     {
+        [JsonPropertyName("maNv")]
+        public string MaNv { get; set; }
+
         [JsonPropertyName("tenTaiKhoan")]
         public string TenTaiKhoan { get; set; }
 
@@ -18,5 +21,11 @@ namespace CoffeeServer.Models
 
         [JsonPropertyName("quyen")]
         public string Quyen { get; set; }
+
+        [JsonPropertyName("diachi")]
+        public string DiaChi{ get; set; }
+
+        [JsonPropertyName("sdt")]
+        public string Sdt { get; set; }
     }
 }

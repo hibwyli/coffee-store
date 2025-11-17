@@ -51,7 +51,7 @@
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.IsSplitterFixed = true;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(4);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -69,8 +69,9 @@
             this.splitContainer1.Panel2.Controls.Add(this.textBox_tenDangNhap);
             this.splitContainer1.Panel2.Controls.Add(this.label_tenDangNhap);
             this.splitContainer1.Panel2.Controls.Add(this.label_title);
+            this.splitContainer1.Panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Panel2_Paint);
             this.splitContainer1.Size = new System.Drawing.Size(1489, 688);
-            this.splitContainer1.SplitterDistance = 733;
+            this.splitContainer1.SplitterDistance = 732;
             this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 0;
             // 
@@ -80,9 +81,9 @@
             this.pictureBox_logo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox_logo.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox_logo.Image")));
             this.pictureBox_logo.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox_logo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox_logo.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox_logo.Name = "pictureBox_logo";
-            this.pictureBox_logo.Size = new System.Drawing.Size(733, 688);
+            this.pictureBox_logo.Size = new System.Drawing.Size(732, 688);
             this.pictureBox_logo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox_logo.TabIndex = 0;
             this.pictureBox_logo.TabStop = false;
@@ -119,7 +120,7 @@
             this.button_DangNhap.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_DangNhap.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.button_DangNhap.Location = new System.Drawing.Point(60, 490);
-            this.button_DangNhap.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button_DangNhap.Margin = new System.Windows.Forms.Padding(4);
             this.button_DangNhap.Name = "button_DangNhap";
             this.button_DangNhap.Size = new System.Drawing.Size(623, 80);
             this.button_DangNhap.TabIndex = 9;
@@ -131,7 +132,7 @@
             // 
             this.textBox_MatKhau.Font = new System.Drawing.Font("Times New Roman", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox_MatKhau.Location = new System.Drawing.Point(60, 301);
-            this.textBox_MatKhau.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox_MatKhau.Margin = new System.Windows.Forms.Padding(4);
             this.textBox_MatKhau.Name = "textBox_MatKhau";
             this.textBox_MatKhau.Size = new System.Drawing.Size(621, 41);
             this.textBox_MatKhau.TabIndex = 5;
@@ -151,7 +152,7 @@
             // 
             this.textBox_tenDangNhap.Font = new System.Drawing.Font("Times New Roman", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox_tenDangNhap.Location = new System.Drawing.Point(60, 182);
-            this.textBox_tenDangNhap.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox_tenDangNhap.Margin = new System.Windows.Forms.Padding(4);
             this.textBox_tenDangNhap.Name = "textBox_tenDangNhap";
             this.textBox_tenDangNhap.Size = new System.Drawing.Size(621, 41);
             this.textBox_tenDangNhap.TabIndex = 3;
@@ -177,7 +178,7 @@
             this.label_title.Location = new System.Drawing.Point(0, 0);
             this.label_title.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label_title.Name = "label_title";
-            this.label_title.Size = new System.Drawing.Size(751, 102);
+            this.label_title.Size = new System.Drawing.Size(752, 102);
             this.label_title.TabIndex = 0;
             this.label_title.Text = "PHẦN MỀM QUẢN LÝ QUÁN CAFE";
             this.label_title.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -189,7 +190,7 @@
             this.ClientSize = new System.Drawing.Size(1489, 688);
             this.Controls.Add(this.splitContainer1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "Form_DangNhap";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

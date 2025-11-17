@@ -44,7 +44,8 @@ namespace DoAnLapTrinhMang
             if (quyen == "Khách hàng")
             {
                 quyen = "KH";
-            }else
+            }
+            else
             {
                 quyen = "NV";
             }
@@ -57,7 +58,9 @@ namespace DoAnLapTrinhMang
                         MatKhau = matKhau,
                         XacNhanMK = xacNhanMK,
                         Email = email,
-                        Quyen = quyen
+                        Quyen = quyen,
+                        Sdt = "",
+                        DiaChi = "",
                     }
                 };
 

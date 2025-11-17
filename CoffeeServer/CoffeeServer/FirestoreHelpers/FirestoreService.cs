@@ -10,14 +10,16 @@ namespace CoffeeServer.FirestoreHelpers
     public class FirestoreService
     {
         private readonly FirestoreDb _db;
+        private readonly FirebaseOtpService _otpService;
 
         public FirestoreService()
         {
-            string path = "C:\\Users\\MINH HIEU\\source\\repos\\coffee-store\\CoffeeServer\\CoffeeServer\\FirestoreHelpers\\serviceAccountKey.json";
+            string path = "C:\\Users\\Hoang Dang\\source\\repos\\coffee-store\\CoffeeServer\\CoffeeServer\\FirestoreHelpers\\serviceAccountKey.json";
             Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", path);
 
             FirestoreDb db = FirestoreDb.Create("coffee-manage-f42fa");
             _db = db;
+            _otpService = new FirebaseOtpService();
         }
 
         // --------------------- GET ALL ---------------------
@@ -120,9 +122,21 @@ namespace CoffeeServer.FirestoreHelpers
             // Kiểm tra user đã tồn tại chưa
             var existing = await _db.Collection("KhachHang").Document(user.MaKH).GetSnapshotAsync();
             if (existing.Exists)
-                return false; // Đã tồn tại
+            {
+                Console.WriteLine($"⚠️ Khách hàng có MaKH {user.MaKH} đã tồn tại.");
+                return false;
+            }
 
             await _db.Collection("KhachHang").Document(user.MaKH).SetAsync(user);
+            try
+            {
+                _otpService.SendRegistrationSuccessEmail(user.Email, "Khách hàng");
+                Console.WriteLine($"✅ Email đăng ký thành công đã được gửi đến: {user.Email}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"⚠️ Lỗi khi gửi email đăng ký cho Khách hàng {user.MaKH}: {ex.Message}");
+            }
             return true;
         }
 
@@ -150,9 +164,23 @@ namespace CoffeeServer.FirestoreHelpers
             // Kiểm tra nhân viên đã tồn tại chưa (dựa vào MaNV)
             var existing = await _db.Collection("NhanVien").Document(nv.MaNV).GetSnapshotAsync();
             if (existing.Exists)
+            {
+                Console.WriteLine($"⚠️ Nhân viên có MaNV {nv.MaNV} đã tồn tại.");
                 return false; // Đã tồn tại
+            }
 
             await _db.Collection("NhanVien").Document(nv.MaNV).SetAsync(nv);
+
+            try
+            {
+                _otpService.SendRegistrationSuccessEmail(nv.Email, "Nhân viên");
+                Console.WriteLine($"✅ Email đăng ký thành công đã được gửi đến: {nv.Email}");
+            }
+            catch (Exception ex)
+            {
+                // Ghi log lỗi gửi email nhưng vẫn trả về true vì đăng ký thành công
+                Console.WriteLine($"⚠️ Lỗi khi gửi email đăng ký cho Nhân viên {nv.MaNV}: {ex.Message}");
+            }
             return true;
         }
 
@@ -239,38 +267,41 @@ namespace CoffeeServer.FirestoreHelpers
         }
         public async Task<bool> SaveResetTokenAsync(string email)
         {
-            var collection = _db.Collection("reset_tokens");
-            var snapshot = await _db.Collection("KhachHang")
-                                    .WhereEqualTo("Email", email)
-                                    .GetSnapshotAsync();
+            // 1. Kiểm tra xem email có tồn tại trong KhachHang KHÔNG
+            var khSnapshot = await _db.Collection("KhachHang")
+                                      .WhereEqualTo("Email", email)
+                                      .GetSnapshotAsync();
 
-            if (snapshot.Count > 0)
+            // 2. Kiểm tra xem email có tồn tại trong NhanVien KHÔNG
+            var nvSnapshot = await _db.Collection("NhanVien")
+                                      .WhereEqualTo("Email", email)
+                                      .GetSnapshotAsync();
+
+            // 3. Nếu không tồn tại ở CẢ HAI nơi, thì mới return false
+            if (khSnapshot.Count == 0 && nvSnapshot.Count == 0)
             {
-                var doc = snapshot.Documents[0];
-                var khachHang = doc.ConvertTo<KhachHang>();
-                Console.WriteLine($"Tên: {khachHang.TenKH}, Email: {khachHang.Email}");
-
-                var token = Convert.ToBase64String(Guid.NewGuid().ToByteArray())
-                .Replace("+", "").Replace("/", "").Substring(0, 6);
-
-                var resetToken = new ResetPasswordToken
-                {
-                    Email = email,
-                    Token = token,
-                    CreatedAt = DateTime.UtcNow,
-                    ExpiresAt = DateTime.UtcNow.AddMinutes(15)
-                };
-
-                await collection.AddAsync(resetToken);
-                var otpService = new FirebaseOtpService();
-                otpService.SendOtpEmail(email, token);
-                return true;
-            }
-            else
-            {
-                Console.WriteLine("Không tìm thấy khách hàng nào có email này.");
+                Console.WriteLine($"Không tìm thấy người dùng nào có email: {email}");
                 return false;
             }
+
+            // 4. Nếu email tồn tại (bất kể là KH hay NV), thì tiếp tục tạo token
+            var collection = _db.Collection("reset_tokens");
+            var token = Convert.ToBase64String(Guid.NewGuid().ToByteArray())
+                             .Replace("+", "").Replace("/", "").Substring(0, 6);
+
+            var resetToken = new ResetPasswordToken
+            {
+                Email = email,
+                Token = token,
+                CreatedAt = DateTime.UtcNow,
+                ExpiresAt = DateTime.UtcNow.AddMinutes(15)
+            };
+
+            await collection.AddAsync(resetToken);
+
+            // 5. Gửi email và trả về true
+            await _otpService.SendOtpEmail(email, token);
+            return true;
         }
         public async Task<bool> VerifyResetTokenAsync(string token)
         {
@@ -348,6 +379,41 @@ namespace CoffeeServer.FirestoreHelpers
 
             // ❌ Không tồn tại trong cả 2
             return false;
+        }
+
+        //Update Thong tin nhan vien
+        public async Task<bool> CapNhatThongTinNhanVien(string maNV, string sdt, string diaChi)
+        {
+            try
+            {
+                // Lấy document nhân viên theo Mã NV
+                var docRef = _db.Collection("NhanVien").Document(maNV);
+                var snapshot = await docRef.GetSnapshotAsync();
+
+                if (!snapshot.Exists)
+                {
+                    // Nếu nhân viên chưa có trong Firestore → không được thêm mới
+                    Console.WriteLine($"⚠️ Nhân viên {maNV} chưa có tài khoản, không thể cập nhật.");
+                    return false;
+                }
+
+                // Nếu tồn tại → chỉ cập nhật thêm thông tin SDT & Địa chỉ
+                var updates = new Dictionary<string, object>
+        {
+            { "SDT", sdt },
+            { "DiaChi", diaChi }
+        };
+
+                await docRef.UpdateAsync(updates);
+
+                Console.WriteLine($"✅ Đã cập nhật thông tin cho nhân viên {maNV}.");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Lỗi khi cập nhật nhân viên: {ex.Message}");
+                return false;
+            }
         }
     }
 }
