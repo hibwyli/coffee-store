@@ -77,5 +77,17 @@ namespace DoAnLapTrinhMang
         {
 
         }
+
+        private void thốngKêToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Form_DoanhThuTheoNgay form_DoanhThuTheoNgay = new Form_DoanhThuTheoNgay();
+            form_DoanhThuTheoNgay.Show();
+        }
+
+        private void thốngKêDoanhThuTheoNhânViênToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form_DoanhThuTheoNhanVien form_DoanhThuTheoNhanVien = new Form_DoanhThuTheoNhanVien();
+            form_DoanhThuTheoNhanVien.Show();
+        }
     }
 }

@@ -196,6 +196,18 @@
     <Compile Include="Form_DanhMucDoUong.Designer.cs">
       <DependentUpon>Form_DanhMucDoUong.cs</DependentUpon>
     </Compile>
+    <Compile Include="Form_DoanhThuTheoNgay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_DoanhThuTheoNgay.Designer.cs">
+      <DependentUpon>Form_DoanhThuTheoNgay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_DoanhThuTheoNhanVien.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_DoanhThuTheoNhanVien.Designer.cs">
+      <DependentUpon>Form_DoanhThuTheoNhanVien.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form_QuenMatKhau.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -217,6 +229,12 @@
     <Compile Include="SessionVars.cs" />
     <EmbeddedResource Include="Form_DanhMucNhanVien.resx">
       <DependentUpon>Form_DanhMucNhanVien.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_DoanhThuTheoNgay.resx">
+      <DependentUpon>Form_DoanhThuTheoNgay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_DoanhThuTheoNhanVien.resx">
+      <DependentUpon>Form_DoanhThuTheoNhanVien.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
