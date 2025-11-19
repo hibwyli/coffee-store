@@ -25,7 +25,6 @@ namespace DoAnLapTrinhMang
             InitializeComponent();
             this.Load += Form_DanhMucNhanVien_Load;
             LoadNvList();
-            this.menuThem.Click += menuThem_Click;
             this.dataGridView_NhanVien.CellContentClick += dataGridView_NhanVien_CellContentClick;
         }
 
@@ -117,6 +116,10 @@ namespace DoAnLapTrinhMang
                 string email = txtEmail.Text.Trim();
                 string mk = txtMk.Text.Trim();
                 string tenNv = txtTenNV.Text.Trim();
+                if (maNV == "" || sdt == "" || diaChi== "" || email== "" || mk== "" || tenNv == "") {
+                    MessageBox.Show("Thieu thong tin");
+                    return;
+                }
                 var request = new RequestModel
                 {
                     Action = "REGISTER",
