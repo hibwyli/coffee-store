@@ -95,7 +95,7 @@ namespace DoAnLapTrinhMang
 
         }
 
-        private void thôngTinCáNhânToolStripMenuItem_Click(object sender, EventArgs e)
+        private void thôngTinCáNhânToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             Form_ThongTinCaNhan form_ThongTinCaNhan = new Form_ThongTinCaNhan();
             form_ThongTinCaNhan.Show();
