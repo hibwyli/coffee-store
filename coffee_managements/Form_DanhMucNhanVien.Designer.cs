@@ -141,6 +141,7 @@
             this.dataGridView_NhanVien.RowTemplate.Height = 24;
             this.dataGridView_NhanVien.Size = new System.Drawing.Size(1167, 448);
             this.dataGridView_NhanVien.TabIndex = 14;
+            this.dataGridView_NhanVien.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_NhanVien_CellContentClick_1);
             this.dataGridView_NhanVien.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_NhanVien_CellContentDoubleClick);
             // 
             // label6
@@ -196,7 +197,7 @@
             // 
             this.menuThem.Image = ((System.Drawing.Image)(resources.GetObject("menuThem.Image")));
             this.menuThem.Name = "menuThem";
-            this.menuThem.Size = new System.Drawing.Size(115, 38);
+            this.menuThem.Size = new System.Drawing.Size(115, 36);
             this.menuThem.Text = "Thêm";
             this.menuThem.Click += new System.EventHandler(this.menuThem_Click);
             // 
@@ -204,7 +205,7 @@
             // 
             this.menuSua.Image = ((System.Drawing.Image)(resources.GetObject("menuSua.Image")));
             this.menuSua.Name = "menuSua";
-            this.menuSua.Size = new System.Drawing.Size(100, 38);
+            this.menuSua.Size = new System.Drawing.Size(100, 36);
             this.menuSua.Text = "Sửa ";
             this.menuSua.Click += new System.EventHandler(this.menuSua_Click);
             // 
@@ -212,7 +213,7 @@
             // 
             this.menuXoa.Image = ((System.Drawing.Image)(resources.GetObject("menuXoa.Image")));
             this.menuXoa.Name = "menuXoa";
-            this.menuXoa.Size = new System.Drawing.Size(94, 38);
+            this.menuXoa.Size = new System.Drawing.Size(94, 36);
             this.menuXoa.Text = "Xóa";
             this.menuXoa.Click += new System.EventHandler(this.menuXoa_Click);
             // 
@@ -220,7 +221,7 @@
             // 
             this.menuThoat.Image = ((System.Drawing.Image)(resources.GetObject("menuThoat.Image")));
             this.menuThoat.Name = "menuThoat";
-            this.menuThoat.Size = new System.Drawing.Size(115, 38);
+            this.menuThoat.Size = new System.Drawing.Size(115, 36);
             this.menuThoat.Text = "Thoát";
             this.menuThoat.Click += new System.EventHandler(this.menuThoat_Click);
             // 

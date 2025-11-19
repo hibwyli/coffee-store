@@ -98,6 +98,7 @@ namespace DoAnLapTrinhMang
             txtDiaChi.Text = "";
             txtEmail.Text = "";
             txtSDT.Text = "";
+            txtMk.Text = "";
         }
 
 
@@ -126,7 +127,7 @@ namespace DoAnLapTrinhMang
                     Data = new UserData
                     {
                         MaNv = maNV,
-                        TenTaiKhoan = mk,
+                        TenTaiKhoan = tenNv,
                         MatKhau = mk,
                         XacNhanMK = mk,
                         Email = email,
@@ -360,6 +361,11 @@ namespace DoAnLapTrinhMang
         private void menuThoat_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void dataGridView_NhanVien_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
         /*
 if (dataGridView_NhanVien.SelectedRows.Count > 0)
