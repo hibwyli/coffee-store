@@ -59,8 +59,8 @@ namespace CoffeeServer.Handlers
                             {
                                 MaKH = maKH,
                                 TenKH = request.Data.TenTaiKhoan,
-                                SDT = "0123456789",
-                                DiaChi = "Hanoi",
+                                SDT = request.Data.Sdt ?? "0",
+                                DiaChi = request.Data.DiaChi ?? "Hanoi",
                                 MatKhau = request.Data.MatKhau,
                                 Email = request.Data.Email
                             };
@@ -95,8 +95,8 @@ namespace CoffeeServer.Handlers
                                 {
                                     MaNV = maNV,
                                     TenNV = request.Data.TenTaiKhoan,      // biến tenTaiKhoan chứa tên đăng nhập
-                                    SDT = "0123456789",
-                                    DiaChi = "Hanoi",
+                                    SDT = request.Data.Sdt ?? "0",
+                                    DiaChi = request.Data.DiaChi ?? "Hanoi",
                                     MatKhau = request.Data.MatKhau,        // biến matKhau chứa mật khẩu
                                     Email = request.Data.Email
                                 };
