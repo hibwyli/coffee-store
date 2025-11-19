@@ -329,7 +329,7 @@ namespace DoAnLapTrinhMang
                     Data = new UserData
                     {
                         MaNv = maNV,
-                        TenTaiKhoan = mk,
+                        TenTaiKhoan = tenNv,
                         MatKhau = mk,
                         XacNhanMK = mk,
                         Email = email,

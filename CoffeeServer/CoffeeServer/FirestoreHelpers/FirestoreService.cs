@@ -382,7 +382,7 @@ namespace CoffeeServer.FirestoreHelpers
         }
 
         //Update Thong tin nhan vien
-        public async Task<bool> CapNhatThongTinNhanVien(string maNV, string sdt, string diaChi,string email)
+        public async Task<bool> CapNhatThongTinNhanVien(string maNV, string sdt, string diaChi,string email,string tenNV)
         {
             try
             {
@@ -400,6 +400,7 @@ namespace CoffeeServer.FirestoreHelpers
                 // Nếu tồn tại → chỉ cập nhật thêm thông tin SDT & Địa chỉ
                 var updates = new Dictionary<string, object>
         {
+            { "TenNV", tenNV},
             { "SDT", sdt },
             { "DiaChi", diaChi },
             { "Email", email }
