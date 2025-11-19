@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
@@ -63,12 +64,26 @@ namespace DoAnLapTrinhMang
                     // Send data
                     await stream.WriteAsync(buffer, 0, buffer.Length);
 
-                    // Receive response
-                    byte[] respBuffer = new byte[1024];
-                    int bytesRead = await stream.ReadAsync(respBuffer, 0, respBuffer.Length);
-                    string response = Encoding.UTF8.GetString(respBuffer, 0, bytesRead);
-                    nvList = System.Text.Json.JsonSerializer.Deserialize<List<NhanVien>>(response);
-                    LoadAll();
+                    // Receive response dynamically
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        byte[] buffers = new byte[1024];
+                        int bytesRead;
+                        while ((bytesRead = await stream.ReadAsync(buffers, 0, buffer.Length)) > 0)
+                        {
+                            ms.Write(buffers, 0, bytesRead);
+
+                            // Optional: break if you know the end of the message
+                            // e.g., for HTTP you can check for double CRLF or Content-Length
+                            if (!stream.DataAvailable)
+                                break;
+                        }
+
+                        byte[] respBuffer = ms.ToArray();
+                        string response = Encoding.UTF8.GetString(respBuffer);
+                        nvList = System.Text.Json.JsonSerializer.Deserialize<List<NhanVien>>(response);
+                        LoadAll();
+                    }
                 }
             }
             catch (Exception ex)
