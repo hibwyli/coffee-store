@@ -15,5 +15,8 @@ namespace CoffeeServer.Models
         public UserData Data { get; set; }   // Thông tin người dùng
         [JsonPropertyName("collectionName")]
         public string CollectionName{ get; set; }
+
+        [JsonPropertyName("DuData")]
+        public  DoUongData DuData { get; set; }
     }
 }

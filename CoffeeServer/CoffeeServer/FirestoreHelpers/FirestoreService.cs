@@ -44,17 +44,60 @@ namespace CoffeeServer.FirestoreHelpers
             return null;
         }
 
+        // --------------------- GET DOCUMENT ID ---------------------
+        private string GetDocumentId<T>(T item) where T : class
+        {
+            if (item is DoUongData du && !string.IsNullOrEmpty(du.MaDU)) return du.MaDU;
+            if (item is KhachHang kh && !string.IsNullOrEmpty(kh.MaKH)) return kh.MaKH;
+            if (item is NhanVien nv && !string.IsNullOrEmpty(nv.MaNV)) return nv.MaNV;
+
+            return Guid.NewGuid().ToString("N");
+        }
+
         // --------------------- ADD ---------------------
         public async Task Add<T>(string collectionName, string id, T item) where T : class
         {
             await _db.Collection(collectionName).Document(id).SetAsync(item);
         }
 
+        // --------------------- CREATE ---------------------
+
+        public async Task<bool> Create(string collectionName, DoUongData item) 
+        {
+            try
+            {
+                // 1. Lấy ID từ đối tượng
+                string documentId = GetDocumentId(item);
+
+                // 2. Sử dụng logic SetAsync với ID đã lấy
+                await _db.Collection(collectionName).Document(documentId).SetAsync(item);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] Lỗi khi tạo tài liệu trong {collectionName}: {ex.Message}");
+                return false;
+            }
+        }
+
         // --------------------- UPDATE ---------------------
-        public async Task Update(string collectionName, string id, Dictionary<string, object> updates)
+        public async Task UpdateFields(string collectionName, string id, Dictionary<string, object> updates)
         {
             var docRef = _db.Collection(collectionName).Document(id);
             await docRef.UpdateAsync(updates);
+        }
+        public async Task<bool> Update<T>(string collectionName, string id, T item) where T : class
+        {
+            try
+            {
+                var docRef = _db.Collection(collectionName).Document(id);
+                await docRef.SetAsync(item);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         // --------------------- DELETE ---------------------

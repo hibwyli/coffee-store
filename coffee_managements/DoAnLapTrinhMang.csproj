@@ -227,6 +227,7 @@
       <DependentUpon>Form_TrangChinh.cs</DependentUpon>
     </Compile>
     <!-- Program -->
+    <Compile Include="Models\DoUongData.cs" />
     <Compile Include="Models\RequestModel.cs" />
     <Compile Include="Models\UserData.cs" />
     <Compile Include="Program.cs" />

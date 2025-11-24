@@ -15,7 +15,7 @@ namespace DoAnLapTrinhMang.Models
         public string MaLoai { get; set; }
 
         [FirestoreProperty]
-        public double DonGia { get; set; }
+        public decimal DonGia { get; set; }
 
         [FirestoreProperty]
         public string HinhAnh { get; set; }

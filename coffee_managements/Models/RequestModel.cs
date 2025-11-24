@@ -13,5 +13,8 @@ namespace CoffeeServer.Models
 
         [JsonPropertyName("collectionName")]
         public string CollectionName { get; set; }
+
+        [JsonPropertyName("DuData")]
+        public DoUongData DuData { get; set; }
     }
 }

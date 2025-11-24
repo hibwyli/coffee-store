@@ -6,6 +6,7 @@ using static Google.Rpc.Context.AttributeContext.Types;
 
 namespace CoffeeServer.Handlers
 {
+
     public class RequestHandler
     {
         // Hàm xử lý JSON client gửi lên
@@ -182,6 +183,17 @@ namespace CoffeeServer.Handlers
                             return jsond;
                         }
                         return "Wrong shit";
+                    case "CREATEDU":
+                        return await HandleDoUongCrud("CREATEDU", request, service);
+
+                    case "UPDATEDU":
+                        return await HandleDoUongCrud("UPDATEDU", request, service);
+
+                    case "DELETEDU":
+                        return await HandleDoUongCrud("DELETEDU", request, service);
+
+                    case "GETALLDU":
+                        return await HandleDoUongCrud("GETALLDU", request, service);
                     default:
                         Console.WriteLine($"[ERROR] Unknown action: {request.Action}");
                         return $"[ERROR] Unknown action: {request.Action}";
@@ -193,6 +205,58 @@ namespace CoffeeServer.Handlers
                 Console.WriteLine($"Error handling request: {ex.Message}");
                 return $"Error handling request: {ex.Message}";
 
+            }
+        }
+        private async Task<string> HandleDoUongCrud(string action, RequestModel request, FirestoreService service)
+        {
+            if (action == "GETALLDU")
+            {
+                try
+                {
+                    List<DoUongData> drinks = await service.GetAll<DoUongData>("DoUong");
+                    return JsonSerializer.Serialize(drinks);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[ERROR] Get All Do Uong: {ex.Message}");
+                    return "GETALLDU FAIL: Lỗi server khi lấy dữ liệu.";
+                }
+            }
+            DoUongData duData = request.DuData;
+
+            if (duData == null)
+            {
+                return $"{action} FAIL: Dữ liệu Đồ Uống (DuData) rỗng.";
+            }
+            switch (action)
+            {
+                case "CREATEDU":
+                    if (string.IsNullOrEmpty(duData.MaDU))
+                    {
+                        duData.MaDU = "DU" + Guid.NewGuid().ToString("N").Substring(0, 6).ToUpper();
+                    }
+
+                    bool createSuccess = await service.Create("DoUong", duData);
+                    return createSuccess ? "CREATE SUCCESS" : "CREATE FAIL";
+
+                case "UPDATEDU":
+                    if (string.IsNullOrEmpty(duData.MaDU))
+                    {
+                        return "UPDATEDU FAIL: Thiếu Mã Đồ Uống (MaDU).";
+                    }
+                    bool updateSuccess = await service.Update("DoUong", duData.MaDU, duData);
+                    return updateSuccess ? "UPDATE SUCCESS" : "UPDATE FAIL";
+
+                case "DELETEDU": 
+                    if (string.IsNullOrEmpty(duData.MaDU))
+                    {
+                        return "DELETEDU FAIL: Thiếu Mã Đồ Uống (MaDU).";
+                    }
+                    await service.Delete("DoUong", duData.MaDU);
+                    return "DELETE SUCCESS";
+
+                default:
+                    return $"[ERROR] Unknown CRUD action for DoUong: {action}";
             }
         }
     }

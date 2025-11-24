@@ -32,7 +32,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.txtTim = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dataGridView_DoUong = new System.Windows.Forms.DataGridView();
             this.txtTenDU = new System.Windows.Forms.TextBox();
             this.txtMaDU = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -46,11 +46,11 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.txtDonGia = new System.Windows.Forms.TextBox();
-            this.cboMaLoai = new System.Windows.Forms.ComboBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnThemHinh = new System.Windows.Forms.LinkLabel();
             this.btnXoaHinh = new System.Windows.Forms.LinkLabel();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.txtMaLoai = new System.Windows.Forms.TextBox();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_DoUong)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -65,6 +65,7 @@
             this.button1.TabIndex = 32;
             this.button1.Text = "Tìm kiếm";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // txtTim
             // 
@@ -84,16 +85,16 @@
             this.label6.TabIndex = 30;
             this.label6.Text = "Tìm kiếm theo tên";
             // 
-            // dataGridView1
+            // dataGridView_DoUong
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 262);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(900, 382);
-            this.dataGridView1.TabIndex = 29;
+            this.dataGridView_DoUong.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView_DoUong.Location = new System.Drawing.Point(0, 262);
+            this.dataGridView_DoUong.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dataGridView_DoUong.Name = "dataGridView_DoUong";
+            this.dataGridView_DoUong.RowHeadersWidth = 51;
+            this.dataGridView_DoUong.RowTemplate.Height = 24;
+            this.dataGridView_DoUong.Size = new System.Drawing.Size(900, 382);
+            this.dataGridView_DoUong.TabIndex = 29;
             // 
             // txtTenDU
             // 
@@ -154,6 +155,7 @@
             this.menuThem.Name = "menuThem";
             this.menuThem.Size = new System.Drawing.Size(92, 29);
             this.menuThem.Text = "Thêm";
+            this.menuThem.Click += new System.EventHandler(this.menuThem_Click);
             // 
             // menuSua
             // 
@@ -161,6 +163,7 @@
             this.menuSua.Name = "menuSua";
             this.menuSua.Size = new System.Drawing.Size(83, 29);
             this.menuSua.Text = "Sửa ";
+            this.menuSua.Click += new System.EventHandler(this.menuSua_Click);
             // 
             // menuXoa
             // 
@@ -168,6 +171,7 @@
             this.menuXoa.Name = "menuXoa";
             this.menuXoa.Size = new System.Drawing.Size(79, 29);
             this.menuXoa.Text = "Xóa";
+            this.menuXoa.Click += new System.EventHandler(this.menuXoa_Click);
             // 
             // menuXoaTrang
             // 
@@ -211,16 +215,6 @@
             this.txtDonGia.Size = new System.Drawing.Size(208, 26);
             this.txtDonGia.TabIndex = 37;
             // 
-            // cboMaLoai
-            // 
-            this.cboMaLoai.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboMaLoai.FormattingEnabled = true;
-            this.cboMaLoai.Location = new System.Drawing.Point(205, 150);
-            this.cboMaLoai.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.cboMaLoai.Name = "cboMaLoai";
-            this.cboMaLoai.Size = new System.Drawing.Size(208, 28);
-            this.cboMaLoai.TabIndex = 38;
-            // 
             // pictureBox1
             // 
             this.pictureBox1.Location = new System.Drawing.Point(471, 54);
@@ -251,23 +245,31 @@
             this.btnXoaHinh.TabStop = true;
             this.btnXoaHinh.Text = "Xóa hình";
             // 
+            // txtMaLoai
+            // 
+            this.txtMaLoai.Location = new System.Drawing.Point(205, 149);
+            this.txtMaLoai.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtMaLoai.Name = "txtMaLoai";
+            this.txtMaLoai.Size = new System.Drawing.Size(208, 26);
+            this.txtMaLoai.TabIndex = 42;
+            // 
             // Form_DanhMucDoUong
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.NavajoWhite;
             this.ClientSize = new System.Drawing.Size(900, 729);
+            this.Controls.Add(this.txtMaLoai);
             this.Controls.Add(this.btnXoaHinh);
             this.Controls.Add(this.btnThemHinh);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.cboMaLoai);
             this.Controls.Add(this.txtDonGia);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.txtTim);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.dataGridView_DoUong);
             this.Controls.Add(this.txtTenDU);
             this.Controls.Add(this.txtMaDU);
             this.Controls.Add(this.label2);
@@ -277,7 +279,7 @@
             this.Name = "Form_DanhMucDoUong";
             this.Text = "Danh mục loại đồ uống";
             this.Load += new System.EventHandler(this.Form_DanhMucDoUong_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_DoUong)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -291,7 +293,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox txtTim;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dataGridView_DoUong;
         private System.Windows.Forms.TextBox txtTenDU;
         private System.Windows.Forms.TextBox txtMaDU;
         private System.Windows.Forms.Label label2;
@@ -305,9 +307,9 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtDonGia;
-        private System.Windows.Forms.ComboBox cboMaLoai;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.LinkLabel btnThemHinh;
         private System.Windows.Forms.LinkLabel btnXoaHinh;
+        private System.Windows.Forms.TextBox txtMaLoai;
     }
 }
