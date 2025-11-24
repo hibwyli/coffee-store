@@ -187,6 +187,12 @@ namespace DoAnLapTrinhMang
             // create hoa don , push hoa don len server
             MessageBox.Show("Not implement create hoa don!");
         }
+
+        private void lịchSửHóaĐơnToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form_LichSuHoaDon form_LichSuHoaDon = new Form_LichSuHoaDon();
+            form_LichSuHoaDon.Show();
+        }
     }
 }
 
