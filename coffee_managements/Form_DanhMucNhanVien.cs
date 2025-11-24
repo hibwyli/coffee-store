@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
@@ -25,7 +26,6 @@ namespace DoAnLapTrinhMang
             InitializeComponent();
             this.Load += Form_DanhMucNhanVien_Load;
             LoadNvList();
-            this.menuThem.Click += menuThem_Click;
             this.dataGridView_NhanVien.CellContentClick += dataGridView_NhanVien_CellContentClick;
         }
 
@@ -64,12 +64,26 @@ namespace DoAnLapTrinhMang
                     // Send data
                     await stream.WriteAsync(buffer, 0, buffer.Length);
 
-                    // Receive response
-                    byte[] respBuffer = new byte[1024];
-                    int bytesRead = await stream.ReadAsync(respBuffer, 0, respBuffer.Length);
-                    string response = Encoding.UTF8.GetString(respBuffer, 0, bytesRead);
-                    nvList = System.Text.Json.JsonSerializer.Deserialize<List<NhanVien>>(response);
-                    LoadAll();
+                    // Receive response dynamically
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        byte[] buffers = new byte[1024];
+                        int bytesRead;
+                        while ((bytesRead = await stream.ReadAsync(buffers, 0, buffer.Length)) > 0)
+                        {
+                            ms.Write(buffers, 0, bytesRead);
+
+                            // Optional: break if you know the end of the message
+                            // e.g., for HTTP you can check for double CRLF or Content-Length
+                            if (!stream.DataAvailable)
+                                break;
+                        }
+
+                        byte[] respBuffer = ms.ToArray();
+                        string response = Encoding.UTF8.GetString(respBuffer);
+                        nvList = System.Text.Json.JsonSerializer.Deserialize<List<NhanVien>>(response);
+                        LoadAll();
+                    }
                 }
             }
             catch (Exception ex)
@@ -99,6 +113,7 @@ namespace DoAnLapTrinhMang
             txtDiaChi.Text = "";
             txtEmail.Text = "";
             txtSDT.Text = "";
+            txtMk.Text = "";
         }
 
 
@@ -117,13 +132,17 @@ namespace DoAnLapTrinhMang
                 string email = txtEmail.Text.Trim();
                 string mk = txtMk.Text.Trim();
                 string tenNv = txtTenNV.Text.Trim();
+                if (maNV == "" || sdt == "" || diaChi== "" || email== "" || mk== "" || tenNv == "") {
+                    MessageBox.Show("Thieu thong tin");
+                    return;
+                }
                 var request = new RequestModel
                 {
                     Action = "REGISTER",
                     Data = new UserData
                     {
                         MaNv = maNV,
-                        TenTaiKhoan = mk,
+                        TenTaiKhoan = tenNv,
                         MatKhau = mk,
                         XacNhanMK = mk,
                         Email = email,
@@ -310,7 +329,7 @@ namespace DoAnLapTrinhMang
                     Data = new UserData
                     {
                         MaNv = maNV,
-                        TenTaiKhoan = mk,
+                        TenTaiKhoan = tenNv,
                         MatKhau = mk,
                         XacNhanMK = mk,
                         Email = email,
@@ -357,6 +376,11 @@ namespace DoAnLapTrinhMang
         private void menuThoat_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void dataGridView_NhanVien_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
         /*
 if (dataGridView_NhanVien.SelectedRows.Count > 0)
