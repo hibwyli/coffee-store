@@ -179,11 +179,7 @@ namespace DoAnLapTrinhMang
                 MessageBox.Show("Thiếu thông tin Đồ Uống.");
                 return;
             }
-            if (!decimal.TryParse(txtDonGia.Text, out decimal donGia))
-            {
-                MessageBox.Show("Đơn giá không hợp lệ.");
-                return;
-            }
+          
 
             // Gói dữ liệu
             var request = new RequestModel
@@ -194,7 +190,7 @@ namespace DoAnLapTrinhMang
                     MaDU = txtMaDU.Text.Trim(),
                     TenDU = txtTenDU.Text.Trim(),
                     MaLoai = txtMaLoai.Text.Trim(),
-                    DonGia = donGia,
+                    DonGia = Convert.ToInt32(txtDonGia.Text),
                     // HinhAnh = "default.jpg" // Có thể cần thêm HinhAnh
                 }
             };
@@ -250,7 +246,7 @@ namespace DoAnLapTrinhMang
                     MaDU = txtMaDU.Text.Trim(),
                     TenDU = txtTenDU.Text.Trim(),
                     MaLoai = txtMaLoai.Text.Trim(),
-                    DonGia = donGia,
+                    DonGia = Convert.ToInt32(donGia),
                     // HinhAnh = "default.jpg" 
                 }
             };
