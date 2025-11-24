@@ -10,21 +10,11 @@ using System.Windows.Forms;
 
 namespace DoAnLapTrinhMang
 {
-    public partial class Form_ThongTinCaNhan : Form
+    public partial class Form_LichSuHoaDon : Form
     {
-        public Form_ThongTinCaNhan()
+        public Form_LichSuHoaDon()
         {
             InitializeComponent();
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

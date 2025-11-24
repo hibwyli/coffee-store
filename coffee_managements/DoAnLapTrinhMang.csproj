@@ -172,6 +172,18 @@
   </ItemGroup>
   <ItemGroup>
     <!-- Forms -->
+    <Compile Include="Form_QuanLiKhachHang.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_QuanLiKhachHang.Designer.cs">
+      <DependentUpon>Form_QuanLiKhachHang.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_LichSuHoaDon.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_LichSuHoaDon.Designer.cs">
+      <DependentUpon>Form_LichSuHoaDon.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form_DanhMucNhanVien.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -242,6 +254,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form_DoanhThuTheoNhanVien.resx">
       <DependentUpon>Form_DoanhThuTheoNhanVien.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_LichSuHoaDon.resx">
+      <DependentUpon>Form_LichSuHoaDon.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_QuanLiKhachHang.resx">
+      <DependentUpon>Form_QuanLiKhachHang.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form_ThongTinCaNhan.resx">
       <DependentUpon>Form_ThongTinCaNhan.cs</DependentUpon>
