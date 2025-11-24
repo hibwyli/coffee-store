@@ -100,5 +100,15 @@ namespace DoAnLapTrinhMang
             Form_ThongTinCaNhan form_ThongTinCaNhan = new Form_ThongTinCaNhan();
             form_ThongTinCaNhan.Show();
         }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void thốngKêToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
