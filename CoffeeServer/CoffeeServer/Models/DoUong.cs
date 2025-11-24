@@ -15,7 +15,7 @@ namespace CoffeeServer.Models
         public string MaLoai { get; set; }
 
         [FirestoreProperty]
-        public double DonGia { get; set; }
+        public double DonGia { get; set; }  
 
         [FirestoreProperty]
         public string HinhAnh { get; set; }
