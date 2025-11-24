@@ -3,6 +3,7 @@ using Google.Cloud.Firestore;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace CoffeeServer.FirestoreHelpers
@@ -14,7 +15,7 @@ namespace CoffeeServer.FirestoreHelpers
 
         public FirestoreService()
         {
-            string path = "C:\\Users\\ADMIN\\source\\repos\\coffee-store\\CoffeeServer\\CoffeeServer\\FirestoreHelpers\\serviceAccountKey.json";
+            string path = "C:\\Users\\MINH HIEU\\source\\repos\\coffee-store\\CoffeeServer\\CoffeeServer\\FirestoreHelpers\\serviceAccountKey.json";
             Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", path);
 
             FirestoreDb db = FirestoreDb.Create("coffee-manage-f42fa");
@@ -66,11 +67,20 @@ namespace CoffeeServer.FirestoreHelpers
         {
             try
             {
+                // Convert tu DoUOngData ve DoUong moi dc 
+                DoUong cac = new DoUong()
+                {
+                    DonGia = item.DonGia,
+                    MaDU = item.MaDU,
+                    TenDU = item.TenDU,
+                    MaLoai = item.MaLoai,
+
+                };
                 // 1. Lấy ID từ đối tượng
-                string documentId = GetDocumentId(item);
+                string documentId = GetDocumentId(cac);
 
                 // 2. Sử dụng logic SetAsync với ID đã lấy
-                await _db.Collection(collectionName).Document(documentId).SetAsync(item);
+                await _db.Collection(collectionName).Document(documentId).SetAsync(cac);
                 return true;
             }
             catch (Exception ex)

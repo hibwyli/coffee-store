@@ -17,6 +17,6 @@ namespace CoffeeServer.Models
         public string MaLoai { get; set; }
 
         [JsonPropertyName("donGia")]
-        public decimal DonGia { get; set; }
+        public int DonGia { get; set; }
     }
 }
