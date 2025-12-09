@@ -51,7 +51,6 @@
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.IsSplitterFixed = true;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Margin = new System.Windows.Forms.Padding(4);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -70,9 +69,8 @@
             this.splitContainer1.Panel2.Controls.Add(this.label_tenDangNhap);
             this.splitContainer1.Panel2.Controls.Add(this.label_title);
             this.splitContainer1.Panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Panel2_Paint);
-            this.splitContainer1.Size = new System.Drawing.Size(1489, 688);
-            this.splitContainer1.SplitterDistance = 732;
-            this.splitContainer1.SplitterWidth = 5;
+            this.splitContainer1.Size = new System.Drawing.Size(1117, 550);
+            this.splitContainer1.SplitterDistance = 549;
             this.splitContainer1.TabIndex = 0;
             // 
             // pictureBox_logo
@@ -81,10 +79,9 @@
             this.pictureBox_logo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox_logo.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox_logo.Image")));
             this.pictureBox_logo.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox_logo.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox_logo.Name = "pictureBox_logo";
-            this.pictureBox_logo.Size = new System.Drawing.Size(732, 688);
-            this.pictureBox_logo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox_logo.Size = new System.Drawing.Size(549, 550);
+            this.pictureBox_logo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox_logo.TabIndex = 0;
             this.pictureBox_logo.TabStop = false;
             // 
@@ -92,10 +89,9 @@
             // 
             this.linkLabel_quenMatKhau.AutoSize = true;
             this.linkLabel_quenMatKhau.Font = new System.Drawing.Font("Times New Roman", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linkLabel_quenMatKhau.Location = new System.Drawing.Point(476, 600);
-            this.linkLabel_quenMatKhau.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.linkLabel_quenMatKhau.Location = new System.Drawing.Point(357, 480);
             this.linkLabel_quenMatKhau.Name = "linkLabel_quenMatKhau";
-            this.linkLabel_quenMatKhau.Size = new System.Drawing.Size(210, 34);
+            this.linkLabel_quenMatKhau.Size = new System.Drawing.Size(155, 25);
             this.linkLabel_quenMatKhau.TabIndex = 11;
             this.linkLabel_quenMatKhau.TabStop = true;
             this.linkLabel_quenMatKhau.Text = "Quên mật khẩu?";
@@ -105,10 +101,9 @@
             // 
             this.linkLabel_chuaCoTaiKhoan.AutoSize = true;
             this.linkLabel_chuaCoTaiKhoan.Font = new System.Drawing.Font("Times New Roman", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linkLabel_chuaCoTaiKhoan.Location = new System.Drawing.Point(53, 600);
-            this.linkLabel_chuaCoTaiKhoan.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.linkLabel_chuaCoTaiKhoan.Location = new System.Drawing.Point(40, 480);
             this.linkLabel_chuaCoTaiKhoan.Name = "linkLabel_chuaCoTaiKhoan";
-            this.linkLabel_chuaCoTaiKhoan.Size = new System.Drawing.Size(244, 34);
+            this.linkLabel_chuaCoTaiKhoan.Size = new System.Drawing.Size(182, 25);
             this.linkLabel_chuaCoTaiKhoan.TabIndex = 10;
             this.linkLabel_chuaCoTaiKhoan.TabStop = true;
             this.linkLabel_chuaCoTaiKhoan.Text = "Chưa có tài khoản?";
@@ -119,10 +114,9 @@
             this.button_DangNhap.BackColor = System.Drawing.Color.Red;
             this.button_DangNhap.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_DangNhap.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.button_DangNhap.Location = new System.Drawing.Point(60, 490);
-            this.button_DangNhap.Margin = new System.Windows.Forms.Padding(4);
+            this.button_DangNhap.Location = new System.Drawing.Point(45, 392);
             this.button_DangNhap.Name = "button_DangNhap";
-            this.button_DangNhap.Size = new System.Drawing.Size(623, 80);
+            this.button_DangNhap.Size = new System.Drawing.Size(467, 64);
             this.button_DangNhap.TabIndex = 9;
             this.button_DangNhap.Text = "Đăng Nhập";
             this.button_DangNhap.UseVisualStyleBackColor = false;
@@ -131,19 +125,17 @@
             // textBox_MatKhau
             // 
             this.textBox_MatKhau.Font = new System.Drawing.Font("Times New Roman", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox_MatKhau.Location = new System.Drawing.Point(60, 301);
-            this.textBox_MatKhau.Margin = new System.Windows.Forms.Padding(4);
+            this.textBox_MatKhau.Location = new System.Drawing.Point(45, 241);
             this.textBox_MatKhau.Name = "textBox_MatKhau";
-            this.textBox_MatKhau.Size = new System.Drawing.Size(621, 41);
+            this.textBox_MatKhau.Size = new System.Drawing.Size(467, 33);
             this.textBox_MatKhau.TabIndex = 5;
             // 
             // label1
             // 
             this.label1.Font = new System.Drawing.Font("Times New Roman", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(17, 239);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(13, 191);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(211, 59);
+            this.label1.Size = new System.Drawing.Size(158, 47);
             this.label1.TabIndex = 4;
             this.label1.Text = "Mật khẩu";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -151,20 +143,18 @@
             // textBox_tenDangNhap
             // 
             this.textBox_tenDangNhap.Font = new System.Drawing.Font("Times New Roman", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox_tenDangNhap.Location = new System.Drawing.Point(60, 182);
-            this.textBox_tenDangNhap.Margin = new System.Windows.Forms.Padding(4);
+            this.textBox_tenDangNhap.Location = new System.Drawing.Point(45, 146);
             this.textBox_tenDangNhap.Name = "textBox_tenDangNhap";
-            this.textBox_tenDangNhap.Size = new System.Drawing.Size(621, 41);
+            this.textBox_tenDangNhap.Size = new System.Drawing.Size(467, 33);
             this.textBox_tenDangNhap.TabIndex = 3;
             this.textBox_tenDangNhap.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // label_tenDangNhap
             // 
             this.label_tenDangNhap.Font = new System.Drawing.Font("Times New Roman", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_tenDangNhap.Location = new System.Drawing.Point(17, 120);
-            this.label_tenDangNhap.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label_tenDangNhap.Location = new System.Drawing.Point(13, 96);
             this.label_tenDangNhap.Name = "label_tenDangNhap";
-            this.label_tenDangNhap.Size = new System.Drawing.Size(268, 59);
+            this.label_tenDangNhap.Size = new System.Drawing.Size(201, 47);
             this.label_tenDangNhap.TabIndex = 1;
             this.label_tenDangNhap.Text = "Tên đăng nhập";
             this.label_tenDangNhap.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -176,21 +166,19 @@
             this.label_title.Font = new System.Drawing.Font("Times New Roman", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_title.ForeColor = System.Drawing.Color.Brown;
             this.label_title.Location = new System.Drawing.Point(0, 0);
-            this.label_title.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label_title.Name = "label_title";
-            this.label_title.Size = new System.Drawing.Size(752, 102);
+            this.label_title.Size = new System.Drawing.Size(564, 82);
             this.label_title.TabIndex = 0;
             this.label_title.Text = "PHẦN MỀM QUẢN LÝ QUÁN CAFE";
             this.label_title.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Form_DangNhap
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1489, 688);
+            this.ClientSize = new System.Drawing.Size(1117, 550);
             this.Controls.Add(this.splitContainer1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "Form_DangNhap";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

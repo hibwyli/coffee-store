@@ -172,6 +172,18 @@
   </ItemGroup>
   <ItemGroup>
     <!-- Forms -->
+    <Compile Include="Form_ChatBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_ChatBox.Designer.cs">
+      <DependentUpon>Form_ChatBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_KhachHangTrangChinh.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_KhachHangTrangChinh.Designer.cs">
+      <DependentUpon>Form_KhachHangTrangChinh.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form_QuanLiKhachHang.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -246,6 +258,9 @@
     <!-- Properties -->
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SessionVars.cs" />
+    <EmbeddedResource Include="Form_ChatBox.resx">
+      <DependentUpon>Form_ChatBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form_DanhMucNhanVien.resx">
       <DependentUpon>Form_DanhMucNhanVien.cs</DependentUpon>
     </EmbeddedResource>
@@ -254,6 +269,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form_DoanhThuTheoNhanVien.resx">
       <DependentUpon>Form_DoanhThuTheoNhanVien.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_KhachHangTrangChinh.resx">
+      <DependentUpon>Form_KhachHangTrangChinh.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form_LichSuHoaDon.resx">
       <DependentUpon>Form_LichSuHoaDon.cs</DependentUpon>

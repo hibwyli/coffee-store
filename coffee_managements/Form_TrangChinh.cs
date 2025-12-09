@@ -188,10 +188,15 @@ namespace DoAnLapTrinhMang
             MessageBox.Show("Not implement create hoa don!");
         }
 
-        private void lịchSửHóaĐơnToolStripMenuItem_Click(object sender, EventArgs e)
+        private void Form_TrangChinh_Load(object sender, EventArgs e)
         {
-            Form_LichSuHoaDon form_LichSuHoaDon = new Form_LichSuHoaDon();
-            form_LichSuHoaDon.Show();
+
+        }
+
+        private void chatBoxToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form_ChatBox form_ChatBox = new Form_ChatBox();
+            form_ChatBox.Show();
         }
     }
 }
