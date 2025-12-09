@@ -15,7 +15,7 @@ namespace CoffeeServer.FirestoreHelpers
 
         public HoaDonService()
         {
-            string path = "C:\\Users\\ADMIN\\source\\repos\\DoAnLapTrinhMang\\serviceAccountKey.json";
+            string path = "C:\\Users\\MINH HIEU\\source\\repos\\DoAnLapTrinhMang\\serviceAccountKey.json";
             Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", path);
 
             _db = FirestoreDb.Create("coffee-manage-f42fa");

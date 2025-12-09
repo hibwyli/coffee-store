@@ -1,19 +1,98 @@
-﻿using System;
+﻿using CoffeeServer.Models;
+using DoAnLapTrinhMang.Models;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net.Sockets;
+using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DoAnLapTrinhMang
 {
     public partial class Form_TrangChinh : Form
     {
-        public Form_TrangChinh()
+        private List<DoUong> duList;
+
+        public Form_TrangChinh ()
         {
             InitializeComponent();
-            MaDoUong.HeaderText = "Mã đồ uống";
-            MaDoUong.Items.AddRange("Option 1", "Option 2", "Option 3");
-
-
+            /// Load do uong heres
+            /// 
+            loadDu();
         }
+        private async Task  loadDu  ()
+        {
+            // load vao duList
+            var request = new RequestModel
+            {
+                Action = "GETALLDU",
+                CollectionName = "DoUong"
+            };
 
+            string json = JsonSerializer.Serialize(request);
+            byte[] buffer = Encoding.UTF8.GetBytes(json);
+
+            try
+            {
+                using (TcpClient client = new TcpClient("127.0.0.1", 5000))
+                using (NetworkStream stream = client.GetStream())
+                {
+                    await stream.WriteAsync(buffer, 0, buffer.Length);
+
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        byte[] buffers = new byte[1024];
+                        int bytesRead;
+
+                        // Đọc response
+                        while ((bytesRead = await stream.ReadAsync(buffers, 0, buffers.Length)) > 0)
+                        {
+                            ms.Write(buffers, 0, bytesRead);
+                            if (!stream.DataAvailable) break;
+                        }
+
+                        byte[] respBuffer = ms.ToArray();
+                        string response = Encoding.UTF8.GetString(respBuffer);
+
+                        // 2. XỬ LÝ PHẢN HỒI (Phần này phải nằm SAU khi đọc stream)
+
+                        // A. Kiểm tra lỗi Server trả về
+                        if (response.StartsWith("GETALLDU FAIL"))
+                        {
+                            MessageBox.Show("Server Error: " + response);
+                            return;
+                        }
+                        try
+                        {
+                            duList = JsonSerializer.Deserialize<List<DoUong>>(response);
+                            LoadAll();
+                        }
+                        catch (JsonException ex)
+                        {
+                            MessageBox.Show("Lỗi Deserialization JSON: " + ex.Message + "\nResponse: " + response);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading Do Uong list: " + ex.Message);
+            }
+        }
+        private void LoadAll()
+        {
+            MaDoUong.HeaderText = "Mã đồ uống";
+            MaDoUong.Items.Clear();
+            foreach (var du in duList)
+            {
+                MaDoUong.Items.Add(du.MaLoai);
+            }
+        }
         private void nhânViênToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Form_DanhMucNhanVien form_DanhMucNhanVien = new Form_DanhMucNhanVien();
@@ -121,19 +200,27 @@ namespace DoAnLapTrinhMang
                 int rowIndex = dataGridView_HoaDon.CurrentCell.RowIndex;
                 DataGridViewRow row = dataGridView_HoaDon.Rows[rowIndex];
 
-                // Lấy giá trị trực tiếp từ combo
-                var selectedValue = combo.SelectedItem.ToString();
+                string selectedMaDU = combo.SelectedItem.ToString();
 
-                // Điền dữ liệu mẫu
-                row.Cells["TenDoUong"].Value = selectedValue; // Dùng trực tiếp từ combo
-                row.Cells["SoLuong"].Value = 3;
-                row.Cells["DonGia"].Value = 3000000;
+                // 🔍 Tìm DoUong trong danh sách
+                var drink = duList.FirstOrDefault(d => d.MaLoai == selectedMaDU);
 
-                // Tính thành tiền
-                int quantity = 3;
-                int unitPrice = 3000000;
-                row.Cells["ThanhTien"].Value = quantity * unitPrice;
+                if (drink == null)
+                {
+                    MessageBox.Show("Không tìm thấy dữ liệu đồ uống!");
+                    return;
+                }
 
+                // ✔ Điền dữ liệu từ đối tượng DoUongData
+                row.Cells["TenDoUong"].Value = drink.TenDU;
+                row.Cells["SoLuong"].Value = 1;                  // mặc định 1
+                row.Cells["DonGia"].Value = drink.DonGia;
+
+                // ✔ Tính thành tiền
+                int quantity = 1;
+                row.Cells["ThanhTien"].Value = quantity * drink.DonGia;
+
+                // ✔ Update tổng
                 UpdateTotalLabel();
             }
         }
@@ -202,6 +289,147 @@ namespace DoAnLapTrinhMang
             Form_QuanLiKhachHang form_QuanliKhachHang = new Form_QuanLiKhachHang();
             form_QuanliKhachHang.Show();
         }
+
+        private void dataGridView_HoaDon_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 &&
+       (dataGridView_HoaDon.Columns[e.ColumnIndex].Name == "SoLuong" ||
+        dataGridView_HoaDon.Columns[e.ColumnIndex].Name == "DonGia"))
+            {
+                DataGridViewRow row = dataGridView_HoaDon.Rows[e.RowIndex];
+
+                if (row.Cells["SoLuong"].Value != null && row.Cells["DonGia"].Value != null)
+                {
+                    int soLuong = Convert.ToInt32(row.Cells["SoLuong"].Value);
+                    int donGia = Convert.ToInt32(row.Cells["DonGia"].Value);
+
+                    row.Cells["ThanhTien"].Value = soLuong * donGia;
+                }
+
+                UpdateTotalLabel();
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            ExportPDF(dataGridView_HoaDon);
+
+        }
+        public void ExportPDF(DataGridView dgv)
+        {
+            try
+            {
+                using (SaveFileDialog sfd = new SaveFileDialog())
+                {
+                    sfd.Filter = "PDF files (*.pdf)|*.pdf";
+                    sfd.FileName = "HoaDon.pdf";
+
+                    if (sfd.ShowDialog() != DialogResult.OK)
+                        return; // người dùng hủy
+
+                    string filePath = sfd.FileName;
+
+                    // Font mặc định
+                    iTextSharp.text.Font fontTitle = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 20, iTextSharp.text.Font.BOLD);
+                    iTextSharp.text.Font fontHeader = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.BOLD);
+                    iTextSharp.text.Font fontNormal = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 11, iTextSharp.text.Font.NORMAL);
+
+                    using (Document doc = new Document(PageSize.A4, 36, 36, 36, 36))
+                    {
+                        PdfWriter.GetInstance(doc, new FileStream(filePath, FileMode.Create));
+                        doc.Open();
+
+                        // Title
+                        var title = new iTextSharp.text.Paragraph("HOA DON BAN HANG", fontTitle)
+                        {
+                            Alignment = Element.ALIGN_CENTER,
+                            SpacingAfter = 12
+                        };
+                        doc.Add(title);
+
+                        // Ngày
+                        doc.Add(new iTextSharp.text.Paragraph("Date: " + DateTime.Now.ToString("dd/MM/yyyy HH:mm"), fontNormal));
+                        doc.Add(new iTextSharp.text.Paragraph("\n"));
+
+                        // Cột mặc định theo thứ tự
+                        string[] columnsOrder = { "MaDU", "Ten Do Uong", "So Luong", "Don Gia", "Thanh Tien" };
+                        PdfPTable table = new PdfPTable(columnsOrder.Length)
+                        {
+                            WidthPercentage = 100f
+                        };
+
+                        // Header
+                        foreach (var colName in columnsOrder)
+                        {
+                            PdfPCell headerCell = new PdfPCell(new Phrase(colName, fontHeader))
+                            {
+                                BackgroundColor = new BaseColor(230, 230, 230),
+                                HorizontalAlignment = Element.ALIGN_CENTER,
+                                Padding = 5
+                            };
+                            table.AddCell(headerCell);
+                        }
+
+                        // Rows
+                        foreach (DataGridViewRow row in dgv.Rows)
+                        {
+                            if (row.IsNewRow) continue;
+
+                            foreach (var colName in columnsOrder)
+                            {
+                                var cell = dgv.Columns.Contains(colName) ? row.Cells[colName] : null;
+                                string text = cell?.Value?.ToString() ?? "";
+                                PdfPCell bodyCell = new PdfPCell(new Phrase(text, fontNormal))
+                                {
+                                    Padding = 5,
+                                    HorizontalAlignment = IsNumericColumn(colName) ? Element.ALIGN_RIGHT : Element.ALIGN_LEFT
+                                };
+                                table.AddCell(bodyCell);
+                            }
+                        }
+
+                        doc.Add(table);
+
+                        // Tổng tiền
+                        decimal total = TinhTong(dgv);
+                        var totalPara = new iTextSharp.text.Paragraph($"\nTotal: {total:N0} VND", fontTitle)
+                        {
+                            Alignment = Element.ALIGN_RIGHT
+                        };
+                        doc.Add(totalPara);
+
+                        doc.Close();
+                    }
+
+                    MessageBox.Show("Xuất PDF thành công: " + filePath);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi xuất PDF: " + ex.Message);
+            }
+        }
+
+        private bool IsNumericColumn(string colName)
+        {
+            if (string.IsNullOrEmpty(colName)) return false;
+            var lower = colName.ToLower();
+            return lower.Contains("gia") || lower.Contains("sl") || lower.Contains("thanh") || lower.Contains("tong") || lower.Contains("so");
+        }
+
+        private decimal TinhTong(DataGridView dgv)
+        {
+            decimal sum = 0;
+            foreach (DataGridViewRow row in dgv.Rows)
+            {
+                if (row.IsNewRow) continue;
+                string s = row.Cells["ThanhTien"]?.Value?.ToString() ?? "0";
+                var cleaned = new string(s.Where(ch => char.IsDigit(ch) || ch == '-').ToArray());
+                if (decimal.TryParse(cleaned, out decimal v)) sum += v;
+            }
+            return sum;
+        }
+
     }
 }
 
