@@ -1,13 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace DoAnLapTrinhMang
 {
@@ -61,7 +53,7 @@ namespace DoAnLapTrinhMang
             textBox_Ten.Text = SessionVars.username;
             textBox_Role.Text = SessionVars.role;
             textBox1.Text = SessionVars.username;
-         }
+        }
 
         private void textBox_Role_TextChanged(object sender, EventArgs e)
         {
@@ -145,7 +137,7 @@ namespace DoAnLapTrinhMang
                 UpdateTotalLabel();
             }
         }
-        
+
 
         private void dataGridView_HoaDon_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -197,6 +189,18 @@ namespace DoAnLapTrinhMang
         {
             Form_ChatBox form_ChatBox = new Form_ChatBox();
             form_ChatBox.Show();
+        }
+
+        private void lịchSửHóaĐơnToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form_LichSuHoaDon form_LichSuHoaDon = new Form_LichSuHoaDon();
+            form_LichSuHoaDon.Show();
+        }
+
+        private void quảnLýKháchHangToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form_QuanLiKhachHang form_QuanliKhachHang = new Form_QuanLiKhachHang();
+            form_QuanliKhachHang.Show();
         }
     }
 }
