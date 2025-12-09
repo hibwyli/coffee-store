@@ -184,6 +184,12 @@
     <Compile Include="Form_ChatBox.Designer.cs">
       <DependentUpon>Form_ChatBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Form_DanhMucBan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_DanhMucBan.Designer.cs">
+      <DependentUpon>Form_DanhMucBan.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form_KhachHangTrangChinh.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -269,6 +275,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form_ChatBox.resx">
       <DependentUpon>Form_ChatBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_DanhMucBan.resx">
+      <DependentUpon>Form_DanhMucBan.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form_DanhMucNhanVien.resx">
       <DependentUpon>Form_DanhMucNhanVien.cs</DependentUpon>
