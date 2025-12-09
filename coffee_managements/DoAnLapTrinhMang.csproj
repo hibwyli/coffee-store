@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
+      <HintPath>packages\BouncyCastle.Cryptography.2.4.0\lib\net461\BouncyCastle.Cryptography.dll</HintPath>
+    </Reference>
     <Reference Include="FirebaseAdmin, Version=3.4.0.0, Culture=neutral, PublicKeyToken=97c8d00c348326ed, processorArchitecture=MSIL">
       <HintPath>packages\FirebaseAdmin.3.4.0\lib\net462\FirebaseAdmin.dll</HintPath>
     </Reference>
@@ -98,6 +101,9 @@
     <Reference Include="Grpc.Net.Common, Version=2.0.0.0, Culture=neutral, PublicKeyToken=d754f35622e28bad, processorArchitecture=MSIL">
       <HintPath>packages\Grpc.Net.Common.2.71.0\lib\netstandard2.0\Grpc.Net.Common.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.4, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>packages\iTextSharp.5.5.13.4\lib\net461\itextsharp.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=9.0.0.10, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Bcl.AsyncInterfaces.9.0.10\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
@@ -317,6 +323,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="Fonts\arial.zip" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -401,6 +408,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="FirestoreHelpers\" />
+    <Folder Include="Fonts\fonts\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
