@@ -63,7 +63,7 @@ namespace CoffeeServer.FirestoreHelpers
 
         // --------------------- CREATE ---------------------
 
-        public async Task<bool> Create(string collectionName, DoUongData item) 
+        public async Task<bool> CreateDu(string collectionName, DoUongData item) 
         {
             try
             {
@@ -90,18 +90,74 @@ namespace CoffeeServer.FirestoreHelpers
             }
         }
 
+        public async Task<bool> CreateBan(string collectionName, BanData item)
+        {
+            try
+            {
+                // Convert tu DoUOngData ve DoUong moi dc 
+                Ban cac = new Ban()
+                {
+                    MaBan = item.MaBan,
+                    SoBan = item.SoBan,
+                    SucChua = item.SucChua,
+
+                };
+                // 1. Lấy ID từ đối tượng
+                string documentId = GetDocumentId(cac);
+
+                // 2. Sử dụng logic SetAsync với ID đã lấy
+                await _db.Collection(collectionName).Document(documentId).SetAsync(cac);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] Lỗi khi tạo tài liệu trong {collectionName}: {ex.Message}");
+                return false;
+            }
+        }
+
         // --------------------- UPDATE ---------------------
         public async Task UpdateFields(string collectionName, string id, Dictionary<string, object> updates)
         {
             var docRef = _db.Collection(collectionName).Document(id);
             await docRef.UpdateAsync(updates);
         }
-        public async Task<bool> Update<T>(string collectionName, string id, T item) where T : class
+
+        public async Task<bool> UpdateDu(string collectionName, string id, DoUongData item)
         {
             try
             {
+                DoUong cac = new DoUong()
+                {
+                    DonGia = item.DonGia,   
+                    MaDU = item.MaDU,
+                    TenDU = item.TenDU,
+                    MaLoai = item.MaLoai,
+
+                };
                 var docRef = _db.Collection(collectionName).Document(id);
-                await docRef.SetAsync(item);
+                await docRef.SetAsync(cac);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                return false;
+            }
+        }
+        public async Task<bool> UpdateBan(string collectionName, string id, BanData item)
+        {
+            try
+            {
+                Ban cac = new Ban()
+                {
+                   MaBan = item.MaBan,
+                   SucChua = item.SucChua,
+                   SoBan = item.SoBan,
+                };
+                var docRef = _db.Collection(collectionName).Document(id);
+                await docRef.SetAsync(cac);
                 return true;
             }
             catch (Exception)
@@ -109,6 +165,7 @@ namespace CoffeeServer.FirestoreHelpers
                 return false;
             }
         }
+
 
         // --------------------- DELETE ---------------------
         public async Task Delete(string collectionName, string id)
@@ -276,7 +333,7 @@ namespace CoffeeServer.FirestoreHelpers
             await db.Collection("KhachHang").Document(kh1.MaKH).SetAsync(kh1);
 
             // ==== 4. Ban ====
-            var ban1 = new Ban { MaBan = "B01", SucChua = 4, TrangThai = "Trống" };
+            var ban1 = new Ban { MaBan = "B01", SucChua = 4, SoBan = 1 };
             await db.Collection("Ban").Document(ban1.MaBan).SetAsync(ban1);
 
             // ==== 5. NhanVien ====

@@ -12,6 +12,6 @@ namespace CoffeeServer.Models
         public int SucChua { get; set; }
 
         [FirestoreProperty]
-        public string TrangThai { get; set; }
+        public int SoBan { get; set; }
     }
 }

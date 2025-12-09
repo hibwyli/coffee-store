@@ -95,6 +95,7 @@
             this.dataGridView_DoUong.RowTemplate.Height = 24;
             this.dataGridView_DoUong.Size = new System.Drawing.Size(900, 382);
             this.dataGridView_DoUong.TabIndex = 29;
+            this.dataGridView_DoUong.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_DoUong_CellContentClick);
             // 
             // txtTenDU
             // 

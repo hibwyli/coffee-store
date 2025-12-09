@@ -280,5 +280,10 @@ namespace DoAnLapTrinhMang
             string json = JsonSerializer.Serialize(request);
             await SendRequestToServer(json);
         }
+
+        private void dataGridView_DoUong_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

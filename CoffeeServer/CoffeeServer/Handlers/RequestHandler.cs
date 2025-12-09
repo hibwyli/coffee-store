@@ -194,6 +194,14 @@ namespace CoffeeServer.Handlers
 
                     case "GETALLDU":
                         return await HandleDoUongCrud("GETALLDU", request, service);
+                    case "CREATEBAN":
+                        return await HandleBanCrud("CREATEBAN", request, service);
+                    case "UPDATEBAN":
+                        return await HandleBanCrud("UPDATEBAN", request, service);
+                    case "DELETEBAN":
+                        return await HandleBanCrud("DELETEBAN", request, service);
+                    case "GETALLBAN":
+                        return await HandleBanCrud("GETALLBAN", request, service);
                     default:
                         Console.WriteLine($"[ERROR] Unknown action: {request.Action}");
                         return $"[ERROR] Unknown action: {request.Action}";
@@ -236,7 +244,7 @@ namespace CoffeeServer.Handlers
                         duData.MaDU = "DU" + Guid.NewGuid().ToString("N").Substring(0, 6).ToUpper();
                     }
 
-                    bool createSuccess = await service.Create("DoUong", duData);
+                    bool createSuccess = await service.CreateDu("DoUong", duData);
                     return createSuccess ? "CREATE SUCCESS" : "CREATE FAIL";
 
                 case "UPDATEDU":
@@ -244,7 +252,7 @@ namespace CoffeeServer.Handlers
                     {
                         return "UPDATEDU FAIL: Thiếu Mã Đồ Uống (MaDU).";
                     }
-                    bool updateSuccess = await service.Update("DoUong", duData.MaDU, duData);
+                    bool updateSuccess = await service.UpdateDu("DoUong", duData.MaDU, duData);
                     return updateSuccess ? "UPDATE SUCCESS" : "UPDATE FAIL";
 
                 case "DELETEDU": 
@@ -253,6 +261,58 @@ namespace CoffeeServer.Handlers
                         return "DELETEDU FAIL: Thiếu Mã Đồ Uống (MaDU).";
                     }
                     await service.Delete("DoUong", duData.MaDU);
+                    return "DELETE SUCCESS";
+
+                default:
+                    return $"[ERROR] Unknown CRUD action for DoUong: {action}";
+            }
+        }
+        private async Task<string> HandleBanCrud(string action, RequestModel request, FirestoreService service)
+        {
+            if (action == "GETALLBAN")
+            {
+                try
+                {
+                    List<Ban> tables = await service.GetAll<Ban>("Ban");
+                    return JsonSerializer.Serialize(tables);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[ERROR] Get All Ban: {ex.Message}");
+                    return "GETALLBAN FAIL: Lỗi server khi lấy dữ liệu.";
+                }
+            }
+            BanData banData = request.BanData;
+
+            if (banData == null)
+            {
+                return $"{action} FAIL: Dữ liệu Đồ Uống (DuData) rỗng.";
+            }
+            switch (action)
+            {
+                case "CREATEBAN":
+                    if (string.IsNullOrEmpty(banData.MaBan))
+                    {
+                        banData.MaBan = "Ban" + Guid.NewGuid().ToString("N").Substring(0, 6).ToUpper();
+                    }
+
+                    bool createSuccess = await service.CreateBan("Ban", banData);
+                    return createSuccess ? "CREATE SUCCESS" : "CREATE FAIL";
+
+                case "UPDATEBAN":
+                    if (string.IsNullOrEmpty(banData.MaBan))
+                    {
+                        return "UPDATEBAN FAIL: Thiếu Mã Bàn.";
+                    }
+                    bool updateSuccess = await service.UpdateBan("Ban", banData.MaBan, banData);
+                    return updateSuccess ? "UPDATE SUCCESS" : "UPDATE FAIL";
+
+                case "DELETEBAN":
+                    if (string.IsNullOrEmpty(banData.MaBan))
+                    {
+                        return "DELETEDU FAIL: Thiếu Mã Bàn.";
+                    }
+                    await service.Delete("Ban", banData.MaBan);
                     return "DELETE SUCCESS";
 
                 default:

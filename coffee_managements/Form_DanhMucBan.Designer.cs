@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_DanhMucBan));
-            this.txtMaLoai = new System.Windows.Forms.TextBox();
+            this.txtSucChua = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.txtTim = new System.Windows.Forms.TextBox();
+            this.txtTimban = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.dataGridView_DoUong = new System.Windows.Forms.DataGridView();
-            this.txtTenDU = new System.Windows.Forms.TextBox();
-            this.txtMaDU = new System.Windows.Forms.TextBox();
+            this.dataGridView_Ban = new System.Windows.Forms.DataGridView();
+            this.txtSoBan = new System.Windows.Forms.TextBox();
+            this.txtMaBan = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -45,17 +45,17 @@
             this.menuXoa = new System.Windows.Forms.ToolStripMenuItem();
             this.menuXoaTrang = new System.Windows.Forms.ToolStripMenuItem();
             this.menuThoat = new System.Windows.Forms.ToolStripMenuItem();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_DoUong)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Ban)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // txtMaLoai
+            // txtSucChua
             // 
-            this.txtMaLoai.Location = new System.Drawing.Point(205, 182);
-            this.txtMaLoai.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtMaLoai.Name = "txtMaLoai";
-            this.txtMaLoai.Size = new System.Drawing.Size(208, 26);
-            this.txtMaLoai.TabIndex = 58;
+            this.txtSucChua.Location = new System.Drawing.Point(205, 182);
+            this.txtSucChua.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtSucChua.Name = "txtSucChua";
+            this.txtSucChua.Size = new System.Drawing.Size(208, 26);
+            this.txtSucChua.TabIndex = 58;
             // 
             // label3
             // 
@@ -77,14 +77,15 @@
             this.button1.TabIndex = 50;
             this.button1.Text = "Tìm kiếm";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // txtTim
+            // txtTimban
             // 
-            this.txtTim.Location = new System.Drawing.Point(221, 661);
-            this.txtTim.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtTim.Name = "txtTim";
-            this.txtTim.Size = new System.Drawing.Size(348, 26);
-            this.txtTim.TabIndex = 49;
+            this.txtTimban.Location = new System.Drawing.Point(221, 661);
+            this.txtTimban.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtTimban.Name = "txtTimban";
+            this.txtTimban.Size = new System.Drawing.Size(348, 26);
+            this.txtTimban.TabIndex = 49;
             // 
             // label6
             // 
@@ -96,32 +97,33 @@
             this.label6.TabIndex = 48;
             this.label6.Text = "Tìm kiếm theo tên";
             // 
-            // dataGridView_DoUong
+            // dataGridView_Ban
             // 
-            this.dataGridView_DoUong.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView_DoUong.Location = new System.Drawing.Point(0, 242);
-            this.dataGridView_DoUong.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.dataGridView_DoUong.Name = "dataGridView_DoUong";
-            this.dataGridView_DoUong.RowHeadersWidth = 51;
-            this.dataGridView_DoUong.RowTemplate.Height = 24;
-            this.dataGridView_DoUong.Size = new System.Drawing.Size(900, 382);
-            this.dataGridView_DoUong.TabIndex = 47;
+            this.dataGridView_Ban.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView_Ban.Location = new System.Drawing.Point(0, 242);
+            this.dataGridView_Ban.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dataGridView_Ban.Name = "dataGridView_Ban";
+            this.dataGridView_Ban.RowHeadersWidth = 51;
+            this.dataGridView_Ban.RowTemplate.Height = 24;
+            this.dataGridView_Ban.Size = new System.Drawing.Size(900, 382);
+            this.dataGridView_Ban.TabIndex = 47;
+            this.dataGridView_Ban.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_Ban_CellContentClick);
             // 
-            // txtTenDU
+            // txtSoBan
             // 
-            this.txtTenDU.Location = new System.Drawing.Point(205, 129);
-            this.txtTenDU.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtTenDU.Name = "txtTenDU";
-            this.txtTenDU.Size = new System.Drawing.Size(208, 26);
-            this.txtTenDU.TabIndex = 46;
+            this.txtSoBan.Location = new System.Drawing.Point(205, 129);
+            this.txtSoBan.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtSoBan.Name = "txtSoBan";
+            this.txtSoBan.Size = new System.Drawing.Size(208, 26);
+            this.txtSoBan.TabIndex = 46;
             // 
-            // txtMaDU
+            // txtMaBan
             // 
-            this.txtMaDU.Location = new System.Drawing.Point(205, 74);
-            this.txtMaDU.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtMaDU.Name = "txtMaDU";
-            this.txtMaDU.Size = new System.Drawing.Size(208, 26);
-            this.txtMaDU.TabIndex = 45;
+            this.txtMaBan.Location = new System.Drawing.Point(205, 74);
+            this.txtMaBan.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtMaBan.Name = "txtMaBan";
+            this.txtMaBan.Size = new System.Drawing.Size(208, 26);
+            this.txtMaBan.TabIndex = 45;
             // 
             // label2
             // 
@@ -166,6 +168,7 @@
             this.menuThem.Name = "menuThem";
             this.menuThem.Size = new System.Drawing.Size(92, 29);
             this.menuThem.Text = "Thêm";
+            this.menuThem.Click += new System.EventHandler(this.menuThem_Click);
             // 
             // menuSua
             // 
@@ -173,6 +176,7 @@
             this.menuSua.Name = "menuSua";
             this.menuSua.Size = new System.Drawing.Size(83, 29);
             this.menuSua.Text = "Sửa ";
+            this.menuSua.Click += new System.EventHandler(this.menuSua_Click);
             // 
             // menuXoa
             // 
@@ -180,6 +184,7 @@
             this.menuXoa.Name = "menuXoa";
             this.menuXoa.Size = new System.Drawing.Size(79, 29);
             this.menuXoa.Text = "Xóa";
+            this.menuXoa.Click += new System.EventHandler(this.menuXoa_Click);
             // 
             // menuXoaTrang
             // 
@@ -201,20 +206,21 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.BurlyWood;
             this.ClientSize = new System.Drawing.Size(902, 712);
-            this.Controls.Add(this.txtMaLoai);
+            this.Controls.Add(this.txtSucChua);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.txtTim);
+            this.Controls.Add(this.txtTimban);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.dataGridView_DoUong);
-            this.Controls.Add(this.txtTenDU);
-            this.Controls.Add(this.txtMaDU);
+            this.Controls.Add(this.dataGridView_Ban);
+            this.Controls.Add(this.txtSoBan);
+            this.Controls.Add(this.txtMaBan);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.menuStrip1);
             this.Name = "Form_DanhMucBan";
             this.Text = "Form_DanhMucBan";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_DoUong)).EndInit();
+            this.Load += new System.EventHandler(this.Form_DanhMucBan_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Ban)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -224,14 +230,14 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox txtMaLoai;
+        private System.Windows.Forms.TextBox txtSucChua;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox txtTim;
+        private System.Windows.Forms.TextBox txtTimban;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.DataGridView dataGridView_DoUong;
-        private System.Windows.Forms.TextBox txtTenDU;
-        private System.Windows.Forms.TextBox txtMaDU;
+        private System.Windows.Forms.DataGridView dataGridView_Ban;
+        private System.Windows.Forms.TextBox txtSoBan;
+        private System.Windows.Forms.TextBox txtMaBan;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.MenuStrip menuStrip1;

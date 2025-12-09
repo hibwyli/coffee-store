@@ -9,9 +9,9 @@ namespace DoAnLapTrinhMang.Models
         public string MaBan { get; set; }
 
         [FirestoreProperty]
-        public int SucChua { get; set; }
+        public int SoBan { get; set; }
 
         [FirestoreProperty]
-        public string TrangThai { get; set; }
+        public int SucChua { get; set; }
     }
 }

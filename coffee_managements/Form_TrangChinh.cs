@@ -430,6 +430,16 @@ namespace DoAnLapTrinhMang
             return sum;
         }
 
+        private void bànToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form_DanhMucBan form_DanhMucBan = new Form_DanhMucBan();
+            form_DanhMucBan.Show();
+        }
+
+        private void hệThốngToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
 
