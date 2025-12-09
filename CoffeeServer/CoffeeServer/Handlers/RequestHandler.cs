@@ -213,7 +213,7 @@ namespace CoffeeServer.Handlers
             {
                 try
                 {
-                    List<DoUongData> drinks = await service.GetAll<DoUongData>("DoUong");
+                    List<DoUong> drinks = await service.GetAll<DoUong>("DoUong");
                     return JsonSerializer.Serialize(drinks);
                 }
                 catch (Exception ex)

@@ -25,7 +25,7 @@ namespace DoAnLapTrinhMang
 
         private void button1_Click(object sender, EventArgs e)
         {
-            listener = new TcpListener(IPAddress.Any, 12345);
+            listener = new TcpListener(IPAddress.Any, 5000);
             listener.Start();
             LogMessage("Server da khoi dong. Dang lang nghe ket noi...");
 
