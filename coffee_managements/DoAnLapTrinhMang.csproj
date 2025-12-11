@@ -270,6 +270,7 @@
     </Compile>
     <!-- Program -->
     <Compile Include="Models\BanData.cs" />
+    <Compile Include="Models\KhachHangData.cs" />
     <Compile Include="Models\DoanhThuData.cs" />
     <Compile Include="Models\DoUongData.cs" />
     <Compile Include="Models\RequestModel.cs" />

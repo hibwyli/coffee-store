@@ -116,6 +116,35 @@ namespace CoffeeServer.FirestoreHelpers
                 return false;
             }
         }
+        public async Task<bool> CreateKH(string collectionName, KhachHangData item)
+        {
+            try
+            {
+                // Convert tu DoUOngData ve DoUong moi dc 
+                KhachHang cac = new KhachHang()
+                {
+                    MaKH = item.MaKH,
+                    TenKH = item.TenKH,
+                    SDT = item.SDT,
+                    DiaChi = item.DiaChi,
+
+                };
+                // 1. Lấy ID từ đối tượng
+                string documentId = GetDocumentId(cac);
+
+                // 2. Sử dụng logic SetAsync với ID đã lấy
+                await _db.Collection(collectionName).Document(documentId).SetAsync(cac);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] Lỗi khi tạo tài liệu trong {collectionName}: {ex.Message}");
+                return false;
+            }
+        }
+
+
+
 
         // --------------------- UPDATE ---------------------
         public async Task UpdateFields(string collectionName, string id, Dictionary<string, object> updates)
@@ -163,6 +192,28 @@ namespace CoffeeServer.FirestoreHelpers
             }
             catch (Exception)
             {
+                return false;
+            }
+        }
+        public async Task<bool> UpdateKH(string collectionName, string id, KhachHangData item)
+        {
+            try
+            {
+                KhachHang cac = new KhachHang()
+                {
+                    MaKH = item.MaKH,
+                    TenKH = item.TenKH,
+                    SDT = item.SDT,
+                    DiaChi = item.DiaChi,
+                };
+                var docRef = _db.Collection(collectionName).Document(id);
+                await docRef.SetAsync(cac);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
                 return false;
             }
         }

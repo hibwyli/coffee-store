@@ -203,6 +203,17 @@ namespace CoffeeServer.Handlers
                         return await HandleBanCrud("DELETEBAN", request, service);
                     case "GETALLBAN":
                         return await HandleBanCrud("GETALLBAN", request, service);
+                    case "CREATEKH":
+                        return await HandleKhachHangCrud("CREATEKH", request, service);
+
+                    case "UPDATEKH":
+                        return await HandleKhachHangCrud("UPDATEKH", request, service);
+
+                    case "DELETEKH":
+                        return await HandleKhachHangCrud("DELETEKH", request, service);
+
+                    case "GETALLKH":
+                        return await HandleKhachHangCrud("GETALLKH", request, service);
 
                     case "GETTOTALDAY":
                     case "GETTOTALBETWEEN":
@@ -271,6 +282,58 @@ namespace CoffeeServer.Handlers
 
                 default:
                     return $"[ERROR] Unknown CRUD action for DoUong: {action}";
+            }
+        }
+        private async Task<string> HandleKhachHangCrud(string action, RequestModel request, FirestoreService service)
+        {
+            if (action == "GETALLKH")
+            {
+                try
+                {
+                    List<KhachHang> customer = await service.GetAll<KhachHang>("KhachHang");
+                    return JsonSerializer.Serialize(customer);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[ERROR] Get All Khach Hang: {ex.Message}");
+                    return "GETALLKH FAIL: Lỗi server khi lấy dữ liệu.";
+                }
+            }
+            KhachHangData khData = request.KHData;
+
+            if (khData == null)
+            {
+                return $"{action} FAIL: Dữ liệu Khách Hàng (Data) rỗng.";
+            }
+            switch (action)
+            {
+                case "CREATEKH":
+                    if (string.IsNullOrEmpty(khData.MaKH))
+                    {
+                        khData.MaKH = "KH" + Guid.NewGuid().ToString("N").Substring(0, 6).ToUpper();
+                    }
+
+                    bool createSuccess = await service.CreateKH("KhachHang", khData);
+                    return createSuccess ? "CREATE SUCCESS" : "CREATE FAIL";
+
+                case "UPDATEKH":
+                    if (string.IsNullOrEmpty(khData.MaKH))
+                    {
+                        return "UPDATEKH FAIL: Thiếu Mã Khách Hàng (MaKH).";
+                    }
+                    bool updateSuccess = await service.UpdateKH("KhachHang", khData.MaKH, khData);
+                    return updateSuccess ? "UPDATE SUCCESS" : "UPDATE FAIL";
+
+                case "DELETEKH":
+                    if (string.IsNullOrEmpty(khData.MaKH))
+                    {
+                        return "DELETEKH FAIL: Thiếu Mã Khách Hàng (MaKH).";
+                    }
+                    await service.Delete("KhachHang", khData.MaKH);
+                    return "DELETE SUCCESS";
+
+                default:
+                    return $"[ERROR] Unknown CRUD action for KhachHang: {action}";
             }
         }
         private async Task<string> HandleBanCrud(string action, RequestModel request, FirestoreService service)
