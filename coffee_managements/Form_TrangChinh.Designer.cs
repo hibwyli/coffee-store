@@ -49,11 +49,8 @@
             this.chatBoxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainLayout = new System.Windows.Forms.TableLayoutPanel();
             this.panelBanHeader = new System.Windows.Forms.Panel();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.rB_All = new System.Windows.Forms.RadioButton();
-            this.rB_CoNguoi = new System.Windows.Forms.RadioButton();
-            this.rB_Trong = new System.Windows.Forms.RadioButton();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.listViewDanhSachBan = new System.Windows.Forms.ListView();
             this.button1 = new System.Windows.Forms.Button();
             this.label_banDangChon = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -75,12 +72,12 @@
             this.Xoa = new System.Windows.Forms.DataGridViewButtonColumn();
             this.textBox_Role = new System.Windows.Forms.TextBox();
             this.textBox_Ten = new System.Windows.Forms.TextBox();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.imageListBan = new System.Windows.Forms.ImageList(this.components);
             this.button5 = new System.Windows.Forms.Button();
+            this.buttonRefresh = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.mainLayout.SuspendLayout();
             this.panelBanHeader.SuspendLayout();
-            this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_HoaDon)).BeginInit();
             this.SuspendLayout();
@@ -97,7 +94,6 @@
             this.chatBoxToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(6, 2, 0, 2);
             this.menuStrip1.Size = new System.Drawing.Size(1501, 33);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
@@ -246,8 +242,9 @@
             // panelBanHeader
             // 
             this.panelBanHeader.BackColor = System.Drawing.Color.BurlyWood;
-            this.panelBanHeader.Controls.Add(this.groupBox1);
-            this.panelBanHeader.Controls.Add(this.listView1);
+            this.panelBanHeader.Controls.Add(this.buttonRefresh);
+            this.panelBanHeader.Controls.Add(this.rB_All);
+            this.panelBanHeader.Controls.Add(this.listViewDanhSachBan);
             this.panelBanHeader.Controls.Add(this.button1);
             this.panelBanHeader.Controls.Add(this.label_banDangChon);
             this.panelBanHeader.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -257,74 +254,39 @@
             this.panelBanHeader.Size = new System.Drawing.Size(579, 769);
             this.panelBanHeader.TabIndex = 0;
             // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.rB_All);
-            this.groupBox1.Controls.Add(this.rB_CoNguoi);
-            this.groupBox1.Controls.Add(this.rB_Trong);
-            this.groupBox1.Location = new System.Drawing.Point(9, 80);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox1.Size = new System.Drawing.Size(357, 62);
-            this.groupBox1.TabIndex = 3;
-            this.groupBox1.TabStop = false;
-            // 
             // rB_All
             // 
             this.rB_All.AutoSize = true;
-            this.rB_All.Location = new System.Drawing.Point(249, 25);
+            this.rB_All.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rB_All.Location = new System.Drawing.Point(14, 95);
             this.rB_All.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rB_All.Name = "rB_All";
-            this.rB_All.Size = new System.Drawing.Size(78, 24);
+            this.rB_All.Size = new System.Drawing.Size(92, 29);
             this.rB_All.TabIndex = 2;
             this.rB_All.TabStop = true;
             this.rB_All.Text = "Tất cả";
             this.rB_All.UseVisualStyleBackColor = true;
             // 
-            // rB_CoNguoi
+            // listViewDanhSachBan
             // 
-            this.rB_CoNguoi.AutoSize = true;
-            this.rB_CoNguoi.Location = new System.Drawing.Point(117, 25);
-            this.rB_CoNguoi.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.rB_CoNguoi.Name = "rB_CoNguoi";
-            this.rB_CoNguoi.Size = new System.Drawing.Size(127, 24);
-            this.rB_CoNguoi.TabIndex = 1;
-            this.rB_CoNguoi.TabStop = true;
-            this.rB_CoNguoi.Text = "Bàn có người";
-            this.rB_CoNguoi.UseVisualStyleBackColor = true;
-            // 
-            // rB_Trong
-            // 
-            this.rB_Trong.AutoSize = true;
-            this.rB_Trong.Location = new System.Drawing.Point(6, 25);
-            this.rB_Trong.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.rB_Trong.Name = "rB_Trong";
-            this.rB_Trong.Size = new System.Drawing.Size(104, 24);
-            this.rB_Trong.TabIndex = 0;
-            this.rB_Trong.TabStop = true;
-            this.rB_Trong.Text = "Bàn trống";
-            this.rB_Trong.UseVisualStyleBackColor = true;
-            // 
-            // listView1
-            // 
-            this.listView1.BackColor = System.Drawing.Color.SeaShell;
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(-3, 170);
-            this.listView1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(582, 597);
-            this.listView1.TabIndex = 2;
-            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listViewDanhSachBan.BackColor = System.Drawing.Color.SeaShell;
+            this.listViewDanhSachBan.HideSelection = false;
+            this.listViewDanhSachBan.Location = new System.Drawing.Point(-3, 171);
+            this.listViewDanhSachBan.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.listViewDanhSachBan.Name = "listViewDanhSachBan";
+            this.listViewDanhSachBan.Size = new System.Drawing.Size(582, 596);
+            this.listViewDanhSachBan.TabIndex = 2;
+            this.listViewDanhSachBan.UseCompatibleStateImageBehavior = false;
+            this.listViewDanhSachBan.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
             // 
             // button1
             // 
             this.button1.BackColor = System.Drawing.Color.MediumSeaGreen;
-            this.button1.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(214, 26);
+            this.button1.Font = new System.Drawing.Font("Times New Roman", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(241, 14);
             this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(147, 33);
+            this.button1.Size = new System.Drawing.Size(221, 51);
             this.button1.TabIndex = 1;
             this.button1.Text = "Chưa chọn bàn";
             this.button1.UseVisualStyleBackColor = false;
@@ -334,7 +296,7 @@
             // 
             this.label_banDangChon.AutoSize = true;
             this.label_banDangChon.Font = new System.Drawing.Font("Times New Roman", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_banDangChon.Location = new System.Drawing.Point(3, 27);
+            this.label_banDangChon.Location = new System.Drawing.Point(9, 27);
             this.label_banDangChon.Name = "label_banDangChon";
             this.label_banDangChon.Size = new System.Drawing.Size(208, 25);
             this.label_banDangChon.TabIndex = 0;
@@ -548,11 +510,11 @@
             this.textBox_Ten.TabIndex = 11;
             this.textBox_Ten.TextChanged += new System.EventHandler(this.textBox_Ten_TextChanged);
             // 
-            // imageList1
+            // imageListBan
             // 
-            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList1.Images.SetKeyName(0, "icon_coffee_cup.png");
+            this.imageListBan.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListBan.ImageStream")));
+            this.imageListBan.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageListBan.Images.SetKeyName(0, "icon_coffee_cup.png");
             // 
             // button5
             // 
@@ -564,6 +526,19 @@
             this.button5.Text = "Đăng xuất";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // buttonRefresh
+            // 
+            this.buttonRefresh.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonRefresh.Font = new System.Drawing.Font("Times New Roman", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonRefresh.Location = new System.Drawing.Point(241, 80);
+            this.buttonRefresh.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.buttonRefresh.Name = "buttonRefresh";
+            this.buttonRefresh.Size = new System.Drawing.Size(221, 51);
+            this.buttonRefresh.TabIndex = 3;
+            this.buttonRefresh.Text = "Làm mới";
+            this.buttonRefresh.UseVisualStyleBackColor = false;
+            this.buttonRefresh.Click += new System.EventHandler(this.buttonRefresh_Click);
             // 
             // Form_TrangChinh
             // 
@@ -585,8 +560,6 @@
             this.mainLayout.ResumeLayout(false);
             this.panelBanHeader.ResumeLayout(false);
             this.panelBanHeader.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_HoaDon)).EndInit();
@@ -628,12 +601,9 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ListView listView1;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.ImageList imageList1;
+        private System.Windows.Forms.ListView listViewDanhSachBan;
+        private System.Windows.Forms.ImageList imageListBan;
         private System.Windows.Forms.RadioButton rB_All;
-        private System.Windows.Forms.RadioButton rB_CoNguoi;
-        private System.Windows.Forms.RadioButton rB_Trong;
         private System.Windows.Forms.TextBox textBox_Role;
         private System.Windows.Forms.TextBox textBox_Ten;
         private System.Windows.Forms.Button button5;
@@ -644,5 +614,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ThanhTien;
         private System.Windows.Forms.DataGridViewButtonColumn Xoa;
         private System.Windows.Forms.ToolStripMenuItem chatBoxToolStripMenuItem;
+        private System.Windows.Forms.Button buttonRefresh;
     }
 }

@@ -24,6 +24,7 @@ namespace DoAnLapTrinhMang
             /// Load do uong heres
             /// 
             loadDu();
+            HienThiDanhSachBan();
         }
         private async Task  loadDu  ()
         {
@@ -456,6 +457,34 @@ namespace DoAnLapTrinhMang
         private void hệThốngToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+        public void HienThiDanhSachBan()
+        {
+            listViewDanhSachBan.Items.Clear();
+            // 1. Cấu hình ListView
+            listViewDanhSachBan.View = View.LargeIcon;
+            listViewDanhSachBan.LargeImageList = imageListBan; // Gán ImageList đã chứa ảnh icon
+            listViewDanhSachBan.Items.Clear();
+            List<string> danhSachSoBan = new List<string> { "1324", "1342", "13421342" };
+
+            // 3. Hiển thị lên ListView
+            foreach (string soBan in danhSachSoBan)
+            {
+                ListViewItem item = new ListViewItem();
+                item.Text = "Bàn " + soBan;
+                item.ImageIndex = 0; 
+                listViewDanhSachBan.Items.Add(item);
+            }
+        }
+
+        private void buttonRefresh_Click(object sender, EventArgs e)
+        {
+            HienThiDanhSachBan();
         }
     }
 }
