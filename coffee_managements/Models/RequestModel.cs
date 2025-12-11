@@ -19,5 +19,7 @@ namespace CoffeeServer.Models
 
         [JsonPropertyName("BanData")]
         public BanData BanData { get; set; }
+        [JsonPropertyName("DoanhThuData")]
+        public DoanhThuData DoanhThuData { get; set; }
     }
 }

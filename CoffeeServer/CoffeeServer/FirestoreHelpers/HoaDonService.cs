@@ -16,7 +16,8 @@ namespace CoffeeServer.FirestoreHelpers
         public HoaDonService()
         {
             string userProfile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-            string path = Path.Combine(userProfile, "source", "repos", "coffee-store", "CoffeeServer", "CoffeeServer", "FirestoreHelpers", "serviceAccountKey.json"); Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", path);
+            string path = Path.Combine(userProfile, "source", "repos", "coffee-store", "CoffeeServer", "CoffeeServer", "FirestoreHelpers", "serviceAccountKey.json");
+            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", path);
 
             _db = FirestoreDb.Create("coffee-manage-f42fa");
             result = new List<DoUong>();
