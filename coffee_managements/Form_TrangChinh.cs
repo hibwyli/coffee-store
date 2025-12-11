@@ -319,17 +319,28 @@ namespace DoAnLapTrinhMang
         {
             try
             {
+                // 1. Ánh xạ tên cột: {Tên hiển thị trong PDF : Tên cột DataGridView}
+                // Giả định tên cột DataGridView của bạn là: MaDoUong, TenDoUong, SoLuong, DonGia, ThanhTien
+                Dictionary<string, string> columnMapping = new Dictionary<string, string>
+        {
+            { "MaDU", "MaDoUong" }, // MaDU (PDF) -> MaDoUong (DGV)
+            { "Ten Do Uong", "TenDoUong" },
+            { "So Luong", "SoLuong" },
+            { "Don Gia", "DonGia" },
+            { "Thanh Tien", "ThanhTien" }
+        };
+
                 using (SaveFileDialog sfd = new SaveFileDialog())
                 {
                     sfd.Filter = "PDF files (*.pdf)|*.pdf";
                     sfd.FileName = "HoaDon.pdf";
 
                     if (sfd.ShowDialog() != DialogResult.OK)
-                        return; // người dùng hủy
+                        return;
 
                     string filePath = sfd.FileName;
 
-                    // Font mặc định
+                    // Font mặc định (Helvetia, không dấu)
                     iTextSharp.text.Font fontTitle = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 20, iTextSharp.text.Font.BOLD);
                     iTextSharp.text.Font fontHeader = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.BOLD);
                     iTextSharp.text.Font fontNormal = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 11, iTextSharp.text.Font.NORMAL);
@@ -351,17 +362,17 @@ namespace DoAnLapTrinhMang
                         doc.Add(new iTextSharp.text.Paragraph("Date: " + DateTime.Now.ToString("dd/MM/yyyy HH:mm"), fontNormal));
                         doc.Add(new iTextSharp.text.Paragraph("\n"));
 
-                        // Cột mặc định theo thứ tự
-                        string[] columnsOrder = { "MaDU", "Ten Do Uong", "So Luong", "Don Gia", "Thanh Tien" };
-                        PdfPTable table = new PdfPTable(columnsOrder.Length)
+                        // Tạo Table
+                        string[] pdfHeaders = columnMapping.Keys.ToArray();
+                        PdfPTable table = new PdfPTable(pdfHeaders.Length)
                         {
                             WidthPercentage = 100f
                         };
 
                         // Header
-                        foreach (var colName in columnsOrder)
+                        foreach (var header in pdfHeaders)
                         {
-                            PdfPCell headerCell = new PdfPCell(new Phrase(colName, fontHeader))
+                            PdfPCell headerCell = new PdfPCell(new Phrase(header, fontHeader))
                             {
                                 BackgroundColor = new BaseColor(230, 230, 230),
                                 HorizontalAlignment = Element.ALIGN_CENTER,
@@ -375,14 +386,21 @@ namespace DoAnLapTrinhMang
                         {
                             if (row.IsNewRow) continue;
 
-                            foreach (var colName in columnsOrder)
+                            // Duyệt qua các header (MaDU, Ten Do Uong,...) để đảm bảo thứ tự
+                            foreach (var header in pdfHeaders)
                             {
-                                var cell = dgv.Columns.Contains(colName) ? row.Cells[colName] : null;
+                                // Lấy tên cột DataGridView thực tế từ ánh xạ
+                                string dgvColName = columnMapping[header];
+
+                                // Lấy giá trị từ DataGridView
+                                var cell = dgv.Columns.Contains(dgvColName) ? row.Cells[dgvColName] : null;
                                 string text = cell?.Value?.ToString() ?? "";
+
                                 PdfPCell bodyCell = new PdfPCell(new Phrase(text, fontNormal))
                                 {
                                     Padding = 5,
-                                    HorizontalAlignment = IsNumericColumn(colName) ? Element.ALIGN_RIGHT : Element.ALIGN_LEFT
+                                    // Dùng tên header PDF để kiểm tra cột số (IsNumericColumn)
+                                    HorizontalAlignment = IsNumericColumn(header) ? Element.ALIGN_RIGHT : Element.ALIGN_LEFT
                                 };
                                 table.AddCell(bodyCell);
                             }
@@ -401,15 +419,14 @@ namespace DoAnLapTrinhMang
                         doc.Close();
                     }
 
-                    MessageBox.Show("Xuất PDF thành công: " + filePath);
+                    MessageBox.Show("Xuat PDF thanh cong: " + filePath);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi khi xuất PDF: " + ex.Message);
+                MessageBox.Show("Loi khi xuat PDF: " + ex.Message);
             }
         }
-
         private bool IsNumericColumn(string colName)
         {
             if (string.IsNullOrEmpty(colName)) return false;
