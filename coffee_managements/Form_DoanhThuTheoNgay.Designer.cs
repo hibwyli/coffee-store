@@ -43,18 +43,20 @@
             // 
             this.dateTimePicker1.CalendarFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePicker1.Location = new System.Drawing.Point(113, 47);
+            this.dateTimePicker1.Location = new System.Drawing.Point(151, 59);
+            this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(295, 26);
+            this.dateTimePicker1.Size = new System.Drawing.Size(392, 31);
             this.dateTimePicker1.TabIndex = 0;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(15, 50);
+            this.label1.Location = new System.Drawing.Point(20, 62);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(76, 22);
+            this.label1.Size = new System.Drawing.Size(99, 29);
             this.label1.TabIndex = 1;
             this.label1.Text = "Từ ngày";
             // 
@@ -62,9 +64,10 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(455, 49);
+            this.label2.Location = new System.Drawing.Point(607, 61);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(87, 22);
+            this.label2.Size = new System.Drawing.Size(114, 29);
             this.label2.TabIndex = 3;
             this.label2.Text = "Đến ngày";
             // 
@@ -72,31 +75,35 @@
             // 
             this.dateTimePicker2.CalendarFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePicker2.Location = new System.Drawing.Point(553, 46);
+            this.dateTimePicker2.Location = new System.Drawing.Point(737, 58);
+            this.dateTimePicker2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(295, 26);
+            this.dateTimePicker2.Size = new System.Drawing.Size(392, 31);
             this.dateTimePicker2.TabIndex = 2;
             // 
             // btnLocDuLieu
             // 
             this.btnLocDuLieu.BackColor = System.Drawing.Color.Aquamarine;
             this.btnLocDuLieu.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLocDuLieu.Location = new System.Drawing.Point(897, 27);
+            this.btnLocDuLieu.Location = new System.Drawing.Point(1196, 34);
+            this.btnLocDuLieu.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnLocDuLieu.Name = "btnLocDuLieu";
-            this.btnLocDuLieu.Size = new System.Drawing.Size(191, 68);
+            this.btnLocDuLieu.Size = new System.Drawing.Size(255, 85);
             this.btnLocDuLieu.TabIndex = 4;
             this.btnLocDuLieu.Text = "Lọc";
             this.btnLocDuLieu.UseVisualStyleBackColor = false;
+            this.btnLocDuLieu.Click += new System.EventHandler(this.btnLocDuLieu_Click);
             // 
             // dataGridView1
             // 
             this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(19, 118);
+            this.dataGridView1.Location = new System.Drawing.Point(25, 148);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 62;
             this.dataGridView1.RowTemplate.Height = 28;
-            this.dataGridView1.Size = new System.Drawing.Size(1069, 444);
+            this.dataGridView1.Size = new System.Drawing.Size(1425, 555);
             this.dataGridView1.TabIndex = 5;
             // 
             // label4
@@ -104,9 +111,10 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Times New Roman", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.Red;
-            this.label4.Location = new System.Drawing.Point(924, 584);
+            this.label4.Location = new System.Drawing.Point(1232, 730);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(101, 32);
+            this.label4.Size = new System.Drawing.Size(138, 43);
             this.label4.TabIndex = 10;
             this.label4.Text = "0 VND ";
             // 
@@ -114,18 +122,19 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Times New Roman", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(834, 584);
+            this.label3.Location = new System.Drawing.Point(1112, 730);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(85, 32);
+            this.label3.Size = new System.Drawing.Size(115, 43);
             this.label3.TabIndex = 9;
             this.label3.Text = "Tổng:";
             // 
             // Form_DoanhThuTheoNgay
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.BurlyWood;
-            this.ClientSize = new System.Drawing.Size(1120, 634);
+            this.ClientSize = new System.Drawing.Size(1493, 792);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.dataGridView1);
@@ -134,6 +143,7 @@
             this.Controls.Add(this.dateTimePicker2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dateTimePicker1);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Form_DoanhThuTheoNgay";
             this.Text = "Thống kê doanh thu theo ngày";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();

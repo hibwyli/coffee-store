@@ -2,7 +2,8 @@
 using CoffeeServer.Models;
 using System;
 using System.Text.Json;
-using static Google.Rpc.Context.AttributeContext.Types;
+using CoffeeServer.FirestoreHelpers;
+using CoffeeServer.DoanhThuService;
 
 namespace CoffeeServer.Handlers
 {
@@ -202,6 +203,11 @@ namespace CoffeeServer.Handlers
                         return await HandleBanCrud("DELETEBAN", request, service);
                     case "GETALLBAN":
                         return await HandleBanCrud("GETALLBAN", request, service);
+
+                    case "GETTOTALDAY":
+                    case "GETTOTALBETWEEN":
+                    case "GETTOTALALL":
+                        return await HandleDoanhThuCrud(request, service);
                     default:
                         Console.WriteLine($"[ERROR] Unknown action: {request.Action}");
                         return $"[ERROR] Unknown action: {request.Action}";
@@ -319,5 +325,47 @@ namespace CoffeeServer.Handlers
                     return $"[ERROR] Unknown CRUD action for DoUong: {action}";
             }
         }
+        private async Task<string> HandleDoanhThuCrud(RequestModel request, FirestoreService service)
+        {
+            var doanhThuService = new CoffeeServer.DoanhThuService.DoanhThuService();
+
+            if (request.DoanhThuData== null)
+            {
+                return "FAIL: DoanhThu data missing!";
+            }
+
+            switch (request.Action.ToUpper())
+            {
+                case "GETTOTALDAY":
+                    if (string.IsNullOrEmpty(request.DoanhThuData.Date))
+                        return "FAIL: Missing date!";
+
+                    DateTime day;
+                    if (!DateTime.TryParse(request.DoanhThuData.Date, out day))
+                        return "FAIL: Invalid date format! Use yyyy-MM-dd";
+
+                    double totalDay = await doanhThuService.GetTotalRevenueByDate(day);
+                    return JsonSerializer.Serialize(new { Total = totalDay });
+
+                case "GETTOTALBETWEEN":
+                    if (string.IsNullOrEmpty(request.DoanhThuData.StartDate) || string.IsNullOrEmpty(request.DoanhThuData.EndDate))
+                        return "FAIL: Missing start or end date!";
+
+                    DateTime start, end;
+                    if (!DateTime.TryParse(request.DoanhThuData.StartDate, out start) || !DateTime.TryParse(request.DoanhThuData.EndDate, out end))
+                        return "FAIL: Invalid date format! Use yyyy-MM-dd";
+
+                    double totalBetween = await doanhThuService.GetTotalRevenueBetweenDates(start, end);
+                    return JsonSerializer.Serialize(new { Total = totalBetween });
+
+                case "GETTOTALALL":
+                    double totalAll = await doanhThuService.GetTotalRevenueAllTime();
+                    return JsonSerializer.Serialize(new { Total = totalAll });
+
+                default:
+                    return $"[ERROR] Unknown DoanhThu action: {request.Action}";
+            }
+        }
+
     }
 }
