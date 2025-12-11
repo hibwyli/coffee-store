@@ -78,6 +78,7 @@
             this.btnTimKhachHang.TabIndex = 34;
             this.btnTimKhachHang.Text = "Tìm kiếm";
             this.btnTimKhachHang.UseVisualStyleBackColor = true;
+            this.btnTimKhachHang.Click += new System.EventHandler(this.btnTimKhachHang_Click);
             // 
             // txtTimKH
             // 
@@ -85,6 +86,7 @@
             this.txtTimKH.Name = "txtTimKH";
             this.txtTimKH.Size = new System.Drawing.Size(370, 22);
             this.txtTimKH.TabIndex = 33;
+            this.txtTimKH.TextChanged += new System.EventHandler(this.txtTimKH_TextChanged);
             // 
             // label6
             // 

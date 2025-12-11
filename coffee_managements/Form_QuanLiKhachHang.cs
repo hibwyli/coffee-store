@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using CoffeeServer.Models;
 using DoAnLapTrinhMang.Models;
 using System.Text.Json;
+using System.Diagnostics;
 
 namespace DoAnLapTrinhMang
 {
@@ -254,6 +255,39 @@ namespace DoAnLapTrinhMang
 
             string json = JsonSerializer.Serialize(request);
             await SendRequestToServer(json);
+        }
+
+        private void btnTimKhachHang_Click(object sender, EventArgs e)
+        {
+            ClearAll();
+
+            string nameToFind = txtTimKH.Text;
+            if (string.IsNullOrEmpty(nameToFind))
+            {
+                LoadAll(); // Nếu rỗng thì tải lại tất cả
+                return;
+            }
+
+            // Lọc danh sách theo so ban
+            List<KhachHang> matchingCustomer = khList
+              .Where(kh => !string.IsNullOrEmpty(kh.TenKH) && kh.TenKH.StartsWith(nameToFind, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+
+            if (matchingCustomer.Count == 0)
+            {
+                MessageBox.Show("Không tìm thấy khách hàng nào khớp.");
+                return;
+            }
+
+            foreach (var kh in matchingCustomer)
+            {
+                AddData(kh);
+            }
+        }
+
+        private void txtTimKH_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

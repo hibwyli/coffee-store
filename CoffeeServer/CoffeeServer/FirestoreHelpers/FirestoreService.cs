@@ -126,7 +126,7 @@ namespace CoffeeServer.FirestoreHelpers
                     MaKH = item.MaKH,
                     TenKH = item.TenKH,
                     SDT = item.SDT,
-                    DiaChi = item.DiaChi,
+                    DiaChi = item.DiaChi
 
                 };
                 // 1. Lấy ID từ đối tượng
