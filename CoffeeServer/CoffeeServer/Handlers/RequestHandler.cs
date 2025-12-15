@@ -167,9 +167,7 @@ namespace CoffeeServer.Handlers
                         }
                         return "NV not exists to delete!";
 
-                    case "GETALL":
-                        if (request.CollectionName != null)
-                        {
+                    case "GETALL":                    
                             List<NhanVien> employees = await service.GetAll<NhanVien>("NhanVien");
                             var displayList = employees.Select(x => new
                             {
@@ -182,8 +180,7 @@ namespace CoffeeServer.Handlers
                             string jsond = JsonSerializer.Serialize(displayList);
                             Console.WriteLine(jsond);
                             return jsond;
-                        }
-                        return "Wrong shit";
+                   
                     case "CREATEDU":
                         return await HandleDoUongCrud("CREATEDU", request, service);
 
@@ -219,6 +216,8 @@ namespace CoffeeServer.Handlers
                     case "GETTOTALBETWEEN":
                     case "GETTOTALALL":
                         return await HandleDoanhThuCrud(request, service);
+                    case "CREATEHOADON":
+                        return await HandleCreateHoaDon(request,service);
                     default:
                         Console.WriteLine($"[ERROR] Unknown action: {request.Action}");
                         return $"[ERROR] Unknown action: {request.Action}";
@@ -230,6 +229,32 @@ namespace CoffeeServer.Handlers
                 Console.WriteLine($"Error handling request: {ex.Message}");
                 return $"Error handling request: {ex.Message}";
 
+            }
+        }
+        private async Task<string> HandleCreateHoaDon(RequestModel request, FirestoreService service)
+        {
+            if (request.HoaDon.ValueKind == JsonValueKind.Null ||
+    request.HoaDon.ValueKind == JsonValueKind.Undefined)
+            {
+                return "FAIL: HoaDon null";
+            }
+
+            try
+            {
+                // 🔥 Deserialize Data -> HoaDon
+                HoaDon hoaDon = request.HoaDon.Deserialize<HoaDon>();
+
+
+                if (hoaDon == null)
+                    return "FAIL_DESERIALIZE";
+
+                bool ok = await service.CreateHoaDon("HoaDon", hoaDon);
+                return ok ? "OK" : "FAIL_CREATE";
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("[ERROR] HandleCreateHoaDon: " + ex.Message);
+                return "ERROR";
             }
         }
         private async Task<string> HandleDoUongCrud(string action, RequestModel request, FirestoreService service)
@@ -409,17 +434,24 @@ namespace CoffeeServer.Handlers
 
                     double totalDay = await doanhThuService.GetTotalRevenueByDate(day);
                     return JsonSerializer.Serialize(new { Total = totalDay });
-
                 case "GETTOTALBETWEEN":
-                    if (string.IsNullOrEmpty(request.DoanhThuData.StartDate) || string.IsNullOrEmpty(request.DoanhThuData.EndDate))
-                        return "FAIL: Missing start or end date!";
+                    if (string.IsNullOrEmpty(request.DoanhThuData.StartDate) ||
+                        string.IsNullOrEmpty(request.DoanhThuData.EndDate))
+                        return "FAIL";
 
-                    DateTime start, end;
-                    if (!DateTime.TryParse(request.DoanhThuData.StartDate, out start) || !DateTime.TryParse(request.DoanhThuData.EndDate, out end))
-                        return "FAIL: Invalid date format! Use yyyy-MM-dd";
+                    if (!DateTime.TryParse(request.DoanhThuData.StartDate, out DateTime start) ||
+                        !DateTime.TryParse(request.DoanhThuData.EndDate, out DateTime end))
+                        return "FAIL";
 
-                    double totalBetween = await doanhThuService.GetTotalRevenueBetweenDates(start, end);
-                    return JsonSerializer.Serialize(new { Total = totalBetween });
+                    var hoaDons = await doanhThuService.GetHoaDonBetweenDates(start, end);
+
+                    double total = hoaDons.Sum(h => h.TongTien);
+
+                    return JsonSerializer.Serialize(new
+                    {
+                        Total = total,
+                        HoaDons = hoaDons
+                    });
 
                 case "GETTOTALALL":
                     double totalAll = await doanhThuService.GetTotalRevenueAllTime();

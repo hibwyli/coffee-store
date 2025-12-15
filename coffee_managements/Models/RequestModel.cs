@@ -1,4 +1,5 @@
 ﻿using DoAnLapTrinhMang.Models;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace CoffeeServer.Models
@@ -23,5 +24,7 @@ namespace CoffeeServer.Models
         public DoanhThuData DoanhThuData { get; set; }
         [JsonPropertyName("KHData")]
         public KhachHangData KHData { get; set; }
+        [JsonPropertyName("HoaDon")]
+        public HoaDon HoaDon { get; set; }
     }
 }

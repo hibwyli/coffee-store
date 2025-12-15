@@ -85,5 +85,30 @@ namespace CoffeeServer.DoanhThuService
 
             return total;
         }
+        public async Task<List<HoaDon>> GetHoaDonBetweenDates(
+    DateTime startDate,
+    DateTime endDate)
+        {
+            List<HoaDon> hoaDons = new List<HoaDon>();
+
+            CollectionReference hoaDonRef = _db.Collection("HoaDon");
+            QuerySnapshot snapshot = await hoaDonRef.GetSnapshotAsync();
+
+            foreach (DocumentSnapshot doc in snapshot.Documents)
+            {
+                if (!doc.Exists) continue;
+
+                HoaDon hd = doc.ConvertTo<HoaDon>();
+
+                if (hd.NgayLap.Date >= startDate.Date &&
+                    hd.NgayLap.Date <= endDate.Date)
+                {
+                    hoaDons.Add(hd);
+                }
+            }
+
+            return hoaDons;
+        }
+
     }
 }

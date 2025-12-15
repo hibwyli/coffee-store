@@ -17,6 +17,11 @@ namespace DoAnLapTrinhMang
     public partial class Form_TrangChinh : Form
     {
         private List<DoUong> duList;
+        private List<Ban> banList;
+        private Ban banHienTai = null;
+        private Dictionary<string, HoaDon> hoaDonTheoBan = new Dictionary<string, HoaDon>();
+
+
 
         public Form_TrangChinh ()
         {
@@ -24,7 +29,7 @@ namespace DoAnLapTrinhMang
             /// Load do uong heres
             /// 
             loadDu();
-            HienThiDanhSachBan();
+            loadBan();
         }
         private async Task  loadDu  ()
         {
@@ -72,6 +77,7 @@ namespace DoAnLapTrinhMang
                         {
                             duList = JsonSerializer.Deserialize<List<DoUong>>(response);
                             LoadAll();
+
                         }
                         catch (JsonException ex)
                         {
@@ -85,6 +91,65 @@ namespace DoAnLapTrinhMang
                 MessageBox.Show("Error loading Do Uong list: " + ex.Message);
             }
         }
+        private async Task loadBan()
+        {
+            // load vao duList
+            var request = new RequestModel
+            {
+                Action = "GETALLBAN",
+                CollectionName = "Ban"
+            };
+
+            string json = JsonSerializer.Serialize(request);
+            byte[] buffer = Encoding.UTF8.GetBytes(json);
+
+            try
+            {
+                using (TcpClient client = new TcpClient("127.0.0.1", 5000))
+                using (NetworkStream stream = client.GetStream())
+                {
+                    await stream.WriteAsync(buffer, 0, buffer.Length);
+
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        byte[] buffers = new byte[1024];
+                        int bytesRead;
+
+                        // Đọc response
+                        while ((bytesRead = await stream.ReadAsync(buffers, 0, buffers.Length)) > 0)
+                        {
+                            ms.Write(buffers, 0, bytesRead);
+                            if (!stream.DataAvailable) break;
+                        }
+
+                        byte[] respBuffer = ms.ToArray();
+                        string response = Encoding.UTF8.GetString(respBuffer);
+
+                        // 2. XỬ LÝ PHẢN HỒI (Phần này phải nằm SAU khi đọc stream)
+
+                        // A. Kiểm tra lỗi Server trả về
+                        if (response.StartsWith("GETALLBAN FAIL"))
+                        {
+                            MessageBox.Show("Server Error: " + response);
+                            return;
+                        }
+                        try
+                        {
+                            banList = JsonSerializer.Deserialize<List<Ban>>(response);
+                            HienThiDanhSachBan();
+                        }
+                        catch (JsonException ex)
+                        {
+                            MessageBox.Show("Lỗi Deserialization JSON: " + ex.Message + "\nResponse: " + response);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading ban list: " + ex.Message);
+            }
+        }
         private void LoadAll()
         {
             MaDoUong.HeaderText = "Mã đồ uống";
@@ -93,6 +158,7 @@ namespace DoAnLapTrinhMang
             {
                 MaDoUong.Items.Add(du.MaLoai);
             }
+
         }
         private void nhânViênToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -132,7 +198,6 @@ namespace DoAnLapTrinhMang
         {
             textBox_Ten.Text = SessionVars.username;
             textBox_Role.Text = SessionVars.role;
-            textBox1.Text = SessionVars.username;
         }
 
         private void textBox_Role_TextChanged(object sender, EventArgs e)
@@ -203,29 +268,30 @@ namespace DoAnLapTrinhMang
 
                 string selectedMaDU = combo.SelectedItem.ToString();
 
-                // 🔍 Tìm DoUong trong danh sách
                 var drink = duList.FirstOrDefault(d => d.MaLoai == selectedMaDU);
-
                 if (drink == null)
                 {
                     MessageBox.Show("Không tìm thấy dữ liệu đồ uống!");
                     return;
                 }
 
-                // ✔ Điền dữ liệu từ đối tượng DoUongData
                 row.Cells["TenDoUong"].Value = drink.TenDU;
-                row.Cells["SoLuong"].Value = 1;                  // mặc định 1
+                row.Cells["SoLuong"].Value = 1;
                 row.Cells["DonGia"].Value = drink.DonGia;
+                row.Cells["ThanhTien"].Value = 1 * drink.DonGia;
 
-                // ✔ Tính thành tiền
-                int quantity = 1;
-                row.Cells["ThanhTien"].Value = quantity * drink.DonGia;
+                // 🔥 Gán model HoaDonItem luôn để CellValueChanged không fail
+                row.Tag = new HoaDonItem
+                {
+                    MaDoUong = drink.MaLoai,
+                    TenDoUong = drink.TenDU,
+                    SoLuong = 1,
+                    DonGia = drink.DonGia
+                };
 
-                // ✔ Update tổng
                 UpdateTotalLabel();
             }
         }
-
 
         private void dataGridView_HoaDon_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -262,10 +328,72 @@ namespace DoAnLapTrinhMang
 
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private async  void button2_Click (object sender, EventArgs e)
         {
-            // create hoa don , push hoa don len server
-            MessageBox.Show("Not implement create hoa don!");
+            if (textBox1.Text == "")
+            {
+                MessageBox.Show("Vui lòng nhập tên khách hàng.");
+                return;
+            }
+            if (!hoaDonTheoBan.ContainsKey(banHienTai.MaBan))
+            {
+                MessageBox.Show("Chưa chọn bàn");
+                return;
+            }
+            
+
+            // 2️⃣ Cập nhật Items từ DataGridView
+            hoaDonTheoBan[banHienTai.MaBan].Items.Clear();
+
+            foreach (DataGridViewRow row in dataGridView_HoaDon.Rows)
+            {
+                if (row.IsNewRow) continue;
+
+                hoaDonTheoBan[banHienTai.MaBan].Items.Add(new HoaDonItem
+                {
+                    TenDoUong = row.Cells["TenDoUong"].Value.ToString(),
+                    SoLuong = Convert.ToInt32(row.Cells["SoLuong"].Value),
+                    DonGia = Convert.ToInt32(row.Cells["DonGia"].Value)
+                });
+            }
+
+            // 3️⃣ Tính tổng tiền
+            hoaDonTheoBan[banHienTai.MaBan].TongTien =
+                hoaDonTheoBan[banHienTai.MaBan].Items.Sum(i => i.SoLuong * i.DonGia);
+            hoaDonTheoBan[banHienTai.MaBan].NgayLap = DateTime.UtcNow;
+            hoaDonTheoBan[banHienTai.MaBan].TenNV = SessionVars.username;
+            hoaDonTheoBan[banHienTai.MaBan].MaKH = textBox1.Text;
+
+            // 4️⃣ Gửi JSON lên server
+            var request = new RequestModel
+            {
+                Action = "CREATEHOADON",
+                HoaDon = hoaDonTheoBan[banHienTai.MaBan]
+            };
+
+            string json = JsonSerializer.Serialize(request);
+            byte[] buffer = Encoding.UTF8.GetBytes(json);
+
+            using (TcpClient client = new TcpClient("127.0.0.1", 5000))
+            using (NetworkStream stream = client.GetStream())
+            {
+                await stream.WriteAsync(buffer, 0, buffer.Length);
+            }
+
+            MessageBox.Show("Đã lưu hóa đơn cho bàn " + banHienTai.MaBan);
+
+            // 🔹 Xóa DataGridView
+            dataGridView_HoaDon.Rows.Clear();
+            label4.Text = "0";
+
+            // 🔹 Reset hoaDonTheoBan cho bàn hiện tại nếu muốn
+            hoaDonTheoBan[banHienTai.MaBan] = new HoaDon
+            {
+                MaBan = banHienTai.MaBan,
+                NgayLap = DateTime.UtcNow,
+                Items = new List<HoaDonItem>(),
+                TongTien = 0
+            };
         }
 
         private void Form_TrangChinh_Load(object sender, EventArgs e)
@@ -293,24 +421,36 @@ namespace DoAnLapTrinhMang
 
         private void dataGridView_HoaDon_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0 &&
-       (dataGridView_HoaDon.Columns[e.ColumnIndex].Name == "SoLuong" ||
-        dataGridView_HoaDon.Columns[e.ColumnIndex].Name == "DonGia"))
+            if (e.RowIndex < 0 || banHienTai == null)
+                return;
+
+            var colName = dataGridView_HoaDon.Columns[e.ColumnIndex].Name;
+            if (colName != "SoLuong" && colName != "DonGia")
+                return;
+
+            DataGridViewRow row = dataGridView_HoaDon.Rows[e.RowIndex];
+
+            // 🔹 Nếu row.Tag chưa có, tạo luôn mới
+            HoaDonItem item = row.Tag as HoaDonItem;
+            if (item == null)
             {
-                DataGridViewRow row = dataGridView_HoaDon.Rows[e.RowIndex];
-
-                if (row.Cells["SoLuong"].Value != null && row.Cells["DonGia"].Value != null)
-                {
-                    int soLuong = Convert.ToInt32(row.Cells["SoLuong"].Value);
-                    int donGia = Convert.ToInt32(row.Cells["DonGia"].Value);
-
-                    row.Cells["ThanhTien"].Value = soLuong * donGia;
-                }
-
-                UpdateTotalLabel();
+                item = new HoaDonItem();
+                row.Tag = item;
             }
-        }
 
+            if (row.Cells["SoLuong"].Value == null || row.Cells["DonGia"].Value == null)
+                return;
+
+            int soLuong = Convert.ToInt32(row.Cells["SoLuong"].Value);
+            int donGia = Convert.ToInt32(row.Cells["DonGia"].Value);
+
+            item.SoLuong = soLuong;
+            item.DonGia = donGia;
+
+            row.Cells["ThanhTien"].Value = soLuong * donGia;
+
+            UpdateTotalLabel();
+        }
         private void button3_Click(object sender, EventArgs e)
         {
             ExportPDF(dataGridView_HoaDon);
@@ -461,30 +601,127 @@ namespace DoAnLapTrinhMang
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (listViewDanhSachBan.SelectedItems.Count == 0)
+                return;
 
+            Ban banMoi = (Ban)listViewDanhSachBan.SelectedItems[0].Tag;
+
+            // 1️⃣ Lưu hóa đơn bàn cũ
+            LuuHoaDonHienTai();
+
+            // 2️⃣ Đổi bàn
+            banHienTai = banMoi;
+
+            // 🔹 Tạo entry trống nếu chưa có
+            if (!hoaDonTheoBan.ContainsKey(banHienTai.MaBan))
+            {
+                hoaDonTheoBan[banHienTai.MaBan] = new HoaDon
+                {
+                    MaBan = banHienTai.MaBan,
+                    NgayLap = DateTime.UtcNow,
+                    Items = new List<HoaDonItem>(),
+                    TongTien = 0
+                };
+            }
+
+            // 3️⃣ Load hóa đơn theo MaBan
+            LoadHoaDonTheoBan(banMoi.MaBan);
+
+            label_banDangChon.Text = $"BÀN ĐANG CHỌN : {banMoi.SoBan}";
+        }
+        private void LuuHoaDonHienTai()
+        {
+            if (banHienTai == null)
+                return;
+
+            HoaDon hd = TaoHoaDonTuGrid();
+
+            hoaDonTheoBan[banHienTai.MaBan] = hd;
+        }
+        private HoaDon TaoHoaDonTuGrid()
+        {
+            HoaDon hd = new HoaDon
+            {
+                MaBan = banHienTai.MaBan,   // 🔥 BẮT BUỘC
+                NgayLap = DateTime.UtcNow,
+                Items = new List<HoaDonItem>()
+            };
+
+            foreach (DataGridViewRow row in dataGridView_HoaDon.Rows)
+            {
+                if (row.IsNewRow) continue;
+
+                hd.Items.Add(new HoaDonItem
+                {
+                    MaDoUong = row.Cells["MaDoUong"].Value?.ToString(),
+                    TenDoUong = row.Cells["TenDoUong"].Value?.ToString(),
+                    SoLuong = Convert.ToInt32(row.Cells["SoLuong"].Value),
+                    DonGia = Convert.ToInt32(row.Cells["DonGia"].Value)
+                });
+            }
+
+            hd.TongTien = hd.Items.Sum(i => i.SoLuong * i.DonGia);
+
+            return hd;
+        }
+        private void LoadHoaDonTheoBan(string maBan)
+        {
+            dataGridView_HoaDon.Rows.Clear();
+
+            if (!hoaDonTheoBan.ContainsKey(maBan))
+                return;
+
+            foreach (var item in hoaDonTheoBan[maBan].Items)
+            {
+                int rowIndex = dataGridView_HoaDon.Rows.Add(
+                    item.MaDoUong,
+                    item.TenDoUong,
+                    item.SoLuong,
+                    item.DonGia,
+                    item.SoLuong * item.DonGia
+                );
+
+                // 🔥 GẮN OBJECT THẬT
+                dataGridView_HoaDon.Rows[rowIndex].Tag = item;
+            }
+
+            UpdateTotalLabel();
         }
         public void HienThiDanhSachBan()
         {
             listViewDanhSachBan.Items.Clear();
-            // 1. Cấu hình ListView
-            listViewDanhSachBan.View = View.LargeIcon;
-            listViewDanhSachBan.LargeImageList = imageListBan; // Gán ImageList đã chứa ảnh icon
-            listViewDanhSachBan.Items.Clear();
-            List<string> danhSachSoBan = new List<string> { "1324", "1342", "13421342" };
 
-            // 3. Hiển thị lên ListView
-            foreach (string soBan in danhSachSoBan)
+            listViewDanhSachBan.View = View.LargeIcon;
+            listViewDanhSachBan.LargeImageList = imageListBan;
+
+            foreach (Ban ban in banList)
             {
-                ListViewItem item = new ListViewItem();
-                item.Text = "Bàn " + soBan;
-                item.ImageIndex = 0; 
+                ListViewItem item = new ListViewItem
+                {
+                    Text = $"Bàn {ban.SoBan}\n({ban.SucChua} chỗ)",
+                    ImageIndex = 0,
+                    Tag = ban
+                };
+
                 listViewDanhSachBan.Items.Add(item);
             }
         }
 
         private void buttonRefresh_Click(object sender, EventArgs e)
         {
-            HienThiDanhSachBan();
+            loadDu();
+            loadBan();
+        }
+
+        private void dataGridView_HoaDon_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            dataGridView_HoaDon.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            dataGridView_HoaDon_CellValueChanged(sender, e);
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

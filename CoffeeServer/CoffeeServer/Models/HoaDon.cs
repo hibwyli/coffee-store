@@ -1,30 +1,39 @@
-﻿using Google.Cloud.Firestore;
-using System;
+﻿using CoffeeServer.Models;
+using Google.Cloud.Firestore;
+using System.Text.Json.Serialization;
 
-namespace CoffeeServer.Models
+[FirestoreData]
+public class HoaDon
 {
-    [FirestoreData]
-    public class HoaDon
-    {
-        [FirestoreDocumentId]
-        public string MaHD { get; set; }
+    [FirestoreDocumentId]
+    [JsonPropertyName("MaHD")]
+    public string MaHD { get; set; }
 
-        [FirestoreProperty]
-        public DateTime NgayLap { get; set; }
+    [FirestoreProperty]
+    [JsonPropertyName("NgayLap")]
+    public DateTime NgayLap { get; set; }
 
-        [FirestoreProperty]
-        public string MaNV { get; set; }
+    [FirestoreProperty]
+    [JsonPropertyName("TenNV")]
+    public string TenNV { get; set; }
 
-        [FirestoreProperty]
-        public string MaKH { get; set; }
+    [FirestoreProperty]
+    [JsonPropertyName("MaKH")]
+    public string MaKH { get; set; }
 
-        [FirestoreProperty]
-        public string MaBan { get; set; }
+    [FirestoreProperty]
+    [JsonPropertyName("MaBan")]
+    public string MaBan { get; set; }
 
-        [FirestoreProperty]
-        public double TongTien { get; set; }
+    [FirestoreProperty]
+    [JsonPropertyName("TongTien")]
+    public double TongTien { get; set; }
 
-        [FirestoreProperty]
-        public string TrangThai { get; set; }
-    }
+    [FirestoreProperty]
+    [JsonPropertyName("TrangThai")]
+    public string TrangThai { get; set; }
+
+    [FirestoreProperty]
+    [JsonPropertyName("Items")]
+    public List<HoaDonItem> Items { get; set; } = new List<HoaDonItem>();
 }

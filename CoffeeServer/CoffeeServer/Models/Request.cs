@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace CoffeeServer.Models
@@ -27,5 +27,7 @@ namespace CoffeeServer.Models
 
         [JsonPropertyName("KHData")]
         public KhachHangData KHData { get; set; }
+        [JsonPropertyName("HoaDon")]
+        public JsonElement HoaDon { get; set; }
     }
 }
