@@ -1,11 +1,15 @@
 ﻿using CoffeeServer.Models;
 using DoAnLapTrinhMang.Models;
+using Google.Apis.Auth.OAuth2;
+using Google.Cloud.Firestore;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
@@ -14,15 +18,24 @@ using System.Windows.Forms;
 
 namespace DoAnLapTrinhMang
 {
+
     public partial class Form_TrangChinh : Form
     {
+        private FirestoreDb db;
+        private const string CollectionBan = "Ban";
         private List<DoUong> duList;
 
         public Form_TrangChinh ()
         {
             InitializeComponent();
-            /// Load do uong heres
-            /// 
+            string userProfile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+            string pathToJsonKey = Path.Combine(userProfile, "source", "repos", "coffee-store", "CoffeeServer", "CoffeeServer", "FirestoreHelpers", "serviceAccountKey.json");
+            Google.Apis.Auth.OAuth2.GoogleCredential credential = Google.Apis.Auth.OAuth2.GoogleCredential.FromFile(pathToJsonKey);
+            var client = new Google.Cloud.Firestore.V1.FirestoreClientBuilder
+            {
+                Credential = credential
+            }.Build();
+            db = FirestoreDb.Create("coffee-manage-f42fa", client);
             loadDu();
             HienThiDanhSachBan();
         }
@@ -346,7 +359,7 @@ namespace DoAnLapTrinhMang
                     iTextSharp.text.Font fontHeader = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.BOLD);
                     iTextSharp.text.Font fontNormal = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 11, iTextSharp.text.Font.NORMAL);
 
-                    using (Document doc = new Document(PageSize.A4, 36, 36, 36, 36))
+                    using (iTextSharp.text.Document doc = new iTextSharp.text.Document(PageSize.A4, 36, 36, 36, 36))
                     {
                         PdfWriter.GetInstance(doc, new FileStream(filePath, FileMode.Create));
                         doc.Open();
@@ -463,23 +476,9 @@ namespace DoAnLapTrinhMang
         {
 
         }
-        public void HienThiDanhSachBan()
+        public async void HienThiDanhSachBan()
         {
-            listViewDanhSachBan.Items.Clear();
-            // 1. Cấu hình ListView
-            listViewDanhSachBan.View = View.LargeIcon;
-            listViewDanhSachBan.LargeImageList = imageListBan; // Gán ImageList đã chứa ảnh icon
-            listViewDanhSachBan.Items.Clear();
-            List<string> danhSachSoBan = new List<string> { "1324", "1342", "13421342" };
-
-            // 3. Hiển thị lên ListView
-            foreach (string soBan in danhSachSoBan)
-            {
-                ListViewItem item = new ListViewItem();
-                item.Text = "Bàn " + soBan;
-                item.ImageIndex = 0; 
-                listViewDanhSachBan.Items.Add(item);
-            }
+            
         }
 
         private void buttonRefresh_Click(object sender, EventArgs e)
