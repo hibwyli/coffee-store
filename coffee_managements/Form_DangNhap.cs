@@ -35,7 +35,7 @@ namespace DoAnLapTrinhMang
 
         private async void button_DangNhap_Click(object sender, EventArgs e)
         {
-         /*   string username = textBox_tenDangNhap.Text.Trim();
+           string username = textBox_tenDangNhap.Text.Trim();
             string password = textBox_MatKhau.Text;
             if (string.IsNullOrWhiteSpace(username))
             {
@@ -114,12 +114,14 @@ namespace DoAnLapTrinhMang
             catch (Exception ex)
             {
                 MessageBox.Show("Error: " + ex.Message);
-            }*/
+            }
+            /*
             SessionVars.username = "TEST";
             SessionVars.role = "NV";
             Form_TrangChinh form_TrangChinh = new Form_TrangChinh();
             form_TrangChinh.UpdateSession();
             form_TrangChinh.Show();
+            */
         }
 
         private void splitContainer1_Panel2_Paint(object sender, PaintEventArgs e)

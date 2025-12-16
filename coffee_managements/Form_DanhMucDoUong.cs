@@ -173,7 +173,7 @@ namespace DoAnLapTrinhMang
 
         private async void menuThem_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtMaDU.Text) || string.IsNullOrEmpty(txtTenDU.Text) ||
+            if (string.IsNullOrEmpty(txtTenDU.Text) ||
                 string.IsNullOrEmpty(txtDonGia.Text) || string.IsNullOrEmpty(txtMaLoai.Text))
             {
                 MessageBox.Show("Thiếu thông tin Đồ Uống.");

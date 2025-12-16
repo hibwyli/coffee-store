@@ -78,6 +78,7 @@
             this.btnTimKhachHang.TabIndex = 34;
             this.btnTimKhachHang.Text = "Tìm kiếm";
             this.btnTimKhachHang.UseVisualStyleBackColor = true;
+            this.btnTimKhachHang.Click += new System.EventHandler(this.btnTimKhachHang_Click);
             // 
             // txtTimKH
             // 
@@ -85,6 +86,7 @@
             this.txtTimKH.Name = "txtTimKH";
             this.txtTimKH.Size = new System.Drawing.Size(370, 22);
             this.txtTimKH.TabIndex = 33;
+            this.txtTimKH.TextChanged += new System.EventHandler(this.txtTimKH_TextChanged);
             // 
             // label6
             // 
@@ -105,6 +107,7 @@
             this.dataGridView_KhachHang.RowTemplate.Height = 24;
             this.dataGridView_KhachHang.Size = new System.Drawing.Size(830, 315);
             this.dataGridView_KhachHang.TabIndex = 31;
+            this.dataGridView_KhachHang.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_KhachHang_CellContentClick);
             // 
             // txtTenKH
             // 
@@ -179,6 +182,7 @@
             this.menuThem.Name = "menuThem";
             this.menuThem.Size = new System.Drawing.Size(80, 24);
             this.menuThem.Text = "Thêm";
+            this.menuThem.Click += new System.EventHandler(this.menuThem_Click);
             // 
             // menuSua
             // 
@@ -186,6 +190,7 @@
             this.menuSua.Name = "menuSua";
             this.menuSua.Size = new System.Drawing.Size(72, 24);
             this.menuSua.Text = "Sửa ";
+            this.menuSua.Click += new System.EventHandler(this.menuSua_Click);
             // 
             // menuXoa
             // 
@@ -193,6 +198,7 @@
             this.menuXoa.Name = "menuXoa";
             this.menuXoa.Size = new System.Drawing.Size(69, 24);
             this.menuXoa.Text = "Xóa";
+            this.menuXoa.Click += new System.EventHandler(this.menuXoa_Click);
             // 
             // menuThoat
             // 
@@ -222,6 +228,7 @@
             this.Controls.Add(this.menuStrip1);
             this.Name = "Form_QuanLiKhachHang";
             this.Text = "Form_QuanLiKhachHang";
+            this.Load += new System.EventHandler(this.Form_QuanLiKhachHang_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_KhachHang)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

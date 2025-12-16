@@ -116,6 +116,61 @@ namespace CoffeeServer.FirestoreHelpers
                 return false;
             }
         }
+        public async Task<bool> CreateHoaDon(string collectionName, HoaDon hoaDon)
+        {
+            try
+            {
+                if (hoaDon == null)
+                    return false;
+
+                // 🔥 CHỐT NULL TRIỆT ĐỂ
+                if (hoaDon.Items == null)
+                    hoaDon.Items = new List<HoaDonItem>();
+
+                if (string.IsNullOrEmpty(hoaDon.MaHD))
+                    hoaDon.MaHD = Guid.NewGuid().ToString();
+
+                await _db.Collection(collectionName)
+                         .Document(hoaDon.MaHD)
+                         .SetAsync(hoaDon);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] CreateHoaDon: {ex.Message}");
+                return false;
+            }
+        }
+        public async Task<bool> CreateKH(string collectionName, KhachHangData item)
+        {
+            try
+            {
+                // Convert tu DoUOngData ve DoUong moi dc 
+                KhachHang cac = new KhachHang()
+                {
+                    MaKH = item.MaKH,
+                    TenKH = item.TenKH,
+                    SDT = item.SDT,
+                    DiaChi = item.DiaChi
+
+                };
+                // 1. Lấy ID từ đối tượng
+                string documentId = GetDocumentId(cac);
+
+                // 2. Sử dụng logic SetAsync với ID đã lấy
+                await _db.Collection(collectionName).Document(documentId).SetAsync(cac);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] Lỗi khi tạo tài liệu trong {collectionName}: {ex.Message}");
+                return false;
+            }
+        }
+
+
+
 
         // --------------------- UPDATE ---------------------
         public async Task UpdateFields(string collectionName, string id, Dictionary<string, object> updates)
@@ -163,6 +218,28 @@ namespace CoffeeServer.FirestoreHelpers
             }
             catch (Exception)
             {
+                return false;
+            }
+        }
+        public async Task<bool> UpdateKH(string collectionName, string id, KhachHangData item)
+        {
+            try
+            {
+                KhachHang cac = new KhachHang()
+                {
+                    MaKH = item.MaKH,
+                    TenKH = item.TenKH,
+                    SDT = item.SDT,
+                    DiaChi = item.DiaChi,
+                };
+                var docRef = _db.Collection(collectionName).Document(id);
+                await docRef.SetAsync(cac);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
                 return false;
             }
         }
@@ -315,67 +392,7 @@ namespace CoffeeServer.FirestoreHelpers
 
             return null; // Sai mật khẩu
         }
-        static async Task InitializeDatabase(FirestoreDb db)
-        {
-            // ==== 1. LoaiDoUong ====
-            var loaiTraSua = new LoaiDoUong { MaLoai = "LT001", TenLoai = "Trà sữa" };
-            var loaiCafe = new LoaiDoUong { MaLoai = "LT002", TenLoai = "Cà phê" };
-            await db.Collection("LoaiDoUong").Document(loaiTraSua.MaLoai).SetAsync(loaiTraSua);
-            await db.Collection("LoaiDoUong").Document(loaiCafe.MaLoai).SetAsync(loaiCafe);
 
-            // ==== 2. DoUong ====
-            var douong1 = new DoUong { MaDU = "DU001", TenDU = "Trà sữa trân châu", MaLoai = "LT001", DonGia = 35000, HinhAnh = "trasua.jpg" };
-            var douong2 = new DoUong { MaDU = "DU002", TenDU = "Cà phê sữa", MaLoai = "LT002", DonGia = 30000, HinhAnh = "cafe.jpg" };
-            await db.Collection("DoUong").Document(douong1.MaDU).SetAsync(douong1);
-            await db.Collection("DoUong").Document(douong2.MaDU).SetAsync(douong2);
-
-            // ==== 3. KhachHang ====
-            var kh1 = new KhachHang { MaKH = "KH001", TenKH = "Nguyen Van A", SDT = "0123456789", DiaChi = "Hanoi" };
-            await db.Collection("KhachHang").Document(kh1.MaKH).SetAsync(kh1);
-
-            // ==== 4. Ban ====
-            var ban1 = new Ban { MaBan = "B01", SucChua = 4, SoBan = 1 };
-            await db.Collection("Ban").Document(ban1.MaBan).SetAsync(ban1);
-
-            // ==== 5. NhanVien ====
-            var nv1 = new NhanVien { MaNV = "NV001", TenNV = "Tran Thi B", MatKhau = "123456", SDT = "0987654321", DiaChi = "Hanoi" };
-            await db.Collection("NhanVien").Document(nv1.MaNV).SetAsync(nv1);
-
-            // ==== 6. HoaDon ====
-            var hd1 = new HoaDon
-            {
-                MaHD = "HD001",
-                NgayLap = DateTime.UtcNow, // ✅ phải dùng UTC
-                MaNV = "NV001",
-                MaKH = "KH001",
-                MaBan = "B01",
-                TongTien = 65000,
-                TrangThai = "Chưa thanh toán"
-            };
-            await db.Collection("HoaDon").Document(hd1.MaHD).SetAsync(hd1);
-
-            // ==== 7. ChiTietHoaDon ====
-            var cthd1 = new ChiTietHoaDon
-            {
-                Id = Guid.NewGuid().ToString(),
-                MaHD = "HD001",
-                MaDU = "DU001",
-                SoLuong = 1,
-                DonGia = 35000,
-                ThanhTien = 35000
-            };
-            var cthd2 = new ChiTietHoaDon
-            {
-                Id = Guid.NewGuid().ToString(),
-                MaHD = "HD001",
-                MaDU = "DU002",
-                SoLuong = 1,
-                DonGia = 30000,
-                ThanhTien = 30000
-            };
-            await db.Collection("ChiTietHoaDon").Document(cthd1.Id).SetAsync(cthd1);
-            await db.Collection("ChiTietHoaDon").Document(cthd2.Id).SetAsync(cthd2);
-        }
         public async Task<bool> SaveResetTokenAsync(string email)
         {
             // 1. Kiểm tra xem email có tồn tại trong KhachHang KHÔNG

@@ -167,9 +167,7 @@ namespace CoffeeServer.Handlers
                         }
                         return "NV not exists to delete!";
 
-                    case "GETALL":
-                        if (request.CollectionName != null)
-                        {
+                    case "GETALL":                    
                             List<NhanVien> employees = await service.GetAll<NhanVien>("NhanVien");
                             var displayList = employees.Select(x => new
                             {
@@ -182,8 +180,7 @@ namespace CoffeeServer.Handlers
                             string jsond = JsonSerializer.Serialize(displayList);
                             Console.WriteLine(jsond);
                             return jsond;
-                        }
-                        return "Wrong shit";
+                   
                     case "CREATEDU":
                         return await HandleDoUongCrud("CREATEDU", request, service);
 
@@ -203,11 +200,24 @@ namespace CoffeeServer.Handlers
                         return await HandleBanCrud("DELETEBAN", request, service);
                     case "GETALLBAN":
                         return await HandleBanCrud("GETALLBAN", request, service);
+                    case "CREATEKH":
+                        return await HandleKhachHangCrud("CREATEKH", request, service);
+
+                    case "UPDATEKH":
+                        return await HandleKhachHangCrud("UPDATEKH", request, service);
+
+                    case "DELETEKH":
+                        return await HandleKhachHangCrud("DELETEKH", request, service);
+
+                    case "GETALLKH":
+                        return await HandleKhachHangCrud("GETALLKH", request, service);
 
                     case "GETTOTALDAY":
                     case "GETTOTALBETWEEN":
                     case "GETTOTALALL":
                         return await HandleDoanhThuCrud(request, service);
+                    case "CREATEHOADON":
+                        return await HandleCreateHoaDon(request,service);
                     default:
                         Console.WriteLine($"[ERROR] Unknown action: {request.Action}");
                         return $"[ERROR] Unknown action: {request.Action}";
@@ -219,6 +229,32 @@ namespace CoffeeServer.Handlers
                 Console.WriteLine($"Error handling request: {ex.Message}");
                 return $"Error handling request: {ex.Message}";
 
+            }
+        }
+        private async Task<string> HandleCreateHoaDon(RequestModel request, FirestoreService service)
+        {
+            if (request.HoaDon.ValueKind == JsonValueKind.Null ||
+    request.HoaDon.ValueKind == JsonValueKind.Undefined)
+            {
+                return "FAIL: HoaDon null";
+            }
+
+            try
+            {
+                // 🔥 Deserialize Data -> HoaDon
+                HoaDon hoaDon = request.HoaDon.Deserialize<HoaDon>();
+
+
+                if (hoaDon == null)
+                    return "FAIL_DESERIALIZE";
+
+                bool ok = await service.CreateHoaDon("HoaDon", hoaDon);
+                return ok ? "OK" : "FAIL_CREATE";
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("[ERROR] HandleCreateHoaDon: " + ex.Message);
+                return "ERROR";
             }
         }
         private async Task<string> HandleDoUongCrud(string action, RequestModel request, FirestoreService service)
@@ -271,6 +307,58 @@ namespace CoffeeServer.Handlers
 
                 default:
                     return $"[ERROR] Unknown CRUD action for DoUong: {action}";
+            }
+        }
+        private async Task<string> HandleKhachHangCrud(string action, RequestModel request, FirestoreService service)
+        {
+            if (action == "GETALLKH")
+            {
+                try
+                {
+                    List<KhachHang> customer = await service.GetAll<KhachHang>("KhachHang");
+                    return JsonSerializer.Serialize(customer);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[ERROR] Get All Khach Hang: {ex.Message}");
+                    return "GETALLKH FAIL: Lỗi server khi lấy dữ liệu.";
+                }
+            }
+            KhachHangData khData = request.KHData;
+
+            if (khData == null)
+            {
+                return $"{action} FAIL: Dữ liệu Khách Hàng (Data) rỗng.";
+            }
+            switch (action)
+            {
+                case "CREATEKH":
+                    if (string.IsNullOrEmpty(khData.MaKH))
+                    {
+                        khData.MaKH = "KH" + Guid.NewGuid().ToString("N").Substring(0, 6).ToUpper();
+                    }
+
+                    bool createSuccess = await service.CreateKH("KhachHang", khData);
+                    return createSuccess ? "CREATE SUCCESS" : "CREATE FAIL";
+
+                case "UPDATEKH":
+                    if (string.IsNullOrEmpty(khData.MaKH))
+                    {
+                        return "UPDATEKH FAIL: Thiếu Mã Khách Hàng (MaKH).";
+                    }
+                    bool updateSuccess = await service.UpdateKH("KhachHang", khData.MaKH, khData);
+                    return updateSuccess ? "UPDATE SUCCESS" : "UPDATE FAIL";
+
+                case "DELETEKH":
+                    if (string.IsNullOrEmpty(khData.MaKH))
+                    {
+                        return "DELETEKH FAIL: Thiếu Mã Khách Hàng (MaKH).";
+                    }
+                    await service.Delete("KhachHang", khData.MaKH);
+                    return "DELETE SUCCESS";
+
+                default:
+                    return $"[ERROR] Unknown CRUD action for KhachHang: {action}";
             }
         }
         private async Task<string> HandleBanCrud(string action, RequestModel request, FirestoreService service)
@@ -346,17 +434,24 @@ namespace CoffeeServer.Handlers
 
                     double totalDay = await doanhThuService.GetTotalRevenueByDate(day);
                     return JsonSerializer.Serialize(new { Total = totalDay });
-
                 case "GETTOTALBETWEEN":
-                    if (string.IsNullOrEmpty(request.DoanhThuData.StartDate) || string.IsNullOrEmpty(request.DoanhThuData.EndDate))
-                        return "FAIL: Missing start or end date!";
+                    if (string.IsNullOrEmpty(request.DoanhThuData.StartDate) ||
+                        string.IsNullOrEmpty(request.DoanhThuData.EndDate))
+                        return "FAIL";
 
-                    DateTime start, end;
-                    if (!DateTime.TryParse(request.DoanhThuData.StartDate, out start) || !DateTime.TryParse(request.DoanhThuData.EndDate, out end))
-                        return "FAIL: Invalid date format! Use yyyy-MM-dd";
+                    if (!DateTime.TryParse(request.DoanhThuData.StartDate, out DateTime start) ||
+                        !DateTime.TryParse(request.DoanhThuData.EndDate, out DateTime end))
+                        return "FAIL";
 
-                    double totalBetween = await doanhThuService.GetTotalRevenueBetweenDates(start, end);
-                    return JsonSerializer.Serialize(new { Total = totalBetween });
+                    var hoaDons = await doanhThuService.GetHoaDonBetweenDates(start, end);
+
+                    double total = hoaDons.Sum(h => h.TongTien);
+
+                    return JsonSerializer.Serialize(new
+                    {
+                        Total = total,
+                        HoaDons = hoaDons
+                    });
 
                 case "GETTOTALALL":
                     double totalAll = await doanhThuService.GetTotalRevenueAllTime();
