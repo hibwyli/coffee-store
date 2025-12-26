@@ -47,7 +47,7 @@ namespace DoAnLapTrinhMang
             try
             {
                 client = new TcpClient();
-                await client.ConnectAsync(serverIp, 12345); // Kết nối bất đồng bộ
+                await client.ConnectAsync(serverIp, 5050); // Kết nối bất đồng bộ
 
                 NetworkStream stream = client.GetStream();
                 reader = new StreamReader(stream, Encoding.UTF8);
@@ -76,13 +76,9 @@ namespace DoAnLapTrinhMang
                 string message;
                 while ((message = await reader.ReadLineAsync()) != null)
                 {
-                    if (message.StartsWith("LIST:"))
+                    if (message.StartsWith("BCST:"))
                     {
-                        string listData = message.Substring(5);
-                    }
-                    else if (message.StartsWith("BCST:"))
-                    {
-                        string[] parts = message.Substring(5).Split(new char[] { ':' }, 2);
+                        string[] parts = message.Substring(6).Split(new char[] { ':' }, 2);
                         string sender = parts[0];
                         string content = parts[1];
                         AddLogMessage($"{(sender == myUsername ? "Me" : sender)}: {content}");
@@ -118,7 +114,7 @@ namespace DoAnLapTrinhMang
 
             try
             {
-                await writer.WriteLineAsync($"MSG:{message}");
+                await writer.WriteLineAsync($"MSG: {message}");
                 textBox_Chat.Clear();
             }
             catch (Exception ex)

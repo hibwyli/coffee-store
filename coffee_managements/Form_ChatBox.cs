@@ -25,7 +25,7 @@ namespace DoAnLapTrinhMang
 
         private void button1_Click(object sender, EventArgs e)
         {
-            listener = new TcpListener(IPAddress.Any, 5000);
+            listener = new TcpListener(IPAddress.Any, 5050);
             listener.Start();
             LogMessage("Server da khoi dong. Dang lang nghe ket noi...");
 
@@ -94,12 +94,21 @@ namespace DoAnLapTrinhMang
                 string message;
                 while ((message = reader.ReadLine()) != null)
                 {
-                    LogMessage($"{username}: {message}");
-
                     if (message.StartsWith("MSG:"))
                     {
-                        string content = message.Substring(4);
-                        BroadcastMessage($"BCST:{username}:{content}", null);
+                        // Lấy nội dung sau chữ "MSG:" (bắt đầu từ ký tự thứ 5)
+                        string content = message.Substring(5);
+
+                        // Chỉ log phần nội dung đã cắt bỏ "MSG:"
+                        LogMessage($"{username}: {content}");
+
+                        // Tiếp tục gửi cho các Client khác (Broadcast)
+                        BroadcastMessage($"BCST:{username}: {content}", null);
+                    }
+                    else
+                    {
+                        // Các loại tin nhắn khác (nếu có)
+                        LogMessage($"{username}: {message}");
                     }
                 }
             }
@@ -172,9 +181,9 @@ namespace DoAnLapTrinhMang
             }
 
             string senderUsername = "NhanVien";
-            string formattedMessage = $"BCST:{senderUsername}:{messageToSend}";
+            string formattedMessage = $"BCST:{senderUsername}: {messageToSend}";
 
-            LogMessage($" {senderUsername}: {messageToSend}");
+            LogMessage($"{senderUsername}: {messageToSend}");
 
             BroadcastMessage(formattedMessage, null);
 
