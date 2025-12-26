@@ -149,14 +149,12 @@ namespace CoffeeServer.Handlers
                         break;
 
                     case "UPDATE":
-                        if(request.Data.DiaChi != "" && request.Data.Sdt !=""&& request.Data.MaNv != "" && request.Data.Email != "")
-                        {
                             bool updateSuccess = await service.CapNhatThongTinNhanVien(request.Data.MaNv,request.Data.Sdt,request.Data.DiaChi,request.Data.Email,request.Data.TenTaiKhoan);
                             if (updateSuccess)
                             {
                                 return "Update success!!";
                             }
-                        }
+                        
                         return "Update failed";
                     case "DELETE":
                         if (request.Data.MaNv != "" )

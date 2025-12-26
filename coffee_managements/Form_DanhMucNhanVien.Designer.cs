@@ -137,6 +137,7 @@
             this.dataGridView_NhanVien.Location = new System.Drawing.Point(1, 240);
             this.dataGridView_NhanVien.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dataGridView_NhanVien.Name = "dataGridView_NhanVien";
+            this.dataGridView_NhanVien.ReadOnly = true;
             this.dataGridView_NhanVien.RowHeadersWidth = 51;
             this.dataGridView_NhanVien.RowTemplate.Height = 24;
             this.dataGridView_NhanVien.Size = new System.Drawing.Size(1167, 448);

@@ -515,7 +515,13 @@ namespace DoAnLapTrinhMang
                         // Ngày
                         doc.Add(new iTextSharp.text.Paragraph("Date: " + DateTime.Now.ToString("dd/MM/yyyy HH:mm"), fontNormal));
                         doc.Add(new iTextSharp.text.Paragraph("\n"));
-
+                        doc.Add(new iTextSharp.text.Paragraph("Customer: " + textBox1.Text));
+                        doc.Add(new iTextSharp.text.Paragraph("\n"));
+                        if (banHienTai != null)
+                        {
+                            doc.Add(new iTextSharp.text.Paragraph("Ban: " + banHienTai.SoBan, fontNormal));
+                            doc.Add(new iTextSharp.text.Paragraph("\n"));
+                        }
                         // Tạo Table
                         string[] pdfHeaders = columnMapping.Keys.ToArray();
                         PdfPTable table = new PdfPTable(pdfHeaders.Length)

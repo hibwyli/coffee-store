@@ -285,5 +285,10 @@ namespace DoAnLapTrinhMang
         {
 
         }
+
+        private void menuThoat_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
