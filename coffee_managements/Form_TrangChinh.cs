@@ -407,6 +407,8 @@ namespace DoAnLapTrinhMang
                 Items = new List<HoaDonItem>(),
                 TongTien = 0
             };
+            Form_ThanhToan form_Thanhtoan = new Form_ThanhToan();
+            form_Thanhtoan.ShowDialog();
         }
 
         private void Form_TrangChinh_Load(object sender, EventArgs e)
