@@ -57,16 +57,16 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label_ThongTinHoaDon = new System.Windows.Forms.Label();
             this.dataGridView_HoaDon = new System.Windows.Forms.DataGridView();
+            this.textBox_Role = new System.Windows.Forms.TextBox();
+            this.textBox_Ten = new System.Windows.Forms.TextBox();
+            this.imageListBan = new System.Windows.Forms.ImageList(this.components);
+            this.button5 = new System.Windows.Forms.Button();
             this.MaDoUong = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.TenDoUong = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SoLuong = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DonGia = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ThanhTien = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Xoa = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.textBox_Role = new System.Windows.Forms.TextBox();
-            this.textBox_Ten = new System.Windows.Forms.TextBox();
-            this.imageListBan = new System.Windows.Forms.ImageList(this.components);
-            this.button5 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.mainLayout.SuspendLayout();
             this.panelBanHeader.SuspendLayout();
@@ -383,19 +383,54 @@
             this.dataGridView_HoaDon.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_HoaDon_CellValueChanged);
             this.dataGridView_HoaDon.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dataGridView_HoaDon_EditingControlShowing);
             // 
+            // textBox_Role
+            // 
+            this.textBox_Role.Location = new System.Drawing.Point(736, 3);
+            this.textBox_Role.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
+            this.textBox_Role.Name = "textBox_Role";
+            this.textBox_Role.Size = new System.Drawing.Size(96, 20);
+            this.textBox_Role.TabIndex = 12;
+            this.textBox_Role.TextChanged += new System.EventHandler(this.textBox_Role_TextChanged);
+            // 
+            // textBox_Ten
+            // 
+            this.textBox_Ten.Location = new System.Drawing.Point(640, 3);
+            this.textBox_Ten.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
+            this.textBox_Ten.Name = "textBox_Ten";
+            this.textBox_Ten.Size = new System.Drawing.Size(94, 20);
+            this.textBox_Ten.TabIndex = 11;
+            this.textBox_Ten.TextChanged += new System.EventHandler(this.textBox_Ten_TextChanged);
+            // 
+            // imageListBan
+            // 
+            this.imageListBan.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListBan.ImageStream")));
+            this.imageListBan.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageListBan.Images.SetKeyName(0, "icon_coffee_cup.png");
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(838, 1);
+            this.button5.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(80, 20);
+            this.button5.TabIndex = 13;
+            this.button5.Text = "Đăng xuất";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
             // MaDoUong
             // 
             this.MaDoUong.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.MaDoUong.HeaderText = "Mã ";
+            this.MaDoUong.HeaderText = "Tên đồ uống";
             this.MaDoUong.MinimumWidth = 8;
             this.MaDoUong.Name = "MaDoUong";
             this.MaDoUong.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.MaDoUong.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.MaDoUong.Width = 47;
+            this.MaDoUong.Width = 94;
             // 
             // TenDoUong
             // 
-            this.TenDoUong.HeaderText = "Tên đồ uống";
+            this.TenDoUong.HeaderText = "Mã đồ uống";
             this.TenDoUong.MinimumWidth = 8;
             this.TenDoUong.Name = "TenDoUong";
             this.TenDoUong.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -432,41 +467,6 @@
             this.Xoa.Name = "Xoa";
             this.Xoa.Text = "Xóa";
             this.Xoa.Width = 50;
-            // 
-            // textBox_Role
-            // 
-            this.textBox_Role.Location = new System.Drawing.Point(736, 3);
-            this.textBox_Role.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
-            this.textBox_Role.Name = "textBox_Role";
-            this.textBox_Role.Size = new System.Drawing.Size(96, 20);
-            this.textBox_Role.TabIndex = 12;
-            this.textBox_Role.TextChanged += new System.EventHandler(this.textBox_Role_TextChanged);
-            // 
-            // textBox_Ten
-            // 
-            this.textBox_Ten.Location = new System.Drawing.Point(640, 3);
-            this.textBox_Ten.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
-            this.textBox_Ten.Name = "textBox_Ten";
-            this.textBox_Ten.Size = new System.Drawing.Size(94, 20);
-            this.textBox_Ten.TabIndex = 11;
-            this.textBox_Ten.TextChanged += new System.EventHandler(this.textBox_Ten_TextChanged);
-            // 
-            // imageListBan
-            // 
-            this.imageListBan.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListBan.ImageStream")));
-            this.imageListBan.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageListBan.Images.SetKeyName(0, "icon_coffee_cup.png");
-            // 
-            // button5
-            // 
-            this.button5.Location = new System.Drawing.Point(838, 1);
-            this.button5.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(80, 20);
-            this.button5.TabIndex = 13;
-            this.button5.Text = "Đăng xuất";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // Form_TrangChinh
             // 
@@ -527,13 +527,13 @@
         private System.Windows.Forms.TextBox textBox_Role;
         private System.Windows.Forms.TextBox textBox_Ten;
         private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.ToolStripMenuItem chatBoxToolStripMenuItem;
+        private System.Windows.Forms.Button buttonRefresh;
         private System.Windows.Forms.DataGridViewComboBoxColumn MaDoUong;
         private System.Windows.Forms.DataGridViewTextBoxColumn TenDoUong;
         private System.Windows.Forms.DataGridViewTextBoxColumn SoLuong;
         private System.Windows.Forms.DataGridViewTextBoxColumn DonGia;
         private System.Windows.Forms.DataGridViewTextBoxColumn ThanhTien;
         private System.Windows.Forms.DataGridViewButtonColumn Xoa;
-        private System.Windows.Forms.ToolStripMenuItem chatBoxToolStripMenuItem;
-        private System.Windows.Forms.Button buttonRefresh;
     }
 }

@@ -30,7 +30,7 @@ namespace DoAnLapTrinhMang
 
 
 
-        public Form_TrangChinh ()
+        public Form_TrangChinh()
         {
             InitializeComponent();
             string userProfile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
@@ -44,7 +44,7 @@ namespace DoAnLapTrinhMang
             loadDu();
             loadBan();
         }
-        private async Task  loadDu  ()
+        private async Task loadDu()
         {
             // load vao duList
             var request = new RequestModel
@@ -165,13 +165,12 @@ namespace DoAnLapTrinhMang
         }
         private void LoadAll()
         {
-            MaDoUong.HeaderText = "Mã đồ uống";
             MaDoUong.Items.Clear();
+
             foreach (var du in duList)
             {
-                MaDoUong.Items.Add(du.MaLoai);
+                MaDoUong.Items.Add(du.TenDU);   // 🔥 dùng tên đồ uống
             }
-
         }
         private void nhânViênToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -273,25 +272,26 @@ namespace DoAnLapTrinhMang
 
         private void Combo_SelectionChangeCommitted(object sender, EventArgs e)
         {
+
             System.Windows.Forms.ComboBox combo = sender as System.Windows.Forms.ComboBox;
             if (combo != null)
             {
                 int rowIndex = dataGridView_HoaDon.CurrentCell.RowIndex;
                 DataGridViewRow row = dataGridView_HoaDon.Rows[rowIndex];
 
-                string selectedMaDU = combo.SelectedItem.ToString();
+                string selectedTenDU = combo.SelectedItem.ToString();
 
-                var drink = duList.FirstOrDefault(d => d.MaLoai == selectedMaDU);
+                var drink = duList.FirstOrDefault(d => d.TenDU == selectedTenDU);
                 if (drink == null)
                 {
                     MessageBox.Show("Không tìm thấy dữ liệu đồ uống!");
                     return;
                 }
 
-                row.Cells["TenDoUong"].Value = drink.TenDU;
+                row.Cells["TenDoUong"].Value = drink.MaLoai;
                 row.Cells["SoLuong"].Value = 1;
                 row.Cells["DonGia"].Value = drink.DonGia;
-                row.Cells["ThanhTien"].Value = 1 * drink.DonGia;
+                row.Cells["ThanhTien"].Value = drink.DonGia;
 
                 // 🔥 Gán model HoaDonItem luôn để CellValueChanged không fail
                 row.Tag = new HoaDonItem
@@ -341,7 +341,7 @@ namespace DoAnLapTrinhMang
 
         }
 
-        private async  void button2_Click (object sender, EventArgs e)
+        private async void button2_Click(object sender, EventArgs e)
         {
             if (textBox1.Text == "")
             {
@@ -353,7 +353,7 @@ namespace DoAnLapTrinhMang
                 MessageBox.Show("Chưa chọn bàn");
                 return;
             }
-            
+
 
             // 2️⃣ Cập nhật Items từ DataGridView
             hoaDonTheoBan[banHienTai.MaBan].Items.Clear();
@@ -434,6 +434,7 @@ namespace DoAnLapTrinhMang
 
         private void dataGridView_HoaDon_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
+           
             if (e.RowIndex < 0 || banHienTai == null)
                 return;
 
@@ -744,4 +745,3 @@ namespace DoAnLapTrinhMang
         }
     }
 }
-

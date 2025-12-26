@@ -122,7 +122,7 @@ namespace DoAnLapTrinhMang
 
         private async void menuThem_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtMaBan.Text) || string.IsNullOrEmpty(txtSoBan.Text) ||
+            if (string.IsNullOrEmpty(txtSoBan.Text) ||
                string.IsNullOrEmpty(txtSucChua.Text))
             {
                 MessageBox.Show("Thiếu thông tin bàn.");
@@ -264,6 +264,16 @@ namespace DoAnLapTrinhMang
         }
 
         private void dataGridView_Ban_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void menuThoat_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void txtMaBan_TextChanged(object sender, EventArgs e)
         {
 
         }
